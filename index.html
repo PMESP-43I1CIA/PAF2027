@@ -1,394 +1,1281 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Férias 2027 - Sistema de Agendamento</title>
 
 <style>
 
+/* =====================================================
+   CONFIGURAÇÕES GERAIS
+===================================================== */
+
 * {
     box-sizing: border-box;
 }
 
 body {
+
     margin: 0;
-    padding: 20px;
+
     font-family: Arial, Helvetica, sans-serif;
+
     background: #f1f3f6;
+
     color: #172033;
+
+    min-height: 100vh;
+
 }
+
+
+/* =====================================================
+   CONTAINER PRINCIPAL
+===================================================== */
 
 .container {
-    max-width: 580px;
-    margin: 0 auto;
-    background: white;
-    padding: 26px;
+
+    width: 100%;
+
+    max-width: 540px;
+
+    margin: 30px auto;
+
+    background: #ffffff;
+
     border-radius: 16px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.10);
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+
+    padding: 28px;
+
 }
 
-h1 {
-    text-align: center;
-    color: #2463df;
-    margin: 0 0 4px;
-}
 
-.subtitulo {
+/* =====================================================
+   CABEÇALHO
+===================================================== */
+
+.header {
+
     text-align: center;
-    color: #718096;
-    font-size: 14px;
+
     margin-bottom: 28px;
+
 }
 
-h2 {
+.header h1 {
+
+    margin: 0;
+
+    font-size: 26px;
+
+    color: #1554d1;
+
+}
+
+.header p {
+
+    margin-top: 8px;
+
+    color: #6b7280;
+
+    font-size: 14px;
+
+}
+
+
+/* =====================================================
+   TÍTULOS
+===================================================== */
+
+.section-title {
+
     font-size: 18px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 12px;
+
+    font-weight: bold;
+
+    margin-bottom: 16px;
+
+    padding-bottom: 10px;
+
+    border-bottom: 1px solid #e5e7eb;
+
 }
 
-h3 {
-    color: #1455d9;
-    font-size: 16px;
-}
+
+/* =====================================================
+   CAMPOS
+===================================================== */
 
 label {
+
     display: block;
-    margin-top: 14px;
-    margin-bottom: 6px;
+
     font-size: 13px;
+
     font-weight: bold;
+
+    margin-bottom: 7px;
+
+    color: #253044;
+
 }
 
 input,
 select {
+
     width: 100%;
-    padding: 12px;
+
+    height: 44px;
+
     border: 1px solid #cbd5e1;
-    border-radius: 7px;
-    font-size: 15px;
-    background: white;
+
+    border-radius: 8px;
+
+    padding: 0 12px;
+
+    font-size: 14px;
+
+    background: #fff;
+
+    transition: border 0.2s;
+
 }
 
 input:focus,
 select:focus {
+
     outline: none;
-    border-color: #2463df;
+
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 2px rgba(37,99,235,0.10);
+
 }
+
+.form-group {
+
+    margin-bottom: 16px;
+
+}
+
+
+/* =====================================================
+   BOTÕES
+===================================================== */
 
 button {
-    width: 100%;
-    padding: 13px;
+
     border: none;
-    border-radius: 7px;
-    background: #2463df;
-    color: white;
-    font-size: 15px;
-    font-weight: bold;
+
     cursor: pointer;
-    margin-top: 20px;
+
+    font-family: inherit;
+
 }
 
-button:hover {
-    background: #174db8;
-}
+.btn-primary {
 
-button:disabled {
-    background: #9ca3af;
-    cursor: not-allowed;
-}
+    width: 100%;
 
-.btn-secundario {
-    background: #6b7280;
-}
+    height: 46px;
 
-.btn-secundario:hover {
-    background: #4b5563;
-}
+    background: #2563eb;
 
-.aviso {
-    background: #fff9e6;
-    border: 1px solid #f4c842;
-    color: #8a5700;
-    padding: 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    margin-bottom: 18px;
-    line-height: 1.5;
-}
+    color: white;
 
-.card {
-    border: 1px solid #dce2eb;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 16px;
-    background: #fbfcfe;
-}
+    border-radius: 8px;
 
-.card + .card {
-    margin-top: 14px;
-}
-
-.oculto {
-    display: none !important;
-}
-
-.erro {
-    color: #dc2626;
-    font-size: 13px;
-    margin-top: 10px;
-}
-
-.sucesso {
-    color: #15803d;
-    font-size: 14px;
-    margin-top: 10px;
     font-weight: bold;
-}
 
-#areaSistema {
-    display: none;
-}
-
-#areaConfirmacao {
-    display: none;
-}
-
-.resumo {
-    background: #f8fafc;
-    border: 1px solid #dbe3ef;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 15px;
-}
-
-.resumo p {
-    margin: 8px 0;
     font-size: 14px;
+
+    transition: background 0.2s;
+
 }
 
-.resumo strong {
-    color: #1455d9;
+.btn-primary:hover {
+
+    background: #1d4ed8;
+
 }
+
+.btn-primary:disabled {
+
+    background: #94a3b8;
+
+    cursor: not-allowed;
+
+}
+
+.btn-secondary {
+
+    width: 100%;
+
+    height: 44px;
+
+    background: #e5e7eb;
+
+    color: #374151;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    margin-top: 10px;
+
+}
+
+
+/* =====================================================
+   TELAS
+===================================================== */
+
+#loginScreen,
+#formScreen {
+
+    display: none;
+
+}
+
+#loginScreen.active,
+#formScreen.active {
+
+    display: block;
+
+}
+
+
+/* =====================================================
+   AVISOS
+===================================================== */
+
+.warning {
+
+    background: #fff8e1;
+
+    border: 1px solid #f4c96b;
+
+    border-radius: 6px;
+
+    padding: 12px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    margin-bottom: 18px;
+
+    color: #92400e;
+
+}
+
+
+/* =====================================================
+   CARDS DAS OPÇÕES
+===================================================== */
+
+.option-card {
+
+    border: 1px solid #dbe2ea;
+
+    border-radius: 12px;
+
+    padding: 16px;
+
+    margin-bottom: 16px;
+
+    background: #fbfcfe;
+
+}
+
+.option-card h3 {
+
+    margin: 0 0 16px 0;
+
+    color: #1554d1;
+
+    font-size: 16px;
+
+}
+
+.option-card .subtitle {
+
+    font-size: 12px;
+
+    color: #6b7280;
+
+    margin-bottom: 12px;
+
+}
+
+
+/* =====================================================
+   INFORMAÇÕES DE PERÍODO
+===================================================== */
+
+.period-info {
+
+    background: #f0f6ff;
+
+    border-left: 4px solid #2563eb;
+
+    padding: 10px;
+
+    margin-top: 10px;
+
+    border-radius: 4px;
+
+    font-size: 12px;
+
+    color: #1e40af;
+
+}
+
+.period-info strong {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+}
+
+
+/* =====================================================
+   BOTÃO SAIR
+===================================================== */
+
+.logout {
+
+    text-align: right;
+
+    margin-bottom: 10px;
+
+}
+
+.logout button {
+
+    background: transparent;
+
+    color: #dc2626;
+
+    font-size: 12px;
+
+}
+
+
+/* =====================================================
+   RODAPÉ
+===================================================== */
+
+.footer {
+
+    text-align: center;
+
+    font-size: 11px;
+
+    color: #9aa0a6;
+
+    margin-top: 22px;
+
+    padding-top: 12px;
+
+    border-top: 1px solid #eeeeee;
+
+    letter-spacing: 0.2px;
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal-overlay {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,0.55);
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    z-index: 9999;
+
+}
+
+.modal-overlay.active {
+
+    display: flex;
+
+}
+
+.modal {
+
+    background: white;
+
+    width: 100%;
+
+    max-width: 500px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    border-radius: 14px;
+
+    padding: 24px;
+
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+
+}
+
+.modal h2 {
+
+    margin-top: 0;
+
+    color: #1554d1;
+
+    text-align: center;
+
+    font-size: 20px;
+
+}
+
+.modal p {
+
+    font-size: 14px;
+
+    color: #374151;
+
+    line-height: 1.5;
+
+}
+
+
+/* =====================================================
+   RESUMO
+===================================================== */
+
+.summary-box {
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 8px;
+
+    padding: 14px;
+
+    margin-bottom: 12px;
+
+}
+
+.summary-box h4 {
+
+    margin: 0 0 10px;
+
+    color: #1554d1;
+
+    font-size: 15px;
+
+}
+
+.summary-row {
+
+    font-size: 13px;
+
+    margin-bottom: 6px;
+
+}
+
+.summary-row strong {
+
+    color: #1e293b;
+
+}
+
+
+/* =====================================================
+   MENSAGENS
+===================================================== */
+
+.message {
+
+    font-size: 13px;
+
+    margin-top: 8px;
+
+    text-align: center;
+
+}
+
+.error {
+
+    color: #dc2626;
+
+}
+
+.success {
+
+    color: #15803d;
+
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
 
 .loading {
+
     text-align: center;
-    margin-top: 15px;
+
+    padding: 20px;
+
     color: #2563eb;
-    font-weight: bold;
+
+    font-size: 14px;
+
 }
+
+
+/* =====================================================
+   RESPONSIVIDADE
+===================================================== */
 
 @media (max-width: 600px) {
 
-    body {
-        padding: 10px;
-    }
-
     .container {
-        padding: 18px;
-        border-radius: 12px;
+
+        margin: 0;
+
+        min-height: 100vh;
+
+        border-radius: 0;
+
+        padding: 22px 18px;
+
     }
 
-    h1 {
-        font-size: 25px;
+    .header h1 {
+
+        font-size: 24px;
+
     }
 
-    button {
-        font-size: 15px;
+    .modal {
+
+        max-height: 92vh;
+
+        padding: 20px;
+
     }
 
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
-    <h1>Férias 2027</h1>
 
-    <div class="subtitulo">
-        Formulário Oficial de Escolha de Período
-    </div>
+    <!-- =================================================
+         CABEÇALHO
+    ================================================= -->
 
+    <div class="header">
 
-    <!-- ================================================= -->
-    <!-- LOGIN -->
-    <!-- ================================================= -->
+        <h1>Férias 2027</h1>
 
-    <div id="areaLogin">
-
-        <h2>Autenticação</h2>
-
-        <label for="cpf">CPF</label>
-        <input
-            type="text"
-            id="cpf"
-            maxlength="14"
-            placeholder="000.000.000-00"
-        >
-
-        <label for="re">RE (Senha)</label>
-        <input
-            type="password"
-            id="re"
-            placeholder="Digite seu RE"
-        >
-
-        <button onclick="login()">Entrar</button>
-
-        <div id="mensagemLogin"></div>
+        <p>Formulário Oficial de Escolha de Período</p>
 
     </div>
 
 
-    <!-- ================================================= -->
-    <!-- SISTEMA PRINCIPAL -->
-    <!-- ================================================= -->
+    <!-- =================================================
+         TELA DE LOGIN
+    ================================================= -->
 
-    <div id="areaSistema">
+    <div id="loginScreen" class="active">
 
-        <h2>Suas Opções de Interesse</h2>
+        <div class="section-title">
 
-        <div class="aviso">
+            Autenticação
+
+        </div>
+
+
+        <form id="loginForm">
+
+
+            <div class="form-group">
+
+                <label for="cpf">CPF</label>
+
+                <input
+                    type="text"
+                    id="cpf"
+                    maxlength="14"
+                    placeholder="000.000.000-00"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="re">RE (Senha)</label>
+
+                <input
+                    type="password"
+                    id="re"
+                    placeholder="Digite sua senha"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn-primary"
+                id="btnLogin">
+
+                Entrar
+
+            </button>
+
+
+            <div id="loginMessage" class="message"></div>
+
+
+        </form>
+
+    </div>
+
+
+
+    <!-- =================================================
+         TELA PRINCIPAL DO FORMULÁRIO
+    ================================================= -->
+
+    <div id="formScreen">
+
+
+        <div class="logout">
+
+            <button onclick="logout()">
+
+                Sair do sistema
+
+            </button>
+
+        </div>
+
+
+        <div class="section-title">
+
+            Suas Opções de Interesse
+
+        </div>
+
+
+        <div class="warning">
 
             <strong>Atenção:</strong><br>
 
             Você deve preencher obrigatoriamente as 3 opções.
+
             As opções não podem ser iguais.
 
-            <br><br>
-
-            Para períodos de <strong>15 + 15 dias</strong>,
-            os dois meses deverão ser diferentes.
+            Para períodos de 15 + 15 dias, os dois meses também deverão ser diferentes.
 
         </div>
 
 
-        <!-- ================================================= -->
-        <!-- OPÇÃO 1 -->
-        <!-- ================================================= -->
-
-        <div class="card">
-
-            <h3>1ª Opção (Preferencial)</h3>
-
-            <label>Tipo de Período</label>
-
-            <select id="tipo1" onchange="alterarTipo(1)">
-                <option value="">Selecione</option>
-                <option value="30">30 dias diretos</option>
-                <option value="15+15">15 + 15 dias</option>
-            </select>
+        <form id="feriasForm">
 
 
-            <div id="campos1"></div>
+            <!-- =================================================
+                 OPÇÃO 1
+            ================================================= -->
 
-        </div>
+            <div class="option-card">
 
-
-        <!-- ================================================= -->
-        <!-- OPÇÃO 2 -->
-        <!-- ================================================= -->
-
-        <div class="card">
-
-            <h3>2ª Opção (Alternativa)</h3>
-
-            <label>Tipo de Período</label>
-
-            <select id="tipo2" onchange="alterarTipo(2)">
-                <option value="">Selecione</option>
-                <option value="30">30 dias diretos</option>
-                <option value="15+15">15 + 15 dias</option>
-            </select>
+                <h3>1ª Opção (Preferencial)</h3>
 
 
-            <div id="campos2"></div>
+                <div class="form-group">
 
-        </div>
+                    <label for="tipo1">
 
+                        Tipo de Período
 
-        <!-- ================================================= -->
-        <!-- OPÇÃO 3 -->
-        <!-- ================================================= -->
+                    </label>
 
-        <div class="card">
+                    <select id="tipo1" onchange="alterarTipo(1)">
 
-            <h3>3ª Opção (Alternativa)</h3>
+                        <option value="30">30 dias diretos</option>
 
-            <label>Tipo de Período</label>
+                        <option value="15+15">15 + 15 dias</option>
 
-            <select id="tipo3" onchange="alterarTipo(3)">
-                <option value="">Selecione</option>
-                <option value="30">30 dias diretos</option>
-                <option value="15+15">15 + 15 dias</option>
-            </select>
+                    </select>
+
+                </div>
 
 
-            <div id="campos3"></div>
+                <!-- OPÇÃO 30 DIAS -->
 
-        </div>
+                <div id="periodo30_1">
+
+                    <div class="form-group">
+
+                        <label for="mes1">
+
+                            Mês de Interesse
+
+                        </label>
+
+                        <select id="mes1" onchange="mesSelecionado(1)">
+
+                        </select>
+
+                    </div>
 
 
-        <button id="btnConfirmar" onclick="validarAntesDeConfirmar()">
-            Confirmar Escolhas
-        </button>
+                    <div class="form-group">
 
-        <div id="mensagemSistema"></div>
+                        <label for="data1">
+
+                            Data pretendida para início
+
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data1"
+                            onchange="atualizarResumoPeriodo(1)"
+                        >
+
+                    </div>
+
+
+                    <div id="info1" class="period-info"></div>
+
+                </div>
+
+
+                <!-- OPÇÃO 15 + 15 DIAS -->
+
+                <div id="periodo1515_1" style="display:none">
+
+
+                    <div class="form-group">
+
+                        <label for="mes1a">
+
+                            Mês do 1º Período
+
+                        </label>
+
+                        <select id="mes1a" onchange="mesSelecionado(1)">
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="data1a">
+
+                            Data pretendida para início
+
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data1a"
+                            onchange="atualizarResumoPeriodo(1)"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="mes1b">
+
+                            Mês do 2º Período
+
+                        </label>
+
+                        <select id="mes1b" onchange="mesSelecionado(1)">
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="data1b">
+
+                            Segunda data pretendida para início
+
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data1b"
+                            onchange="atualizarResumoPeriodo(1)"
+                        >
+
+                    </div>
+
+
+                    <div id="info1515_1" class="period-info"></div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 OPÇÃO 2
+            ================================================= -->
+
+            <div class="option-card">
+
+                <h3>2ª Opção (Alternativa)</h3>
+
+
+                <div class="form-group">
+
+                    <label for="tipo2">
+
+                        Tipo de Período
+
+                    </label>
+
+                    <select id="tipo2" onchange="alterarTipo(2)">
+
+                        <option value="30">30 dias diretos</option>
+
+                        <option value="15+15">15 + 15 dias</option>
+
+                    </select>
+
+                </div>
+
+
+                <div id="periodo30_2">
+
+                    <div class="form-group">
+
+                        <label for="mes2">
+
+                            Mês de Interesse
+
+                        </label>
+
+                        <select id="mes2" onchange="mesSelecionado(2)">
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="data2">
+
+                            Data pretendida para início
+
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data2"
+                            onchange="atualizarResumoPeriodo(2)"
+                        >
+
+                    </div>
+
+
+                    <div id="info2" class="period-info"></div>
+
+                </div>
+
+
+                <div id="periodo1515_2" style="display:none">
+
+
+                    <div class="form-group">
+
+                        <label for="mes2a">
+
+                            Mês do 1º Período
+
+                        </label>
+
+                        <select id="mes2a" onchange="mesSelecionado(2)">
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="data2a">
+
+                            Data pretendida para início
+
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data2a"
+                            onchange="atualizarResumoPeriodo(2)"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="mes2b">
+
+                            Mês do 2º Período
+
+                        </label>
+
+                        <select id="mes2b" onchange="mesSelecionado(2)">
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="data2b">
+
+                            Segunda data pretendida para início
+
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data2b"
+                            onchange="atualizarResumoPeriodo(2)"
+                        >
+
+                    </div>
+
+
+                    <div id="info1515_2" class="period-info"></div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 OPÇÃO 3
+            ================================================= -->
+
+            <div class="option-card">
+
+                <h3>3ª Opção (Alternativa)</h3>
+
+
+                <div class="form-group">
+
+                    <label for="tipo3">
+
+                        Tipo de Período
+
+                    </label>
+
+                    <select id="tipo3" onchange="alterarTipo(3)">
+
+                        <option value="30">30 dias diretos</option>
+
+                        <option value="15+15">15 + 15 dias</option>
+
+                    </select>
+
+                </div>
+
+
+                <div id="periodo30_3">
+
+                    <div class="form-group">
+
+                        <label for="mes3">
+
+                            Mês de Interesse
+
+                        </label>
+
+                        <select id="mes3" onchange="mesSelecionado(3)">
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="data3">
+
+                            Data pretendida para início
+
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data3"
+                            onchange="atualizarResumoPeriodo(3)"
+                        >
+
+                    </div>
+
+
+                    <div id="info3" class="period-info"></div>
+
+                </div>
+
+
+                <div id="periodo1515_3" style="display:none">
+
+
+                    <div class="form-group">
+
+                        <label for="mes3a">
+
+                            Mês do 1º Período
+
+                        </label>
+
+                        <select id="mes3a" onchange="mesSelecionado(3)">
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="data3a">
+
+                            Data pretendida para início
+
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data3a"
+                            onchange="atualizarResumoPeriodo(3)"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="mes3b">
+
+                            Mês do 2º Período
+
+                        </label>
+
+                        <select id="mes3b" onchange="mesSelecionado(3)">
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="data3b">
+
+                            Segunda data pretendida para início
+
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data3b"
+                            onchange="atualizarResumoPeriodo(3)"
+                        >
+
+                    </div>
+
+
+                    <div id="info1515_3" class="period-info"></div>
+
+                </div>
+
+
+            </div>
+
+
+            <div id="formMessage" class="message"></div>
+
+
+            <button
+                type="submit"
+                class="btn-primary"
+                id="btnEnviar">
+
+                Enviar Escolhas
+
+            </button>
+
+
+        </form>
+
 
     </div>
 
 
-    <!-- ================================================= -->
-    <!-- ÁREA DE CONFIRMAÇÃO -->
-    <!-- ================================================= -->
+    <!-- =================================================
+         RODAPÉ
+    ================================================= -->
 
-    <div id="areaConfirmacao">
+    <div class="footer">
 
-        <h2>Confirmação das Escolhas</h2>
+        Elaborado por: Cb PM Ciquiroli
 
-        <div class="aviso">
-            Confira atentamente os dados abaixo antes de enviar.
-        </div>
+    </div>
 
-        <div id="resumoConfirmacao" class="resumo"></div>
 
-        <button onclick="enviarEscolhas()">
-            Enviar Escolhas
-        </button>
+</div>
+
+
+
+<!-- =====================================================
+     MODAL DE CONFIRMAÇÃO
+===================================================== -->
+
+<div id="modalConfirmacao" class="modal-overlay">
+
+    <div class="modal">
+
+        <h2>Confirme suas Escolhas</h2>
+
+        <p style="text-align:center">
+
+            Confira atentamente os períodos selecionados antes de confirmar o envio.
+
+        </p>
+
+
+        <div id="resumoConfirmacao"></div>
+
 
         <button
-            class="btn-secundario"
-            onclick="voltarEdicao()"
-        >
-            Voltar e Corrigir
+            class="btn-primary"
+            onclick="confirmarEnvio()">
+
+            Confirmar e Enviar
+
         </button>
 
-        <div id="mensagemEnvio"></div>
 
-    </div>
+        <button
+            class="btn-secondary"
+            onclick="fecharModal('modalConfirmacao')">
+
+            Voltar e Corrigir
+
+        </button>
 
 
-    <!-- ================================================= -->
-    <!-- RESUMO FINAL -->
-    <!-- ================================================= -->
+        <div class="footer">
 
-    <div id="areaSucesso" class="oculto">
+            Elaborado por: Cb PM Ciquiroli
 
-        <h2>Escolhas Registradas</h2>
-
-        <div class="sucesso">
-            Suas opções foram registradas com sucesso!
         </div>
-
-        <div id="resumoFinal" class="resumo"></div>
 
     </div>
 
 </div>
+
+
+
+<!-- =====================================================
+     MODAL DE SUCESSO
+===================================================== -->
+
+<div id="modalSucesso" class="modal-overlay">
+
+    <div class="modal">
+
+        <h2 style="color:#15803d">
+
+            Escolhas Registradas
+
+        </h2>
+
+
+        <p style="text-align:center">
+
+            Suas opções de férias foram registradas com sucesso.
+
+        </p>
+
+
+        <div id="resumoSucesso"></div>
+
+
+        <button
+            class="btn-primary"
+            onclick="fecharSistema()">
+
+            Finalizar
+
+        </button>
+
+
+        <div class="footer">
+
+            Elaborado por: Cb PM Ciquiroli
+
+        </div>
+
+    </div>
+
+</div>
+
 
 
 <script>
@@ -398,118 +1285,185 @@ button:disabled {
    CONFIGURAÇÃO DO GOOGLE APPS SCRIPT
 ===================================================== */
 
-const URL_API =
-"https://script.google.com/macros/s/AKfycbzRmSXwxT0i7ttudFZ3S_AI0YFGogVeNu63WKhqBQcEInO33s6T7Ximzrt1OeLunweFZw/exec";
-
-
-const ANO = 2027;
-
-const MESES = [
-    "Janeiro",
-    "Fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-    "Julho",
-    "Agosto",
-    "Setembro",
-    "Outubro",
-    "Novembro",
-    "Dezembro"
-];
-
-let usuarioAtual = null;
+const API_URL = "https://script.google.com/macros/s/AKfycbzRmSXwxT0i7ttudFZ3S_AI0YFGogVeNu63WKhqBQcEInO33s6T7Ximzrt1OeLunweFZw/exec";
 
 
 /* =====================================================
-   FORMATAÇÃO CPF
+   VARIÁVEIS GLOBAIS
 ===================================================== */
 
-document.getElementById("cpf").addEventListener("input", function(e) {
+let usuarioLogado = null;
 
-    let valor = e.target.value.replace(/\D/g, "");
+let dadosPendentes = null;
 
-    valor = valor.substring(0, 11);
 
-    valor = valor.replace(
-        /(\d{3})(\d)/,
-        "$1.$2"
-    );
+/* =====================================================
+   MESES DO ANO
+===================================================== */
 
-    valor = valor.replace(
-        /(\d{3})(\d)/,
-        "$1.$2"
-    );
+const MESES = [
 
-    valor = valor.replace(
-        /(\d{3})(\d{1,2})$/,
-        "$1-$2"
-    );
+    { numero: 1, nome: "Janeiro" },
 
-    e.target.value = valor;
+    { numero: 2, nome: "Fevereiro" },
+
+    { numero: 3, nome: "Março" },
+
+    { numero: 4, nome: "Abril" },
+
+    { numero: 5, nome: "Maio" },
+
+    { numero: 6, nome: "Junho" },
+
+    { numero: 7, nome: "Julho" },
+
+    { numero: 8, nome: "Agosto" },
+
+    { numero: 9, nome: "Setembro" },
+
+    { numero: 10, nome: "Outubro" },
+
+    { numero: 11, nome: "Novembro" },
+
+    { numero: 12, nome: "Dezembro" }
+
+];
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    preencherTodosMeses();
+
+    configurarCPF();
+
+    restaurarSessao();
 
 });
 
 
 /* =====================================================
-   LOGIN
+   CONFIGURAÇÃO DO CPF
 ===================================================== */
 
-async function login() {
+function configurarCPF() {
 
-    const cpf = document.getElementById("cpf").value;
-    const re = document.getElementById("re").value;
-    const mensagem = document.getElementById("mensagemLogin");
+    const campo = document.getElementById("cpf");
 
-    mensagem.innerHTML = "Verificando...";
+    campo.addEventListener("input", function() {
 
-    if (!cpf || !re) {
-        mensagem.innerHTML =
-        '<div class="erro">Informe CPF e RE.</div>';
-        return;
-    }
+        let valor = campo.value.replace(/\D/g, "");
 
-    try {
+        valor = valor.substring(0, 11);
 
-        const resposta = await fetch(URL_API, {
+        valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
 
-            method: "POST",
+        valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
 
-            headers: {
-                "Content-Type": "text/plain;charset=utf-8"
-            },
+        valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 
-            body: JSON.stringify({
-                acao: "login",
-                cpf: cpf,
-                re: re
-            })
+        campo.value = valor;
+
+    });
+
+}
+
+
+/* =====================================================
+   PREENCHER SELECTS DE MESES
+===================================================== */
+
+function preencherTodosMeses() {
+
+    for (let i = 1; i <= 3; i++) {
+
+        const selects = [
+
+            document.getElementById(`mes${i}`),
+
+            document.getElementById(`mes${i}a`),
+
+            document.getElementById(`mes${i}b`)
+
+        ];
+
+        selects.forEach(select => {
+
+            if (!select) return;
+
+            select.innerHTML = "";
+
+            MESES.forEach(mes => {
+
+                const option = document.createElement("option");
+
+                option.value = mes.numero;
+
+                option.textContent = mes.nome;
+
+                select.appendChild(option);
+
+            });
 
         });
 
-        const dados = await resposta.json();
+    }
 
-        if (dados.sucesso) {
 
-            usuarioAtual = dados;
+    // Configuração inicial
+    for (let i = 1; i <= 3; i++) {
 
-            document.getElementById("areaLogin").style.display = "none";
-            document.getElementById("areaSistema").style.display = "block";
+        definirDataPadrao(i);
 
-        } else {
+    }
 
-            mensagem.innerHTML =
-            '<div class="erro">' + dados.msg + '</div>';
+}
 
-        }
 
-    } catch (erro) {
+/* =====================================================
+   DEFINIR DATA PADRÃO
+===================================================== */
 
-        console.error(erro);
+function definirDataPadrao(opcao) {
 
-        mensagem.innerHTML =
-        '<div class="erro">Erro ao conectar ao servidor. Verifique sua internet.</div>';
+    const ano = 2027;
+
+    const tipo = document.getElementById(`tipo${opcao}`).value;
+
+    if (tipo === "30") {
+
+        const mes = parseInt(document.getElementById(`mes${opcao}`).value);
+
+        const data = formatarDataInput(ano, mes, 1);
+
+        document.getElementById(`data${opcao}`).value = data;
+
+        atualizarLimitesData(opcao, "data" + opcao, mes);
+
+        atualizarResumoPeriodo(opcao);
+
+    }
+
+    else {
+
+        const mesA = parseInt(document.getElementById(`mes${opcao}a`).value);
+
+        const mesB = parseInt(document.getElementById(`mes${opcao}b`).value);
+
+        document.getElementById(`data${opcao}a`).value =
+            formatarDataInput(ano, mesA, 1);
+
+        document.getElementById(`data${opcao}b`).value =
+            formatarDataInput(ano, mesB, 1);
+
+        atualizarLimitesData(opcao, "data" + opcao + "a", mesA);
+
+        atualizarLimitesData(opcao, "data" + opcao + "b", mesB);
+
+        atualizarResumoPeriodo(opcao);
 
     }
 
@@ -522,410 +1476,280 @@ async function login() {
 
 function alterarTipo(opcao) {
 
-    const tipo = document.getElementById("tipo" + opcao).value;
+    const tipo = document.getElementById(`tipo${opcao}`).value;
 
-    const container =
-    document.getElementById("campos" + opcao);
-
-    container.innerHTML = "";
 
     if (tipo === "30") {
 
-        criarCampos30(opcao);
+        document.getElementById(`periodo30_${opcao}`).style.display = "block";
+
+        document.getElementById(`periodo1515_${opcao}`).style.display = "none";
 
     }
 
-    if (tipo === "15+15") {
+    else {
 
-        criarCampos1515(opcao);
+        document.getElementById(`periodo30_${opcao}`).style.display = "none";
+
+        document.getElementById(`periodo1515_${opcao}`).style.display = "block";
 
     }
 
-    atualizarBloqueios();
+
+    definirDataPadrao(opcao);
+
+    atualizarRegrasMeses();
 
 }
 
 
 /* =====================================================
-   CRIA CAMPOS DE 30 DIAS
+   QUANDO O USUÁRIO SELECIONA O MÊS
+   ATUALIZA O CALENDÁRIO PARA O MÊS ESCOLHIDO
 ===================================================== */
 
-function criarCampos30(opcao) {
+function mesSelecionado(opcao) {
 
-    const container =
-    document.getElementById("campos" + opcao);
+    const tipo = document.getElementById(`tipo${opcao}`).value;
 
-    container.innerHTML = `
+    const ano = 2027;
 
-        <label>Mês de Interesse</label>
 
-        <select
-            id="mes${opcao}"
-            onchange="mesAlterado(${opcao}, 1)"
-        >
-            <option value="">Selecione o mês</option>
-            ${gerarOpcoesMeses()}
-        </select>
+    if (tipo === "30") {
 
-        <label>Data pretendida para início</label>
+        const mes = parseInt(document.getElementById(`mes${opcao}`).value);
 
-        <input
-            type="date"
-            id="data${opcao}_1"
-            onchange="atualizarDataManual(${opcao}, 1)"
-        >
+        const campoData = document.getElementById(`data${opcao}`);
 
-        <div id="resultado${opcao}_1"></div>
+        const diaAtual = obterDiaSeguro(campoData.value);
 
-    `;
+        campoData.value = formatarDataInput(ano, mes, diaAtual);
 
-}
+        atualizarLimitesData(opcao, "data" + opcao, mes);
 
-
-/* =====================================================
-   CRIA CAMPOS DE 15 + 15
-===================================================== */
-
-function criarCampos1515(opcao) {
-
-    const container =
-    document.getElementById("campos" + opcao);
-
-    container.innerHTML = `
-
-        <h4>1º Período de 15 dias</h4>
-
-        <label>Mês do 1º Período</label>
-
-        <select
-            id="mes${opcao}_1"
-            onchange="mesAlterado(${opcao}, 1)"
-        >
-            <option value="">Selecione o mês</option>
-            ${gerarOpcoesMeses()}
-        </select>
-
-        <label>Data pretendida para início</label>
-
-        <input
-            type="date"
-            id="data${opcao}_1"
-            onchange="atualizarDataManual(${opcao}, 1)"
-        >
-
-        <div id="resultado${opcao}_1"></div>
-
-
-        <hr>
-
-
-        <h4>2º Período de 15 dias</h4>
-
-        <label>Mês do 2º Período</label>
-
-        <select
-            id="mes${opcao}_2"
-            onchange="mesAlterado(${opcao}, 2)"
-        >
-            <option value="">Selecione o mês</option>
-            ${gerarOpcoesMeses()}
-        </select>
-
-        <label>Data pretendida para início</label>
-
-        <input
-            type="date"
-            id="data${opcao}_2"
-            onchange="atualizarDataManual(${opcao}, 2)"
-        >
-
-        <div id="resultado${opcao}_2"></div>
-
-    `;
-
-}
-
-
-/* =====================================================
-   GERA MESES
-===================================================== */
-
-function gerarOpcoesMeses() {
-
-    let html = "";
-
-    MESES.forEach((mes, index) => {
-
-        const numero = String(index + 1).padStart(2, "0");
-
-        html += `
-            <option value="${numero}">
-                ${mes}
-            </option>
-        `;
-
-    });
-
-    return html;
-
-}
-
-
-/* =====================================================
-   MÊS ALTERADO
-   SINCRONIZA CALENDÁRIO
-===================================================== */
-
-function mesAlterado(opcao, periodo) {
-
-    const tipo =
-    document.getElementById("tipo" + opcao).value;
-
-    const mesSelect = tipo === "30"
-        ? document.getElementById("mes" + opcao)
-        : document.getElementById(`mes${opcao}_${periodo}`);
-
-    const mes = mesSelect.value;
-
-    if (!mes) return;
-
-    const dataInput =
-    document.getElementById(`data${opcao}_${periodo}`);
-
-    // Primeiro dia do mês selecionado
-    const dataInicial =
-    `${ANO}-${mes}-01`;
-
-    dataInput.value = dataInicial;
-
-    dataInput.min = `${ANO}-${mes}-01`;
-
-    dataInput.max =
-    `${ANO}-${mes}-${new Date(ANO, parseInt(mes), 0).getDate()}`;
-
-    calcularPeriodo(opcao, periodo);
-
-    atualizarBloqueios();
-
-}
-
-
-/* =====================================================
-   DATA MANUAL ALTERADA
-===================================================== */
-
-function atualizarDataManual(opcao, periodo) {
-
-    calcularPeriodo(opcao, periodo);
-
-}
-
-
-/* =====================================================
-   CALCULAR PERÍODO
-===================================================== */
-
-function calcularPeriodo(opcao, periodo) {
-
-    const tipo =
-    document.getElementById("tipo" + opcao).value;
-
-    const dataInput =
-    document.getElementById(`data${opcao}_${periodo}`);
-
-    const resultado =
-    document.getElementById(`resultado${opcao}_${periodo}`);
-
-    if (!dataInput || !dataInput.value) return;
-
-    const dataInicio = new Date(dataInput.value + "T00:00:00");
-
-    let dias = 0;
-
-    if (tipo === "30") dias = 30;
-
-    if (tipo === "15+15") dias = 15;
-
-    if (!dias) return;
-
-    const dataTermino = new Date(dataInicio);
-
-    dataTermino.setDate(
-        dataTermino.getDate() + dias - 1
-    );
-
-    const inicioFormatado = formatarData(dataInicio);
-    const terminoFormatado = formatarData(dataTermino);
-
-    resultado.innerHTML = `
-        <div style="font-size:12px;color:#475569;margin-top:8px;">
-            Início: <strong>${inicioFormatado}</strong><br>
-            Término: <strong>${terminoFormatado}</strong>
-        </div>
-    `;
-
-}
-
-
-/* =====================================================
-   FORMATAR DATA
-===================================================== */
-
-function formatarData(data) {
-
-    const dia = String(data.getDate()).padStart(2, "0");
-
-    const mes = String(data.getMonth() + 1).padStart(2, "0");
-
-    const ano = data.getFullYear();
-
-    return `${dia}/${mes}/${ano}`;
-
-}
-
-
-/* =====================================================
-   OBTER DATA E TÉRMINO
-===================================================== */
-
-function obterPeriodo(opcao, periodo) {
-
-    const tipo =
-    document.getElementById("tipo" + opcao).value;
-
-    const dataInput =
-    document.getElementById(`data${opcao}_${periodo}`);
-
-    if (!dataInput || !dataInput.value) {
-        return null;
     }
 
-    const inicio = new Date(
-        dataInput.value + "T00:00:00"
-    );
 
-    const dias = tipo === "30" ? 30 : 15;
+    else {
 
-    const termino = new Date(inicio);
+        const mesA = parseInt(document.getElementById(`mes${opcao}a`).value);
 
-    termino.setDate(
-        termino.getDate() + dias - 1
-    );
+        const mesB = parseInt(document.getElementById(`mes${opcao}b`).value);
 
-    return {
-        inicio: formatarData(inicio),
-        termino: formatarData(termino),
-        inicioISO: dataInput.value
-    };
+        const campoA = document.getElementById(`data${opcao}a`);
+
+        const campoB = document.getElementById(`data${opcao}b`);
+
+        const diaA = obterDiaSeguro(campoA.value);
+
+        const diaB = obterDiaSeguro(campoB.value);
+
+        campoA.value = formatarDataInput(ano, mesA, diaA);
+
+        campoB.value = formatarDataInput(ano, mesB, diaB);
+
+        atualizarLimitesData(opcao, "data" + opcao + "a", mesA);
+
+        atualizarLimitesData(opcao, "data" + opcao + "b", mesB);
+
+    }
+
+
+    atualizarRegrasMeses();
+
+    atualizarResumoPeriodo(opcao);
 
 }
 
 
 /* =====================================================
-   VALIDAÇÃO DOS MESES REPETIDOS
+   OBTER DIA SEGURO
 ===================================================== */
 
-function atualizarBloqueios() {
+function obterDiaSeguro(valor) {
+
+    if (!valor) return 1;
+
+    const partes = valor.split("-");
+
+    if (partes.length !== 3) return 1;
+
+    let dia = parseInt(partes[2]);
+
+    if (isNaN(dia)) dia = 1;
+
+    if (dia < 1) dia = 1;
+
+    if (dia > 28) dia = 1;
+
+    return dia;
+
+}
+
+
+/* =====================================================
+   FORMATAR DATA PARA INPUT DATE
+===================================================== */
+
+function formatarDataInput(ano, mes, dia) {
+
+    const ultimoDia = new Date(ano, mes, 0).getDate();
+
+    if (dia > ultimoDia) dia = ultimoDia;
+
+    return `${ano}-${String(mes).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
+
+}
+
+
+/* =====================================================
+   ATUALIZAR LIMITES DO CALENDÁRIO
+===================================================== */
+
+function atualizarLimitesData(opcao, idCampo, mes) {
+
+    const campo = document.getElementById(idCampo);
+
+    if (!campo) return;
+
+    const ano = 2027;
+
+    const primeiroDia = `${ano}-${String(mes).padStart(2,"0")}-01`;
+
+    const ultimoDia = `${ano}-${String(mes).padStart(2,"0")}-${String(new Date(ano, mes, 0).getDate()).padStart(2,"0")}`;
+
+    campo.min = primeiroDia;
+
+    campo.max = ultimoDia;
+
+}
+
+
+/* =====================================================
+   REGRAS DE MESES
+===================================================== */
+
+function atualizarRegrasMeses() {
 
     const mesesSelecionados = [];
 
-    for (let opcao = 1; opcao <= 3; opcao++) {
+    for (let i = 1; i <= 3; i++) {
 
-        const tipo =
-        document.getElementById("tipo" + opcao).value;
-
-        if (!tipo) continue;
+        const tipo = document.getElementById(`tipo${i}`).value;
 
         if (tipo === "30") {
 
-            const select =
-            document.getElementById("mes" + opcao);
+            const mes = document.getElementById(`mes${i}`);
 
-            if (select && select.value) {
-                mesesSelecionados.push({
-                    elemento: select,
-                    valor: select.value
-                });
-            }
+            mesesSelecionados.push({
+
+                elemento: mes,
+
+                valor: mes.value,
+
+                grupo: i
+
+            });
 
         }
 
-        if (tipo === "15+15") {
+        else {
 
-            const select1 =
-            document.getElementById(`mes${opcao}_1`);
+            const mesA = document.getElementById(`mes${i}a`);
 
-            const select2 =
-            document.getElementById(`mes${opcao}_2`);
+            const mesB = document.getElementById(`mes${i}b`);
 
-            if (select1 && select1.value) {
-                mesesSelecionados.push({
-                    elemento: select1,
-                    valor: select1.value
-                });
-            }
+            mesesSelecionados.push({
 
-            if (select2 && select2.value) {
-                mesesSelecionados.push({
-                    elemento: select2,
-                    valor: select2.value
-                });
-            }
+                elemento: mesA,
+
+                valor: mesA.value,
+
+                grupo: i
+
+            });
+
+            mesesSelecionados.push({
+
+                elemento: mesB,
+
+                valor: mesB.value,
+
+                grupo: i
+
+            });
 
         }
 
     }
 
 
-    // Bloqueia meses já escolhidos em outras opções
+    // Remove bloqueios anteriores
 
-    for (let opcao = 1; opcao <= 3; opcao++) {
+    for (let i = 1; i <= 3; i++) {
 
-        const tipo =
-        document.getElementById("tipo" + opcao).value;
+        const ids = [
 
-        if (!tipo) continue;
+            `mes${i}`,
 
+            `mes${i}a`,
 
-        const selects = [];
+            `mes${i}b`
 
-        if (tipo === "30") {
+        ];
 
-            const s = document.getElementById("mes" + opcao);
+        ids.forEach(id => {
 
-            if (s) selects.push(s);
+            const select = document.getElementById(id);
 
-        }
-
-        if (tipo === "15+15") {
-
-            const s1 = document.getElementById(`mes${opcao}_1`);
-            const s2 = document.getElementById(`mes${opcao}_2`);
-
-            if (s1) selects.push(s1);
-            if (s2) selects.push(s2);
-
-        }
-
-
-        selects.forEach(select => {
-
-            const valorAtual = select.value;
+            if (!select) return;
 
             Array.from(select.options).forEach(option => {
 
                 option.disabled = false;
 
-                if (
-                    option.value &&
-                    option.value !== valorAtual &&
-                    mesesSelecionados.some(item =>
-                        item.elemento !== select &&
-                        item.valor === option.value
-                    )
-                ) {
+            });
 
-                    option.disabled = true;
+        });
+
+    }
+
+
+    // Bloqueia meses repetidos entre opções diferentes
+
+    for (let i = 1; i <= 3; i++) {
+
+        const tipoAtual = document.getElementById(`tipo${i}`).value;
+
+        let selectsAtuais = [];
+
+        if (tipoAtual === "30") {
+
+            selectsAtuais.push(document.getElementById(`mes${i}`));
+
+        }
+
+        else {
+
+            selectsAtuais.push(document.getElementById(`mes${i}a`));
+
+            selectsAtuais.push(document.getElementById(`mes${i}b`));
+
+        }
+
+
+        selectsAtuais.forEach(selectAtual => {
+
+            if (!selectAtual) return;
+
+            const valorAtual = selectAtual.value;
+
+
+            mesesSelecionados.forEach(item => {
+
+                if (item.grupo !== i && item.valor === valorAtual) {
+
+                    // Não altera seleção atual, apenas bloqueia no próximo select
 
                 }
 
@@ -936,33 +1760,94 @@ function atualizarBloqueios() {
     }
 
 
-    // Regra específica: 15+15 não pode repetir mês dentro da própria opção
+    // Aplicação efetiva de bloqueios
 
-    for (let opcao = 1; opcao <= 3; opcao++) {
+    for (let i = 1; i <= 3; i++) {
 
-        const tipo =
-        document.getElementById("tipo" + opcao).value;
+        const tipoAtual = document.getElementById(`tipo${i}`).value;
 
-        if (tipo !== "15+15") continue;
+        let selectsAtuais = [];
 
-        const s1 = document.getElementById(`mes${opcao}_1`);
-        const s2 = document.getElementById(`mes${opcao}_2`);
+        if (tipoAtual === "30") {
 
-        if (s1 && s2) {
+            selectsAtuais.push(document.getElementById(`mes${i}`));
 
-            Array.from(s2.options).forEach(option => {
+        }
 
-                option.disabled =
-                    option.value &&
-                    option.value === s1.value;
+        else {
+
+            selectsAtuais.push(document.getElementById(`mes${i}a`));
+
+            selectsAtuais.push(document.getElementById(`mes${i}b`));
+
+        }
+
+
+        selectsAtuais.forEach(selectAtual => {
+
+            if (!selectAtual) return;
+
+
+            mesesSelecionados.forEach(item => {
+
+                if (item.elemento !== selectAtual && item.valor === selectAtual.options[selectAtual.selectedIndex]?.value) {
+
+                    // Não fazer nada
+
+                }
 
             });
 
-            Array.from(s1.options).forEach(option => {
 
-                option.disabled =
-                    option.value &&
-                    option.value === s2.value;
+            // Bloqueia meses escolhidos nas outras opções
+
+            mesesSelecionados.forEach(item => {
+
+                if (item.elemento !== selectAtual && item.grupo !== i) {
+
+                    Array.from(selectAtual.options).forEach(option => {
+
+                        if (option.value === item.valor) {
+
+                            option.disabled = true;
+
+                        }
+
+                    });
+
+                }
+
+            });
+
+        });
+
+    }
+
+
+    // Regra interna do 15 + 15:
+    // Os dois meses devem ser diferentes
+
+    for (let i = 1; i <= 3; i++) {
+
+        const tipo = document.getElementById(`tipo${i}`).value;
+
+        if (tipo === "15+15") {
+
+            const mesA = document.getElementById(`mes${i}a`);
+
+            const mesB = document.getElementById(`mes${i}b`);
+
+            if (!mesA || !mesB) continue;
+
+            Array.from(mesB.options).forEach(option => {
+
+                option.disabled = (option.value === mesA.value);
+
+            });
+
+            Array.from(mesA.options).forEach(option => {
+
+                option.disabled = (option.value === mesB.value);
 
             });
 
@@ -974,333 +1859,184 @@ function atualizarBloqueios() {
 
 
 /* =====================================================
-   VALIDAÇÃO COMPLETA
+   ATUALIZAR RESUMO DO PERÍODO
 ===================================================== */
 
-function validarAntesDeConfirmar() {
+function atualizarResumoPeriodo(opcao) {
 
-    const opcoes = [];
+    const tipo = document.getElementById(`tipo${opcao}`).value;
 
-    for (let i = 1; i <= 3; i++) {
+    if (tipo === "30") {
 
-        const tipo =
-        document.getElementById("tipo" + i).value;
+        const data = document.getElementById(`data${opcao}`).value;
 
-        if (!tipo) {
+        const info = document.getElementById(`info${opcao}`);
 
-            alert(`Preencha o tipo da ${i}ª opção.`);
+        if (!data) {
+
+            info.innerHTML = "";
+
             return;
 
         }
 
+        const inicio = converterData(data);
 
-        if (tipo === "30") {
+        const termino = adicionarDias(inicio, 29);
 
-            const mes =
-            document.getElementById("mes" + i).value;
+        info.innerHTML = `
 
-            const data =
-            document.getElementById(`data${i}_1`).value;
+            <strong>Resumo do período:</strong>
 
-            if (!mes || !data) {
+            Início: ${formatarDataBR(inicio)}<br>
 
-                alert(`Preencha todos os campos da ${i}ª opção.`);
-                return;
+            Término: ${formatarDataBR(termino)}<br>
 
-            }
+            Total: 30 dias corridos
 
-            opcoes.push({
-                tipo: "30 dias diretos",
-                meses: [mes],
-                periodos: [obterPeriodo(i, 1)]
-            });
-
-        }
-
-
-        if (tipo === "15+15") {
-
-            const mes1 =
-            document.getElementById(`mes${i}_1`).value;
-
-            const mes2 =
-            document.getElementById(`mes${i}_2`).value;
-
-            const data1 =
-            document.getElementById(`data${i}_1`).value;
-
-            const data2 =
-            document.getElementById(`data${i}_2`).value;
-
-
-            if (!mes1 || !mes2 || !data1 || !data2) {
-
-                alert(`Preencha todos os campos da ${i}ª opção.`);
-                return;
-
-            }
-
-
-            if (mes1 === mes2) {
-
-                alert(
-                    `Na ${i}ª opção, os dois períodos de 15 dias devem ocorrer em meses diferentes.`
-                );
-
-                return;
-
-            }
-
-
-            opcoes.push({
-                tipo: "15 + 15 dias",
-                meses: [mes1, mes2],
-                periodos: [
-                    obterPeriodo(i, 1),
-                    obterPeriodo(i, 2)
-                ]
-            });
-
-        }
-
-    }
-
-
-    // Verificar opções idênticas
-
-    const textos = opcoes.map(op => JSON.stringify(op));
-
-    if (new Set(textos).size !== textos.length) {
-
-        alert("As três opções não podem ser iguais.");
-        return;
-
-    }
-
-
-    // Verificar meses repetidos entre opções
-
-    const todosMeses = [];
-
-    opcoes.forEach(op => {
-
-        op.meses.forEach(mes => {
-
-            if (todosMeses.includes(mes)) {
-
-                alert(
-                    "Não é permitido repetir o mesmo mês entre as opções."
-                );
-
-                throw new Error("Meses repetidos");
-
-            }
-
-            todosMeses.push(mes);
-
-        });
-
-    });
-
-
-    mostrarConfirmacao(opcoes);
-
-}
-
-
-/* =====================================================
-   MOSTRAR CONFIRMAÇÃO
-===================================================== */
-
-function mostrarConfirmacao(opcoes) {
-
-    let html = "";
-
-    opcoes.forEach((opcao, index) => {
-
-        html += `
-            <div style="margin-bottom:20px;">
-
-                <h3>${index + 1}ª Opção</h3>
-
-                <p>
-                    <strong>Tipo:</strong> ${opcao.tipo}
-                </p>
         `;
 
+    }
 
-        if (opcao.tipo === "30 dias diretos") {
+    else {
 
-            html += `
-                <p>
-                    <strong>Período:</strong><br>
-                    Início: ${opcao.periodos[0].inicio}<br>
-                    Término: ${opcao.periodos[0].termino}
-                </p>
-            `;
+        const dataA = document.getElementById(`data${opcao}a`).value;
 
-        }
+        const dataB = document.getElementById(`data${opcao}b`).value;
 
+        const info = document.getElementById(`info1515_${opcao}`);
 
-        if (opcao.tipo === "15 + 15 dias") {
+        if (!dataA || !dataB) {
 
-            html += `
-                <p>
-                    <strong>1º Período:</strong><br>
-                    Início: ${opcao.periodos[0].inicio}<br>
-                    Término: ${opcao.periodos[0].termino}
-                </p>
+            info.innerHTML = "";
 
-                <p>
-                    <strong>2º Período:</strong><br>
-                    Início: ${opcao.periodos[1].inicio}<br>
-                    Término: ${opcao.periodos[1].termino}
-                </p>
-            `;
+            return;
 
         }
 
-        html += `</div>`;
+        const inicioA = converterData(dataA);
 
-    });
+        const terminoA = adicionarDias(inicioA, 14);
 
+        const inicioB = converterData(dataB);
 
-    document.getElementById("resumoConfirmacao").innerHTML = html;
+        const terminoB = adicionarDias(inicioB, 14);
 
-    document.getElementById("areaSistema").style.display = "none";
+        info.innerHTML = `
 
-    document.getElementById("areaConfirmacao").style.display = "block";
+            <strong>Resumo dos períodos:</strong>
+
+            1º Período: ${formatarDataBR(inicioA)} até ${formatarDataBR(terminoA)}<br>
+
+            2º Período: ${formatarDataBR(inicioB)} até ${formatarDataBR(terminoB)}<br>
+
+            Total: 30 dias corridos divididos em 15 + 15 dias
+
+        `;
+
+    }
 
 }
 
 
 /* =====================================================
-   VOLTAR PARA EDIÇÃO
+   CONVERTER DATA
 ===================================================== */
 
-function voltarEdicao() {
+function converterData(valor) {
 
-    document.getElementById("areaConfirmacao").style.display = "none";
+    const partes = valor.split("-");
 
-    document.getElementById("areaSistema").style.display = "block";
+    return new Date(
+
+        parseInt(partes[0]),
+
+        parseInt(partes[1]) - 1,
+
+        parseInt(partes[2])
+
+    );
 
 }
 
 
 /* =====================================================
-   GERAR TEXTO COMPLETO DAS OPÇÕES
+   ADICIONAR DIAS
 ===================================================== */
 
-function gerarTextoOpcao(opcao) {
+function adicionarDias(data, dias) {
 
-    let texto = "";
+    const novaData = new Date(data);
 
-    if (opcao.tipo === "30") {
+    novaData.setDate(novaData.getDate() + dias);
 
-        const mes =
-        document.getElementById("mes" + opcao.numero);
-
-        const periodo =
-        obterPeriodo(opcao.numero, 1);
-
-        texto =
-        `30 dias diretos | Início: ${periodo.inicio} | Término: ${periodo.termino}`;
-
-    }
-
-
-    if (opcao.tipo === "15+15") {
-
-        const periodo1 =
-        obterPeriodo(opcao.numero, 1);
-
-        const periodo2 =
-        obterPeriodo(opcao.numero, 2);
-
-        texto =
-        `15 + 15 dias | 1º Período: ${periodo1.inicio} a ${periodo1.termino} | 2º Período: ${periodo2.inicio} a ${periodo2.termino}`;
-
-    }
-
-    return texto;
+    return novaData;
 
 }
 
 
 /* =====================================================
-   ENVIAR ESCOLHAS AO GOOGLE APPS SCRIPT
+   FORMATAR DATA BR
 ===================================================== */
 
-async function enviarEscolhas() {
+function formatarDataBR(data) {
 
-    const mensagem =
-    document.getElementById("mensagemEnvio");
+    return String(data.getDate()).padStart(2,"0") + "/" +
 
-    mensagem.innerHTML =
-    '<div class="loading">Enviando dados...</div>';
+           String(data.getMonth() + 1).padStart(2,"0") + "/" +
 
+           data.getFullYear();
 
-    const opcoes = [];
-
-    for (let i = 1; i <= 3; i++) {
-
-        const tipo =
-        document.getElementById("tipo" + i).value;
-
-        let texto = "";
-
-        if (tipo === "30") {
-
-            const periodo =
-            obterPeriodo(i, 1);
-
-            texto =
-            `30 dias diretos | Início: ${periodo.inicio} | Término: ${periodo.termino}`;
-
-        }
+}
 
 
-        if (tipo === "15+15") {
+/* =====================================================
+   LOGIN
+===================================================== */
 
-            const periodo1 =
-            obterPeriodo(i, 1);
+document.getElementById("loginForm").addEventListener("submit", async function(e) {
 
-            const periodo2 =
-            obterPeriodo(i, 2);
+    e.preventDefault();
 
-            texto =
-            `15 + 15 dias | 1º Período: ${periodo1.inicio} a ${periodo1.termino} | 2º Período: ${periodo2.inicio} a ${periodo2.termino}`;
 
-        }
+    const cpf = document.getElementById("cpf").value;
 
-        opcoes.push(texto);
+    const re = document.getElementById("re").value;
 
-    }
+
+    const btn = document.getElementById("btnLogin");
+
+    const msg = document.getElementById("loginMessage");
+
+
+    btn.disabled = true;
+
+    btn.textContent = "Verificando...";
+
+    msg.textContent = "";
+
+    msg.className = "message";
 
 
     try {
 
-        const resposta = await fetch(URL_API, {
+        const resposta = await fetch(API_URL, {
 
             method: "POST",
 
             headers: {
+
                 "Content-Type": "text/plain;charset=utf-8"
+
             },
 
             body: JSON.stringify({
 
-                acao: "salvar",
+                acao: "login",
 
-                cpf: document.getElementById("cpf").value,
+                cpf: cpf,
 
-                nome: usuarioAtual.nome,
-
-                op1: opcoes[0],
-
-                op2: opcoes[1],
-
-                op3: opcoes[2]
+                re: re
 
             })
 
@@ -1312,48 +2048,606 @@ async function enviarEscolhas() {
 
         if (dados.sucesso) {
 
-            document.getElementById("areaConfirmacao").style.display = "none";
+            usuarioLogado = {
 
-            document.getElementById("areaSucesso").classList.remove("oculto");
+                cpf: limparCPF(cpf),
 
-            document.getElementById("resumoFinal").innerHTML = `
+                nome: dados.nome
 
-                <p><strong>Nome:</strong> ${usuarioAtual.nome}</p>
+            };
 
-                <p><strong>CPF:</strong> ${document.getElementById("cpf").value}</p>
 
-                <hr>
+            sessionStorage.setItem(
 
-                <p><strong>1ª Opção:</strong><br>${opcoes[0]}</p>
+                "usuarioFerias",
 
-                <p><strong>2ª Opção:</strong><br>${opcoes[1]}</p>
+                JSON.stringify(usuarioLogado)
 
-                <p><strong>3ª Opção:</strong><br>${opcoes[2]}</p>
+            );
 
-                <hr>
 
-                <p>
-                    Sua solicitação foi registrada com sucesso.
-                </p>
+            document.getElementById("loginScreen").classList.remove("active");
 
-            `;
-
-        } else {
-
-            mensagem.innerHTML =
-            '<div class="erro">' + dados.msg + '</div>';
+            document.getElementById("formScreen").classList.add("active");
 
         }
 
-    } catch (erro) {
+        else {
+
+            msg.textContent = dados.msg || "CPF ou senha inválidos.";
+
+            msg.className = "message error";
+
+        }
+
+
+    }
+
+    catch (erro) {
 
         console.error(erro);
 
-        mensagem.innerHTML =
-        '<div class="erro">Erro ao enviar dados. Verifique sua conexão com a internet.</div>';<div class="assinatura-sistema">
-    Elaborado por: Cb PM Ciquiroli
-</div>
+        msg.textContent = "Erro ao conectar ao servidor. Verifique sua internet.";
+
+        msg.className = "message error";
+
     }
+
+
+    btn.disabled = false;
+
+    btn.textContent = "Entrar";
+
+});
+
+
+/* =====================================================
+   RESTAURAR SESSÃO
+===================================================== */
+
+function restaurarSessao() {
+
+    const sessao = sessionStorage.getItem("usuarioFerias");
+
+    if (!sessao) return;
+
+
+    try {
+
+        usuarioLogado = JSON.parse(sessao);
+
+        document.getElementById("loginScreen").classList.remove("active");
+
+        document.getElementById("formScreen").classList.add("active");
+
+    }
+
+    catch(e) {
+
+        sessionStorage.removeItem("usuarioFerias");
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    usuarioLogado = null;
+
+    sessionStorage.removeItem("usuarioFerias");
+
+    location.reload();
+
+}
+
+
+/* =====================================================
+   PREPARAR DADOS PARA ENVIO
+===================================================== */
+
+function prepararDados() {
+
+    if (!usuarioLogado) {
+
+        throw new Error("Usuário não autenticado.");
+
+    }
+
+
+    const opcoes = [];
+
+
+    for (let i = 1; i <= 3; i++) {
+
+        const tipo = document.getElementById(`tipo${i}`).value;
+
+
+        if (tipo === "30") {
+
+            const mes = parseInt(document.getElementById(`mes${i}`).value);
+
+            const data = document.getElementById(`data${i}`).value;
+
+
+            if (!data) {
+
+                throw new Error(`Preencha a data da ${i}ª opção.`);
+
+            }
+
+
+            const inicio = converterData(data);
+
+            const termino = adicionarDias(inicio, 29);
+
+
+            opcoes.push({
+
+                opcao: i,
+
+                tipo: "30 dias diretos",
+
+                mes: mes,
+
+                dataInicio: formatarDataBR(inicio),
+
+                dataTermino: formatarDataBR(termino),
+
+                dataInicioISO: data
+
+            });
+
+        }
+
+        else {
+
+            const mesA = parseInt(document.getElementById(`mes${i}a`).value);
+
+            const mesB = parseInt(document.getElementById(`mes${i}b`).value);
+
+            const dataA = document.getElementById(`data${i}a`).value;
+
+            const dataB = document.getElementById(`data${i}b`).value;
+
+
+            if (!dataA || !dataB) {
+
+                throw new Error(`Preencha todas as datas da ${i}ª opção.`);
+
+            }
+
+
+            if (mesA === mesB) {
+
+                throw new Error(
+
+                    `Os dois períodos da ${i}ª opção devem possuir meses diferentes.`
+
+                );
+
+            }
+
+
+            const inicioA = converterData(dataA);
+
+            const terminoA = adicionarDias(inicioA, 14);
+
+            const inicioB = converterData(dataB);
+
+            const terminoB = adicionarDias(inicioB, 14);
+
+
+            opcoes.push({
+
+                opcao: i,
+
+                tipo: "15 + 15 dias",
+
+                mes1: mesA,
+
+                mes2: mesB,
+
+                dataInicio1: formatarDataBR(inicioA),
+
+                dataTermino1: formatarDataBR(terminoA),
+
+                dataInicio2: formatarDataBR(inicioB),
+
+                dataTermino2: formatarDataBR(terminoB),
+
+                dataInicio1ISO: dataA,
+
+                dataInicio2ISO: dataB
+
+            });
+
+        }
+
+    }
+
+
+    // Verificar meses repetidos entre as 3 opções
+
+    const mesesUtilizados = [];
+
+    opcoes.forEach(opcao => {
+
+        if (opcao.tipo === "30 dias diretos") {
+
+            mesesUtilizados.push(opcao.mes);
+
+        }
+
+        else {
+
+            mesesUtilizados.push(opcao.mes1);
+
+            mesesUtilizados.push(opcao.mes2);
+
+        }
+
+    });
+
+
+    const repetidos = mesesUtilizados.filter(
+
+        (mes, index) => mesesUtilizados.indexOf(mes) !== index
+
+    );
+
+
+    if (repetidos.length > 0) {
+
+        throw new Error(
+
+            "As opções não podem utilizar meses repetidos."
+
+        );
+
+    }
+
+
+    return opcoes;
+
+}
+
+
+/* =====================================================
+   GERAR RESUMO HTML
+===================================================== */
+
+function gerarResumoHTML(opcoes) {
+
+    let html = "";
+
+
+    opcoes.forEach(opcao => {
+
+        const nomeMes1 = MESES.find(m => m.numero === opcao.mes)?.nome;
+
+        const nomeMesA = MESES.find(m => m.numero === opcao.mes1)?.nome;
+
+        const nomeMesB = MESES.find(m => m.numero === opcao.mes2)?.nome;
+
+
+        if (opcao.tipo === "30 dias diretos") {
+
+            html += `
+
+                <div class="summary-box">
+
+                    <h4>${opcao.opcao}ª Opção — ${opcao.tipo}</h4>
+
+                    <div class="summary-row">
+
+                        <strong>Mês:</strong> ${nomeMes1}
+
+                    </div>
+
+                    <div class="summary-row">
+
+                        <strong>Início:</strong> ${opcao.dataInicio}
+
+                    </div>
+
+                    <div class="summary-row">
+
+                        <strong>Término:</strong> ${opcao.dataTermino}
+
+                    </div>
+
+                    <div class="summary-row">
+
+                        <strong>Duração:</strong> 30 dias
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+        else {
+
+            html += `
+
+                <div class="summary-box">
+
+                    <h4>${opcao.opcao}ª Opção — ${opcao.tipo}</h4>
+
+                    <div class="summary-row">
+
+                        <strong>1º Período (${nomeMesA}):</strong>
+
+                    </div>
+
+                    <div class="summary-row">
+
+                        Início: ${opcao.dataInicio1}
+
+                    </div>
+
+                    <div class="summary-row">
+
+                        Término: ${opcao.dataTermino1}
+
+                    </div>
+
+                    <br>
+
+                    <div class="summary-row">
+
+                        <strong>2º Período (${nomeMesB}):</strong>
+
+                    </div>
+
+                    <div class="summary-row">
+
+                        Início: ${opcao.dataInicio2}
+
+                    </div>
+
+                    <div class="summary-row">
+
+                        Término: ${opcao.dataTermino2}
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+    });
+
+
+    return html;
+
+}
+
+
+/* =====================================================
+   SUBMIT DO FORMULÁRIO
+===================================================== */
+
+document.getElementById("feriasForm").addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+
+    const msg = document.getElementById("formMessage");
+
+    msg.textContent = "";
+
+    msg.className = "message";
+
+
+    try {
+
+        dadosPendentes = prepararDados();
+
+        document.getElementById("resumoConfirmacao").innerHTML =
+
+            gerarResumoHTML(dadosPendentes);
+
+
+        abrirModal("modalConfirmacao");
+
+    }
+
+    catch (erro) {
+
+        msg.textContent = erro.message;
+
+        msg.className = "message error";
+
+    }
+
+});
+
+
+/* =====================================================
+   ABRIR MODAL
+===================================================== */
+
+function abrirModal(id) {
+
+    document.getElementById(id).classList.add("active");
+
+}
+
+
+/* =====================================================
+   FECHAR MODAL
+===================================================== */
+
+function fecharModal(id) {
+
+    document.getElementById(id).classList.remove("active");
+
+}
+
+
+/* =====================================================
+   CONFIRMAR ENVIO
+===================================================== */
+
+async function confirmarEnvio() {
+
+    if (!dadosPendentes) {
+
+        alert("Nenhum dado para enviar.");
+
+        return;
+
+    }
+
+
+    const btn = document.querySelector(
+
+        "#modalConfirmacao .btn-primary"
+
+    );
+
+
+    btn.disabled = true;
+
+    btn.textContent = "Enviando...";
+
+
+    try {
+
+        const op1 = gerarTextoOpcao(dadosPendentes[0]);
+
+        const op2 = gerarTextoOpcao(dadosPendentes[1]);
+
+        const op3 = gerarTextoOpcao(dadosPendentes[2]);
+
+
+        const resposta = await fetch(API_URL, {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type": "text/plain;charset=utf-8"
+
+            },
+
+            body: JSON.stringify({
+
+                acao: "salvar",
+
+                cpf: usuarioLogado.cpf,
+
+                nome: usuarioLogado.nome,
+
+                op1: op1,
+
+                op2: op2,
+
+                op3: op3
+
+            })
+
+        });
+
+
+        const dados = await resposta.json();
+
+
+        if (!dados.sucesso) {
+
+            throw new Error(dados.msg || "Erro ao registrar escolhas.");
+
+        }
+
+
+        fecharModal("modalConfirmacao");
+
+
+        document.getElementById("resumoSucesso").innerHTML =
+
+            gerarResumoHTML(dadosPendentes);
+
+
+        abrirModal("modalSucesso");
+
+
+    }
+
+    catch (erro) {
+
+        alert(erro.message || "Erro ao enviar dados. Verifique sua conexão.");
+
+    }
+
+
+    btn.disabled = false;
+
+    btn.textContent = "Confirmar e Enviar";
+
+}
+
+
+/* =====================================================
+   GERAR TEXTO PARA PLANILHA
+===================================================== */
+
+function gerarTextoOpcao(opcao) {
+
+    if (opcao.tipo === "30 dias diretos") {
+
+        const mes = MESES.find(m => m.numero === opcao.mes)?.nome;
+
+        return `30 dias diretos em ${mes} (Início: ${opcao.dataInicioISO}; Término: ${formatarDataISOParaBR(opcao.dataTermino)})`;
+
+    }
+
+
+    const mesA = MESES.find(m => m.numero === opcao.mes1)?.nome;
+
+    const mesB = MESES.find(m => m.numero === opcao.mes2)?.nome;
+
+
+    return `15 dias em ${mesA} (Início: ${opcao.dataInicio1ISO}; Término: ${formatarDataISOParaBR(opcao.dataTermino1)}) + 15 dias em ${mesB} (Início: ${opcao.dataInicio2ISO}; Término: ${formatarDataISOParaBR(opcao.dataTermino2)})`;
+
+}
+
+
+/* =====================================================
+   CONVERTER DATA BR PARA TEXTO
+===================================================== */
+
+function formatarDataISOParaBR(dataBR) {
+
+    return dataBR;
+
+}
+
+
+/* =====================================================
+   FINALIZAR SISTEMA
+===================================================== */
+
+function fecharSistema() {
+
+    fecharModal("modalSucesso");
+
+    usuarioLogado = null;
+
+    dadosPendentes = null;
+
+    sessionStorage.removeItem("usuarioFerias");
+
+    location.reload();
 
 }
 
@@ -1361,4 +2655,5 @@ async function enviarEscolhas() {
 </script>
 
 </body>
+
 </html>
