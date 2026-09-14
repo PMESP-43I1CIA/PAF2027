@@ -1,1514 +1,1373 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Férias 2027 - Sistema de Agendamento</title>
 
-    <title>Agendamento de Férias 2027</title>
+<style>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+* {
+    box-sizing: border-box;
+}
 
-    <style>
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f1f3f6;
+    color: #263238;
+}
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-        }
+.container {
+    width: 100%;
+    max-width: 760px;
+    margin: 30px auto;
+    padding: 20px;
+}
 
-        .hidden {
-            display: none !important;
-        }
+.card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+}
 
-        input,
-        select,
-        button {
-            font-size: 16px;
-        }
+h1 {
+    text-align: center;
+    color: #2563eb;
+    margin-bottom: 5px;
+    font-size: 28px;
+}
 
-        input[type="date"] {
-            appearance: auto;
-        }
+.subtitle {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 30px;
+}
 
-        .fade-in {
-            animation: fadeIn 0.3s ease-in-out;
-        }
+h2 {
+    color: #1e293b;
+    font-size: 20px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 12px;
+}
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(5px);
-            }
+h3 {
+    color: #2563eb;
+    font-size: 17px;
+    margin-top: 0;
+}
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: bold;
+}
 
-        .loading {
-            opacity: 0.7;
-            cursor: wait;
-        }
+input,
+select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+    background: #fff;
+}
 
-    </style>
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
+}
 
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 13px 18px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+    width: 100%;
+    margin-top: 25px;
+}
+
+.btn-success {
+    background: #16a34a;
+    color: white;
+}
+
+.btn-secondary {
+    background: #cbd5e1;
+    color: #1e293b;
+}
+
+.btn-danger {
+    background: #dc2626;
+    color: white;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.login-box {
+    max-width: 400px;
+    margin: auto;
+}
+
+.identity-box {
+    text-align: center;
+    padding: 25px 10px;
+}
+
+.identity-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1d4ed8;
+    margin: 20px 0;
+}
+
+.button-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.button-row button {
+    flex: 1;
+}
+
+.alert {
+    padding: 14px;
+    border-radius: 8px;
+    margin: 15px 0;
+    font-size: 14px;
+}
+
+.alert-warning {
+    background: #fff7ed;
+    border: 1px solid #fdba74;
+    color: #9a3412;
+}
+
+.alert-info {
+    background: #eff6ff;
+    border: 1px solid #93c5fd;
+    color: #1e40af;
+}
+
+.option-card {
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 20px;
+}
+
+.option-card.hidden {
+    display: none;
+}
+
+.period-block {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.period-title {
+    font-weight: bold;
+    color: #334155;
+    margin-bottom: 10px;
+}
+
+.confirmation-box {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 18px;
+    margin-top: 15px;
+}
+
+.confirmation-item {
+    border-bottom: 1px solid #e2e8f0;
+    padding: 12px 0;
+}
+
+.confirmation-item:last-child {
+    border-bottom: none;
+}
+
+.confirmation-item strong {
+    display: block;
+    color: #1d4ed8;
+    margin-bottom: 5px;
+}
+
+.loading {
+    text-align: center;
+    padding: 30px;
+    display: none;
+}
+
+.spinner {
+    width: 35px;
+    height: 35px;
+    border: 4px solid #e5e7eb;
+    border-top-color: #2563eb;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: auto;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.success-box {
+    text-align: center;
+    padding: 25px;
+}
+
+.success-icon {
+    font-size: 50px;
+    color: #16a34a;
+}
+
+.error-message {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 5px;
+    display: none;
+}
+
+@media (max-width: 600px) {
+
+    .container {
+        margin: 10px auto;
+        padding: 10px;
+    }
+
+    .card {
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+
+    .button-row button {
+        width: 100%;
+    }
+
+}
+
+</style>
 </head>
 
+<body>
 
-<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4 text-gray-800">
+<div class="container">
+<div class="card">
 
-    <div class="bg-white w-full max-w-md rounded-2xl shadow-xl p-6 space-y-6">
+<!-- CABEÇALHO -->
+<h1>Férias 2027</h1>
+<div class="subtitle">Formulário Oficial de Escolha de Período</div>
 
-        <!-- =====================================================
-             CABEÇALHO
-        ====================================================== -->
 
-        <div class="text-center">
+<!-- ================= LOGIN ================= -->
 
-            <h1 class="text-2xl font-bold text-blue-700">
-                Férias 2027
-            </h1>
+<div id="loginSection" class="section active">
 
-            <p class="text-sm text-gray-500">
-                Formulário Oficial de Escolha de Período
-            </p>
+<h2>Autenticação</h2>
+
+<div class="login-box">
+
+<label for="cpf">CPF</label>
+<input type="text" id="cpf" maxlength="14" placeholder="000.000.000-00">
+
+<label for="senha">RE (Senha)</label>
+<input type="password" id="senha" placeholder="Digite sua senha">
+
+<button class="btn-primary" onclick="login()">
+Entrar
+</button>
+
+<div id="loginError" class="error-message"></div>
+
+</div>
+</div>
+
+
+<!-- ================= CONFIRMAÇÃO IDENTIDADE ================= -->
+
+<div id="identitySection" class="section">
+
+<h2>Confirme sua Identidade</h2>
+
+<div class="identity-box">
+
+<p>O sistema localizou o seguinte cadastro:</p>
+
+<div id="identityName" class="identity-name"></div>
+
+<div class="button-row">
+
+<button class="btn-secondary" onclick="logout()">
+Não sou eu
+</button>
+
+<button class="btn-success" onclick="confirmIdentity()">
+Confirmar e Avançar
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- ================= FORMULÁRIO ================= -->
+
+<div id="formSection" class="section">
+
+<h2>Suas Opções de Interesse</h2>
+
+<div class="alert alert-warning">
+<strong>Atenção:</strong> Você deve preencher obrigatoriamente as 3 opções.
+As opções não podem ser iguais.
+<br><br>
+Para períodos de 15 + 15 dias, os dois meses deverão ser diferentes.
+</div>
+
+<form id="vacationForm">
+
+<!-- OPÇÃO 1 -->
+
+<div class="option-card">
+
+<h3>1ª Opção (Preferencial)</h3>
+
+<label>Tipo de Período</label>
+
+<select id="tipo1" onchange="changePeriodType(1)">
+<option value="30">30 dias diretos</option>
+<option value="15+15">15 + 15 dias</option>
+</select>
+
+<div id="periods1"></div>
+
+</div>
+
+
+<!-- OPÇÃO 2 -->
+
+<div class="option-card">
+
+<h3>2ª Opção (Alternativa)</h3>
+
+<label>Tipo de Período</label>
+
+<select id="tipo2" onchange="changePeriodType(2)">
+<option value="30">30 dias diretos</option>
+<option value="15+15">15 + 15 dias</option>
+</select>
+
+<div id="periods2"></div>
+
+</div>
+
+
+<!-- OPÇÃO 3 -->
+
+<div class="option-card">
+
+<h3>3ª Opção (Alternativa)</h3>
+
+<label>Tipo de Período</label>
+
+<select id="tipo3" onchange="changePeriodType(3)">
+<option value="30">30 dias diretos</option>
+<option value="15+15">15 + 15 dias</option>
+</select>
+
+<div id="periods3"></div>
+
+</div>
+
+
+<button type="button" class="btn-primary" onclick="prepareConfirmation()">
+Enviar Escolhas
+</button>
+
+</form>
+
+</div>
+
+
+<!-- ================= CONFIRMAÇÃO ================= -->
+
+<div id="confirmationSection" class="section">
+
+<h2>Confirme suas Escolhas</h2>
+
+<div class="alert alert-info">
+Confira atentamente os períodos escolhidos antes de confirmar o envio.
+</div>
+
+<div id="confirmationContent" class="confirmation-box"></div>
+
+<div class="button-row">
+
+<button class="btn-secondary" onclick="backToForm()">
+Voltar e Corrigir
+</button>
+
+<button class="btn-success" onclick="submitVacations()">
+Confirmar Envio
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ================= LOADING ================= -->
+
+<div id="loadingSection" class="loading">
+
+<div class="spinner"></div>
+
+<p>Enviando suas escolhas...</p>
+
+</div>
+
+
+<!-- ================= SUCESSO ================= -->
+
+<div id="successSection" class="section">
+
+<div class="success-box">
+
+<div class="success-icon">✓</div>
+
+<h2>Escolhas Registradas com Sucesso!</h2>
+
+<p>Seu formulário foi enviado e registrado no sistema.</p>
+
+<div id="successSummary" class="confirmation-box"></div>
+
+<button class="btn-primary" onclick="location.reload()">
+Finalizar
+</button>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+<script>
+
+/* =====================================================
+   CONFIGURAÇÕES
+===================================================== */
+
+/*
+   MANTENHA AQUI A URL DO SEU GOOGLE APPS SCRIPT
+*/
+
+const SCRIPT_URL =
+"https://script.google.com/macros/s/SEU_ID_AQUI/exec";
+
+
+const ANO = 2027;
+
+const MESES = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro"
+];
+
+let usuarioAtual = null;
+
+let dadosFormulario = [];
+
+let mesesSelecionados = new Set();
+
+
+/* =====================================================
+   UTILITÁRIOS
+===================================================== */
+
+function formatCPF(value) {
+
+    value = value.replace(/\D/g, '');
+
+    value = value.substring(0, 11);
+
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
+    return value;
+}
+
+document.getElementById("cpf").addEventListener("input", function() {
+    this.value = formatCPF(this.value);
+});
+
+
+function formatDateBR(dateString) {
+
+    if (!dateString) return "";
+
+    const parts = dateString.split("-");
+
+    if (parts.length !== 3) return dateString;
+
+    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+}
+
+
+function formatDateISO(date) {
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+}
+
+
+function addDays(dateString, days) {
+
+    const date = new Date(dateString + "T12:00:00");
+
+    date.setDate(date.getDate() + days - 1);
+
+    return formatDateISO(date);
+}
+
+
+function showSection(id) {
+
+    document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function login() {
+
+    const cpf = document.getElementById("cpf").value.trim();
+    const senha = document.getElementById("senha").value.trim();
+
+    const error = document.getElementById("loginError");
+
+    error.style.display = "none";
+
+    if (!cpf || !senha) {
+
+        error.innerText = "Informe o CPF e a senha.";
+        error.style.display = "block";
+
+        return;
+    }
+
+    try {
+
+        const url =
+            SCRIPT_URL +
+            "?acao=login" +
+            "&cpf=" + encodeURIComponent(cpf) +
+            "&senha=" + encodeURIComponent(senha);
+
+        const response = await fetch(url);
+
+        const data = await response.json();
+
+        if (!data.success) {
+
+            error.innerText = data.message || "CPF ou senha inválidos.";
+            error.style.display = "block";
+
+            return;
+        }
+
+        usuarioAtual = data.usuario;
+
+        document.getElementById("identityName").innerText =
+            usuarioAtual.nome;
+
+        showSection("identitySection");
+
+    } catch (err) {
+
+        error.innerText =
+            "Erro ao conectar ao servidor. Verifique sua internet.";
+
+        error.style.display = "block";
+
+        console.error(err);
+    }
+}
+
+
+function logout() {
+
+    usuarioAtual = null;
+
+    document.getElementById("cpf").value = "";
+    document.getElementById("senha").value = "";
+
+    showSection("loginSection");
+}
+
+
+function confirmIdentity() {
+
+    if (!usuarioAtual) return;
+
+    showSection("formSection");
+
+    initializeOptions();
+}
+
+
+/* =====================================================
+   INICIALIZAÇÃO DOS PERÍODOS
+===================================================== */
+
+function initializeOptions() {
+
+    for (let i = 1; i <= 3; i++) {
+
+        document.getElementById("tipo" + i).value = "30";
+
+        renderPeriodFields(i, "30");
+    }
+
+    updateMonthRestrictions();
+}
+
+
+/* =====================================================
+   ALTERAÇÃO TIPO DE PERÍODO
+===================================================== */
+
+function changePeriodType(optionNumber) {
+
+    const tipo =
+        document.getElementById("tipo" + optionNumber).value;
+
+    renderPeriodFields(optionNumber, tipo);
+
+    updateMonthRestrictions();
+}
+
+
+/* =====================================================
+   CRIAÇÃO DOS CAMPOS
+===================================================== */
+
+function renderPeriodFields(optionNumber, tipo) {
+
+    const container =
+        document.getElementById("periods" + optionNumber);
+
+    container.innerHTML = "";
+
+    if (tipo === "30") {
+
+        container.innerHTML = createSinglePeriod(optionNumber);
+
+    } else {
+
+        container.innerHTML =
+            createFifteenPeriod(optionNumber, 1) +
+            createFifteenPeriod(optionNumber, 2);
+    }
+
+    attachMonthEvents(optionNumber);
+
+    updateDateFields(optionNumber);
+}
+
+
+function createSinglePeriod(optionNumber) {
+
+    return `
+
+        <div class="period-block">
+
+            <div class="period-title">
+                Período de 30 dias
+            </div>
+
+            <label>Mês de Interesse</label>
+
+            <select
+                id="mes_${optionNumber}_1"
+                data-option="${optionNumber}"
+                data-period="1"
+                class="month-select">
+
+                ${createMonthOptions()}
+
+            </select>
+
+            <label>Data pretendida para início</label>
+
+            <input
+                type="date"
+                id="data_${optionNumber}_1"
+                class="date-input">
 
         </div>
 
-
-        <!-- =====================================================
-             TELA 1 — LOGIN
-        ====================================================== -->
-
-        <div id="tela-login" class="space-y-4">
-
-            <h2 class="text-lg font-semibold text-center border-b pb-2">
-                Autenticação
-            </h2>
+    `;
+}
 
 
-            <div>
+function createFifteenPeriod(optionNumber, periodNumber) {
 
-                <label class="block text-sm font-medium mb-1">
-                    CPF
-                </label>
+    return `
 
-                <input
-                    type="text"
-                    id="login-cpf"
-                    placeholder="000.000.000-00"
-                    maxlength="14"
-                    autocomplete="off"
-                    class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                >
+        <div class="period-block">
 
+            <div class="period-title">
+                ${periodNumber}º Período de 15 dias
             </div>
 
+            <label>Mês do ${periodNumber}º Período</label>
 
-            <div>
+            <select
+                id="mes_${optionNumber}_${periodNumber}"
+                data-option="${optionNumber}"
+                data-period="${periodNumber}"
+                class="month-select">
 
-                <label class="block text-sm font-medium mb-1">
-                    RE (Senha)
-                </label>
+                ${createMonthOptions()}
 
-                <input
-                    type="password"
-                    id="login-re"
-                    placeholder="Digite seu RE"
-                    autocomplete="off"
-                    class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                >
+            </select>
 
-            </div>
+            <label>
+                Data pretendida para início
+            </label>
 
-
-            <button
-                onclick="autenticar()"
-                id="btn-login"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition"
-            >
-                Entrar
-            </button>
-
-
-            <div id="mensagem-login" class="text-center text-sm hidden"></div>
+            <input
+                type="date"
+                id="data_${optionNumber}_${periodNumber}"
+                class="date-input">
 
         </div>
 
+    `;
+}
 
 
-        <!-- =====================================================
-             TELA 2 — CONFIRMAÇÃO DE IDENTIDADE
-        ====================================================== -->
+function createMonthOptions() {
 
-        <div id="tela-confirmacao" class="hidden space-y-4 text-center">
+    let html = `<option value="">Selecione o mês</option>`;
 
-            <h2 class="text-lg font-semibold border-b pb-2">
-                Confirme sua Identidade
-            </h2>
+    MESES.forEach((mes, index) => {
 
-            <p class="text-gray-600">
-                O sistema localizou o seguinte cadastro:
-            </p>
+        const mesNumero = index + 1;
 
-            <p id="nome-usuario" class="text-xl font-bold text-blue-800 my-2"></p>
+        html += `
+            <option value="${mesNumero}">
+                ${mes}
+            </option>
+        `;
+    });
 
+    return html;
+}
 
-            <div class="flex gap-3">
 
-                <button
-                    onclick="reiniciar()"
-                    class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-3 rounded-lg transition"
-                >
-                    Não sou eu
-                </button>
+/* =====================================================
+   EVENTOS DOS MESES
+===================================================== */
 
+function attachMonthEvents(optionNumber) {
 
-                <button
-                    onclick="avancarParaForm()"
-                    class="w-1/2 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition"
-                >
-                    Confirmar e Avançar
-                </button>
+    const selects =
+        document.querySelectorAll(
+            `#periods${optionNumber} .month-select`
+        );
 
-            </div>
+    selects.forEach(select => {
 
-        </div>
+        select.addEventListener("change", function() {
 
+            updateDateFields(optionNumber);
 
-
-        <!-- =====================================================
-             TELA 3 — FORMULÁRIO
-        ====================================================== -->
-
-        <form
-            id="tela-formulario"
-            class="hidden space-y-6"
-            onsubmit="enviarFormulario(event)"
-        >
-
-            <h2 class="text-lg font-semibold border-b pb-2">
-                Suas Opções de Interesse
-            </h2>
-
-
-            <div class="text-xs text-amber-700 bg-amber-50 p-3 rounded border border-amber-200">
-
-                <strong>Atenção:</strong>
-
-                Você deve preencher obrigatoriamente as 3 opções.
-
-                As opções não podem ser iguais.
-
-                Para períodos de 15 + 15 dias, os dois meses deverão ser diferentes.
-
-            </div>
-
-
-            <!-- CONTAINER DAS OPÇÕES -->
-
-            <div class="space-y-6 max-h-[60vh] overflow-y-auto pr-1">
-
-
-                <!-- =====================================================
-                     OPÇÃO 1
-                ====================================================== -->
-
-                <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
-
-                    <h3 class="font-bold text-blue-700">
-                        1ª Opção (Preferencial)
-                    </h3>
-
-
-                    <label class="block text-xs font-medium">
-                        Tipo de Período
-                    </label>
-
-                    <select
-                        id="tipo-1"
-                        onchange="alterarTipoPeriodo(1)"
-                        class="w-full p-3 border rounded-lg bg-white"
-                        required
-                    >
-
-                        <option value="30 dias">
-                            30 dias diretos
-                        </option>
-
-                        <option value="15+15 dias">
-                            15 + 15 dias
-                        </option>
-
-                    </select>
-
-
-
-                    <!-- MÊS PRIMEIRO PERÍODO -->
-
-                    <div>
-
-                        <label class="block text-xs font-medium mb-1" id="label-mes-1">
-                            Mês de Interesse
-                        </label>
-
-                        <select
-                            id="mes-1"
-                            onchange="mesSelecionado(1, 'a')"
-                            class="w-full p-3 border rounded-lg bg-white"
-                            required
-                        >
-
-                            <option value="">Selecione o mês</option>
-
-                            <option value="Janeiro">Janeiro</option>
-                            <option value="Fevereiro">Fevereiro</option>
-                            <option value="Março">Março</option>
-                            <option value="Abril">Abril</option>
-                            <option value="Maio">Maio</option>
-                            <option value="Junho">Junho</option>
-                            <option value="Julho">Julho</option>
-                            <option value="Agosto">Agosto</option>
-                            <option value="Setembro">Setembro</option>
-                            <option value="Outubro">Outubro</option>
-                            <option value="Novembro">Novembro</option>
-                            <option value="Dezembro">Dezembro</option>
-
-                        </select>
-
-                    </div>
-
-
-
-                    <!-- DATA PRIMEIRO PERÍODO -->
-
-                    <div>
-
-                        <label class="block text-xs font-medium mb-1">
-                            Data pretendida para início
-                        </label>
-
-                        <input
-                            type="date"
-                            id="data-1"
-                            class="w-full p-3 border rounded-lg bg-white"
-                            required
-                        >
-
-                    </div>
-
-
-
-                    <!-- SEGUNDO PERÍODO -->
-
-                    <div
-                        id="segundo-periodo-1"
-                        class="hidden border-t pt-4 mt-4 space-y-3 fade-in"
-                    >
-
-                        <h4 class="font-bold text-blue-700 text-sm">
-                            2º Período de 15 dias
-                        </h4>
-
-
-                        <label class="block text-xs font-medium">
-                            Mês do 2º Período
-                        </label>
-
-                        <select
-                            id="mes-1b"
-                            onchange="mesSelecionado(1, 'b')"
-                            class="w-full p-3 border rounded-lg bg-white"
-                        >
-
-                            <option value="">Selecione o mês</option>
-
-                            <option value="Janeiro">Janeiro</option>
-                            <option value="Fevereiro">Fevereiro</option>
-                            <option value="Março">Março</option>
-                            <option value="Abril">Abril</option>
-                            <option value="Maio">Maio</option>
-                            <option value="Junho">Junho</option>
-                            <option value="Julho">Julho</option>
-                            <option value="Agosto">Agosto</option>
-                            <option value="Setembro">Setembro</option>
-                            <option value="Outubro">Outubro</option>
-                            <option value="Novembro">Novembro</option>
-                            <option value="Dezembro">Dezembro</option>
-
-                        </select>
-
-
-                        <label class="block text-xs font-medium">
-                            Segunda data pretendida para início
-                        </label>
-
-                        <input
-                            type="date"
-                            id="data-1b"
-                            class="w-full p-3 border rounded-lg bg-white"
-                        >
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =====================================================
-                     OPÇÃO 2
-                ====================================================== -->
-
-                <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
-
-                    <h3 class="font-bold text-blue-700">
-                        2ª Opção (Alternativa)
-                    </h3>
-
-
-                    <label class="block text-xs font-medium">
-                        Tipo de Período
-                    </label>
-
-                    <select
-                        id="tipo-2"
-                        onchange="alterarTipoPeriodo(2)"
-                        class="w-full p-3 border rounded-lg bg-white"
-                        required
-                    >
-
-                        <option value="30 dias">
-                            30 dias diretos
-                        </option>
-
-                        <option value="15+15 dias">
-                            15 + 15 dias
-                        </option>
-
-                    </select>
-
-
-
-                    <div>
-
-                        <label class="block text-xs font-medium mb-1">
-                            Mês de Interesse
-                        </label>
-
-                        <select
-                            id="mes-2"
-                            onchange="mesSelecionado(2, 'a')"
-                            class="w-full p-3 border rounded-lg bg-white"
-                            required
-                        >
-
-                            <option value="">Selecione o mês</option>
-
-                            <option value="Janeiro">Janeiro</option>
-                            <option value="Fevereiro">Fevereiro</option>
-                            <option value="Março">Março</option>
-                            <option value="Abril">Abril</option>
-                            <option value="Maio">Maio</option>
-                            <option value="Junho">Junho</option>
-                            <option value="Julho">Julho</option>
-                            <option value="Agosto">Agosto</option>
-                            <option value="Setembro">Setembro</option>
-                            <option value="Outubro">Outubro</option>
-                            <option value="Novembro">Novembro</option>
-                            <option value="Dezembro">Dezembro</option>
-
-                        </select>
-
-                    </div>
-
-
-
-                    <div>
-
-                        <label class="block text-xs font-medium mb-1">
-                            Data pretendida para início
-                        </label>
-
-                        <input
-                            type="date"
-                            id="data-2"
-                            class="w-full p-3 border rounded-lg bg-white"
-                            required
-                        >
-
-                    </div>
-
-
-
-                    <div
-                        id="segundo-periodo-2"
-                        class="hidden border-t pt-4 mt-4 space-y-3 fade-in"
-                    >
-
-                        <h4 class="font-bold text-blue-700 text-sm">
-                            2º Período de 15 dias
-                        </h4>
-
-
-                        <label class="block text-xs font-medium">
-                            Mês do 2º Período
-                        </label>
-
-                        <select
-                            id="mes-2b"
-                            onchange="mesSelecionado(2, 'b')"
-                            class="w-full p-3 border rounded-lg bg-white"
-                        >
-
-                            <option value="">Selecione o mês</option>
-
-                            <option value="Janeiro">Janeiro</option>
-                            <option value="Fevereiro">Fevereiro</option>
-                            <option value="Março">Março</option>
-                            <option value="Abril">Abril</option>
-                            <option value="Maio">Maio</option>
-                            <option value="Junho">Junho</option>
-                            <option value="Julho">Julho</option>
-                            <option value="Agosto">Agosto</option>
-                            <option value="Setembro">Setembro</option>
-                            <option value="Outubro">Outubro</option>
-                            <option value="Novembro">Novembro</option>
-                            <option value="Dezembro">Dezembro</option>
-
-                        </select>
-
-
-                        <label class="block text-xs font-medium">
-                            Segunda data pretendida para início
-                        </label>
-
-                        <input
-                            type="date"
-                            id="data-2b"
-                            class="w-full p-3 border rounded-lg bg-white"
-                        >
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =====================================================
-                     OPÇÃO 3
-                ====================================================== -->
-
-                <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
-
-                    <h3 class="font-bold text-blue-700">
-                        3ª Opção (Alternativa)
-                    </h3>
-
-
-                    <label class="block text-xs font-medium">
-                        Tipo de Período
-                    </label>
-
-                    <select
-                        id="tipo-3"
-                        onchange="alterarTipoPeriodo(3)"
-                        class="w-full p-3 border rounded-lg bg-white"
-                        required
-                    >
-
-                        <option value="30 dias">
-                            30 dias diretos
-                        </option>
-
-                        <option value="15+15 dias">
-                            15 + 15 dias
-                        </option>
-
-                    </select>
-
-
-
-                    <div>
-
-                        <label class="block text-xs font-medium mb-1">
-                            Mês de Interesse
-                        </label>
-
-                        <select
-                            id="mes-3"
-                            onchange="mesSelecionado(3, 'a')"
-                            class="w-full p-3 border rounded-lg bg-white"
-                            required
-                        >
-
-                            <option value="">Selecione o mês</option>
-
-                            <option value="Janeiro">Janeiro</option>
-                            <option value="Fevereiro">Fevereiro</option>
-                            <option value="Março">Março</option>
-                            <option value="Abril">Abril</option>
-                            <option value="Maio">Maio</option>
-                            <option value="Junho">Junho</option>
-                            <option value="Julho">Julho</option>
-                            <option value="Agosto">Agosto</option>
-                            <option value="Setembro">Setembro</option>
-                            <option value="Outubro">Outubro</option>
-                            <option value="Novembro">Novembro</option>
-                            <option value="Dezembro">Dezembro</option>
-
-                        </select>
-
-                    </div>
-
-
-
-                    <div>
-
-                        <label class="block text-xs font-medium mb-1">
-                            Data pretendida para início
-                        </label>
-
-                        <input
-                            type="date"
-                            id="data-3"
-                            class="w-full p-3 border rounded-lg bg-white"
-                            required
-                        >
-
-                    </div>
-
-
-
-                    <div
-                        id="segundo-periodo-3"
-                        class="hidden border-t pt-4 mt-4 space-y-3 fade-in"
-                    >
-
-                        <h4 class="font-bold text-blue-700 text-sm">
-                            2º Período de 15 dias
-                        </h4>
-
-
-                        <label class="block text-xs font-medium">
-                            Mês do 2º Período
-                        </label>
-
-                        <select
-                            id="mes-3b"
-                            onchange="mesSelecionado(3, 'b')"
-                            class="w-full p-3 border rounded-lg bg-white"
-                        >
-
-                            <option value="">Selecione o mês</option>
-
-                            <option value="Janeiro">Janeiro</option>
-                            <option value="Fevereiro">Fevereiro</option>
-                            <option value="Março">Março</option>
-                            <option value="Abril">Abril</option>
-                            <option value="Maio">Maio</option>
-                            <option value="Junho">Junho</option>
-                            <option value="Julho">Julho</option>
-                            <option value="Agosto">Agosto</option>
-                            <option value="Setembro">Setembro</option>
-                            <option value="Outubro">Outubro</option>
-                            <option value="Novembro">Novembro</option>
-                            <option value="Dezembro">Dezembro</option>
-
-                        </select>
-
-
-                        <label class="block text-xs font-medium">
-                            Segunda data pretendida para início
-                        </label>
-
-                        <input
-                            type="date"
-                            id="data-3b"
-                            class="w-full p-3 border rounded-lg bg-white"
-                        >
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-
-            <!-- =====================================================
-                 BOTÃO ENVIAR
-            ====================================================== -->
-
-            <button
-                type="submit"
-                id="btn-enviar"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition"
-            >
-                Enviar Escolhas
-            </button>
-
-
-            <div id="mensagem-formulario" class="text-center text-sm hidden"></div>
-
-        </form>
-
-    </div>
-
-
-
-    <!-- =========================================================
-         JAVASCRIPT PRINCIPAL
-    ========================================================== -->
-
-    <script>
-
-
-        /* =====================================================
-           CONFIGURAÇÃO DO SISTEMA
-        ====================================================== */
-
-        const WEB_APP_URL =
-            "https://script.google.com/macros/s/AKfycbzRmSXwxT0i7ttudFZ3S_AI0YFGogVeNu63WKhqBQcEInO33s6T7Ximzrt1OeLunweFZw/exec";
-
-
-        const ANO_FERIAS = 2027;
-
-
-        let usuarioNome = "";
-        let usuarioCpf = "";
-
-
-
-        /* =====================================================
-           LISTA DE MESES
-        ====================================================== */
-
-        const mesesNumeros = {
-
-            Janeiro: "01",
-            Fevereiro: "02",
-            Março: "03",
-            Abril: "04",
-            Maio: "05",
-            Junho: "06",
-            Julho: "07",
-            Agosto: "08",
-            Setembro: "09",
-            Outubro: "10",
-            Novembro: "11",
-            Dezembro: "12"
-
-        };
-
-
-
-        /* =====================================================
-           MÁSCARA CPF
-        ====================================================== */
-
-        document
-            .getElementById("login-cpf")
-            .addEventListener("input", function (e) {
-
-                let value = e.target.value.replace(/\D/g, "");
-
-                if (value.length > 11) {
-                    value = value.substring(0, 11);
-                }
-
-                value = value.replace(/(\d{3})(\d)/, "$1.$2");
-                value = value.replace(/(\d{3})(\d)/, "$1.$2");
-                value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-
-                e.target.value = value;
-
-            });
-
-
-
-        /* =====================================================
-           ENTER NO LOGIN
-        ====================================================== */
-
-        document
-            .getElementById("login-re")
-            .addEventListener("keypress", function (event) {
-
-                if (event.key === "Enter") {
-                    autenticar();
-                }
-
-            });
-
-
-
-        /* =====================================================
-           TROCA DE TELAS
-        ====================================================== */
-
-        function trocarTela(idTela) {
-
-            document
-                .getElementById("tela-login")
-                .classList.add("hidden");
-
-            document
-                .getElementById("tela-confirmacao")
-                .classList.add("hidden");
-
-            document
-                .getElementById("tela-formulario")
-                .classList.add("hidden");
-
-
-            document
-                .getElementById(idTela)
-                .classList.remove("hidden");
-
-        }
-
-
-
-        /* =====================================================
-           MENSAGENS
-        ====================================================== */
-
-        function mostrarMensagem(elementoId, mensagem, tipo = "erro") {
-
-            const elemento = document.getElementById(elementoId);
-
-            elemento.innerText = mensagem;
-
-            elemento.classList.remove(
-                "hidden",
-                "text-red-600",
-                "text-green-600",
-                "text-blue-600"
-            );
-
-
-            if (tipo === "sucesso") {
-                elemento.classList.add("text-green-600");
-            }
-
-            else if (tipo === "info") {
-                elemento.classList.add("text-blue-600");
-            }
-
-            else {
-                elemento.classList.add("text-red-600");
-            }
-
-        }
-
-
-
-        /* =====================================================
-           AUTENTICAÇÃO
-        ====================================================== */
-
-        async function autenticar() {
-
-            const cpf =
-                document.getElementById("login-cpf").value.trim();
-
-            const re =
-                document.getElementById("login-re").value.trim();
-
-            const btn =
-                document.getElementById("btn-login");
-
-
-            if (!cpf || !re) {
-
-                mostrarMensagem(
-                    "mensagem-login",
-                    "Preencha todos os campos obrigatórios."
-                );
-
-                return;
-            }
-
-
-            btn.disabled = true;
-            btn.classList.add("loading");
-            btn.innerText = "Verificando...";
-
-
-            try {
-
-                const response = await fetch(WEB_APP_URL, {
-
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "text/plain;charset=utf-8"
-                    },
-
-                    body: JSON.stringify({
-
-                        acao: "login",
-                        cpf: cpf,
-                        re: re
-
-                    })
-
-                });
-
-
-                if (!response.ok) {
-                    throw new Error("Erro HTTP " + response.status);
-                }
-
-
-                const res = await response.json();
-
-
-                if (res.sucesso) {
-
-                    usuarioNome = res.nome;
-                    usuarioCpf = cpf;
-
-
-                    document
-                        .getElementById("nome-usuario")
-                        .innerText = res.nome;
-
-
-                    trocarTela("tela-confirmacao");
-
-                }
-
-                else {
-
-                    mostrarMensagem(
-                        "mensagem-login",
-                        res.msg || "CPF ou RE incorretos."
-                    );
-
-                }
-
-            }
-
-            catch (error) {
-
-                console.error("Erro no login:", error);
-
-                mostrarMensagem(
-                    "mensagem-login",
-                    "Erro ao conectar ao servidor. Verifique a internet e tente novamente."
-                );
-
-            }
-
-            finally {
-
-                btn.disabled = false;
-                btn.classList.remove("loading");
-                btn.innerText = "Entrar";
-
-            }
-
-        }
-
-
-
-        /* =====================================================
-           AVANÇAR PARA FORMULÁRIO
-        ====================================================== */
-
-        function avancarParaForm() {
-
-            trocarTela("tela-formulario");
-
-        }
-
-
-
-        /* =====================================================
-           REINICIAR SISTEMA
-        ====================================================== */
-
-        function reiniciar() {
-
-            window.location.reload();
-
-        }
-
-
-
-        /* =====================================================
-           ALTERAÇÃO DO TIPO DE PERÍODO
-        ====================================================== */
-
-        function alterarTipoPeriodo(opcao) {
-
-            const tipo =
-                document.getElementById(`tipo-${opcao}`).value;
-
-            const segundoPeriodo =
-                document.getElementById(`segundo-periodo-${opcao}`);
-
-
-            const mesSegundo =
-                document.getElementById(`mes-${opcao}b`);
-
-            const dataSegundo =
-                document.getElementById(`data-${opcao}b`);
-
-
-            if (tipo === "15+15 dias") {
-
-                segundoPeriodo.classList.remove("hidden");
-
-                mesSegundo.required = true;
-                dataSegundo.required = true;
-
-            }
-
-            else {
-
-                segundoPeriodo.classList.add("hidden");
-
-                mesSegundo.required = false;
-                dataSegundo.required = false;
-
-                mesSegundo.value = "";
-                dataSegundo.value = "";
-
-                dataSegundo.removeAttribute("min");
-                dataSegundo.removeAttribute("max");
-
-            }
-
-        }
-
-
-
-        /* =====================================================
-           ATUALIZA CALENDÁRIO CONFORME O MÊS SELECIONADO
-        ====================================================== */
-
-        function mesSelecionado(opcao, periodo) {
-
-            const selectId =
-                periodo === "a"
-                    ? `mes-${opcao}`
-                    : `mes-${opcao}b`;
-
-
-            const dataId =
-                periodo === "a"
-                    ? `data-${opcao}`
-                    : `data-${opcao}b`;
-
-
-            const selectMes =
-                document.getElementById(selectId);
-
-            const inputData =
-                document.getElementById(dataId);
-
-
-            if (!selectMes || !inputData) return;
-
-
-            const mesSelecionado = selectMes.value;
-
-
-            if (!mesSelecionado) return;
-
-
-            const numeroMes =
-                mesesNumeros[mesSelecionado];
-
-
-            if (!numeroMes) return;
-
-
-            /*
-                Descobre o último dia do mês.
-            */
-
-            const ultimoDia =
-                new Date(
-                    ANO_FERIAS,
-                    parseInt(numeroMes),
-                    0
-                ).getDate();
-
-
-            /*
-                Define limites do calendário.
-            */
-
-            const dataMinima =
-                `${ANO_FERIAS}-${numeroMes}-01`;
-
-            const dataMaxima =
-                `${ANO_FERIAS}-${numeroMes}-${String(ultimoDia).padStart(2, "0")}`;
-
-
-            inputData.min = dataMinima;
-            inputData.max = dataMaxima;
-
-
-            /*
-                Sempre que trocar o mês, posiciona a data
-                no primeiro dia daquele mês.
-
-                Isso faz o calendário retornar para
-                o mês escolhido pelo usuário.
-            */
-
-            let dia = "01";
-
-
-            if (inputData.value) {
-
-                const partes =
-                    inputData.value.split("-");
-
-
-                if (partes.length === 3) {
-
-                    const diaAtual =
-                        parseInt(partes[2]);
-
-
-                    if (
-                        !isNaN(diaAtual) &&
-                        diaAtual >= 1 &&
-                        diaAtual <= ultimoDia
-                    ) {
-
-                        dia =
-                            String(diaAtual).padStart(2, "0");
-
-                    }
-
-                }
-
-            }
-
-
-            inputData.value =
-                `${ANO_FERIAS}-${numeroMes}-${dia}`;
-
-
-            /*
-                Tenta abrir automaticamente o calendário.
-                Funciona nos navegadores que suportam showPicker().
-            */
-
-            try {
-
-                if (typeof inputData.showPicker === "function") {
-
-                    inputData.showPicker();
-
-                }
-
-            }
-
-            catch (error) {
-
-                console.log(
-                    "Calendário automático não suportado neste navegador."
-                );
-
-            }
-
-        }
-
-
-
-        /* =====================================================
-           VALIDAÇÃO DE DATAS
-        ====================================================== */
-
-        function validarDataNoMes(mes, data) {
-
-            if (!mes || !data) return false;
-
-
-            const numeroMes =
-                mesesNumeros[mes];
-
-
-            const partes =
-                data.split("-");
-
-
-            if (partes.length !== 3) return false;
-
-
-            const ano = parseInt(partes[0]);
-            const mesData = partes[1];
-
-
-            return (
-                ano === ANO_FERIAS &&
-                mesData === numeroMes
-            );
-
-        }
-
-
-
-        /* =====================================================
-           VALIDAÇÃO DE MESES DIFERENTES — 15 + 15
-        ====================================================== */
-
-        function validarMeses15Mais15(opcao) {
-
-            const tipo =
-                document.getElementById(`tipo-${opcao}`).value;
-
-
-            if (tipo !== "15+15 dias") {
-                return true;
-            }
-
-
-            const mes1 =
-                document.getElementById(`mes-${opcao}`).value;
-
-            const mes2 =
-                document.getElementById(`mes-${opcao}b`).value;
-
-
-            if (!mes1 || !mes2) {
-
-                alert(
-                    `Opção ${opcao}: informe os dois meses do período 15 + 15 dias.`
-                );
-
-                return false;
-
-            }
-
-
-            if (mes1 === mes2) {
-
-                alert(
-                    `Opção ${opcao}: os dois períodos de 15 dias devem obrigatoriamente ser em meses diferentes.`
-                );
-
-
-                document
-                    .getElementById(`mes-${opcao}b`)
-                    .value = "";
-
-
-                document
-                    .getElementById(`data-${opcao}b`)
-                    .value = "";
-
-
-                return false;
-
-            }
-
-
-            return true;
-
-        }
-
-
-
-        /* =====================================================
-           VALIDAÇÃO GERAL DE DATAS
-        ====================================================== */
-
-        function validarTodasDatas() {
-
-            for (let opcao = 1; opcao <= 3; opcao++) {
-
-                const tipo =
-                    document.getElementById(`tipo-${opcao}`).value;
-
-
-                const mes1 =
-                    document.getElementById(`mes-${opcao}`).value;
-
-                const data1 =
-                    document.getElementById(`data-${opcao}`).value;
-
-
-                if (!validarDataNoMes(mes1, data1)) {
-
-                    alert(
-                        `Opção ${opcao}: a data do início deve pertencer ao mês selecionado.`
-                    );
-
-                    return false;
-
-                }
-
-
-                if (tipo === "15+15 dias") {
-
-                    const mes2 =
-                        document.getElementById(`mes-${opcao}b`).value;
-
-                    const data2 =
-                        document.getElementById(`data-${opcao}b`).value;
-
-
-                    if (!validarDataNoMes(mes2, data2)) {
-
-                        alert(
-                            `Opção ${opcao}: a segunda data deve pertencer ao segundo mês selecionado.`
-                        );
-
-                        return false;
-
-                    }
-
-                }
-
-            }
-
-
-            return true;
-
-        }
-
-
-
-        /* =====================================================
-           CRIAÇÃO DO RESUMO DAS OPÇÕES
-        ====================================================== */
-
-        function obterResumoOpcao(opcao) {
-
-            const tipo =
-                document.getElementById(`tipo-${opcao}`).value;
-
-
-            const mes1 =
-                document.getElementById(`mes-${opcao}`).value;
-
-            const data1 =
-                document.getElementById(`data-${opcao}`).value;
-
-
-            let resumo = "";
-
-
-            if (tipo === "30 dias") {
-
-                resumo =
-                    `30 dias diretos em ${mes1} (Início: ${data1})`;
-
-            }
-
-            else {
-
-                const mes2 =
-                    document.getElementById(`mes-${opcao}b`).value;
-
-                const data2 =
-                    document.getElementById(`data-${opcao}b`).value;
-
-
-                resumo =
-                    `15 + 15 dias: 1º período em ${mes1} (Início: ${data1}) + 2º período em ${mes2} (Início: ${data2})`;
-
-            }
-
-
-            return resumo;
-
-        }
-
-
-
-        /* =====================================================
-           VALIDAÇÃO DE DUPLICIDADE
-        ====================================================== */
-
-        function validarDuplicidade() {
-
-            const opcoes = [
-
-                obterResumoOpcao(1).toLowerCase(),
-                obterResumoOpcao(2).toLowerCase(),
-                obterResumoOpcao(3).toLowerCase()
-
-            ];
-
-
-            if (
-                opcoes[0] === opcoes[1] ||
-                opcoes[0] === opcoes[2] ||
-                opcoes[1] === opcoes[2]
-            ) {
-
-                alert(
-                    "Erro: Não é permitido escolher opções de férias iguais."
-                );
-
-                return false;
-
-            }
-
-
-            return true;
-
-        }
-
-
-
-        /* =====================================================
-           ENVIO DO FORMULÁRIO
-        ====================================================== */
-
-        async function enviarFormulario(e) {
-
-            e.preventDefault();
-
-
-            /*
-                Validação dos meses 15 + 15.
-            */
-
-            for (let opcao = 1; opcao <= 3; opcao++) {
-
-                if (!validarMeses15Mais15(opcao)) {
-                    return;
-                }
-
-            }
-
-
-            /*
-                Validação das datas.
-            */
-
-            if (!validarTodasDatas()) {
-                return;
-            }
-
-
-            /*
-                Validação de duplicidade.
-            */
-
-            if (!validarDuplicidade()) {
-                return;
-            }
-
-
-            const btn =
-                document.getElementById("btn-enviar");
-
-
-            btn.disabled = true;
-            btn.classList.add("loading");
-            btn.innerText = "Enviando...";
-
-
-            const op1 = obterResumoOpcao(1);
-            const op2 = obterResumoOpcao(2);
-            const op3 = obterResumoOpcao(3);
-
-
-            try {
-
-                const response = await fetch(WEB_APP_URL, {
-
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "text/plain;charset=utf-8"
-                    },
-
-                    body: JSON.stringify({
-
-                        acao: "salvar",
-
-                        cpf: usuarioCpf,
-
-                        nome: usuarioNome,
-
-                        op1: op1,
-
-                        op2: op2,
-
-                        op3: op3
-
-                    })
-
-                });
-
-
-                if (!response.ok) {
-                    throw new Error("Erro HTTP " + response.status);
-                }
-
-
-                const res = await response.json();
-
-
-                if (res.sucesso) {
-
-                    alert(
-                        "Sucesso! Suas opções de férias foram registradas."
-                    );
-
-                    reiniciar();
-
-                }
-
-                else {
-
-                    alert(
-                        res.msg ||
-                        "Erro ao salvar dados."
-                    );
-
-                }
-
-            }
-
-            catch (error) {
-
-                console.error("Erro ao enviar formulário:", error);
-
-                alert(
-                    "Erro ao enviar dados. Verifique sua conexão com a internet."
-                );
-
-            }
-
-            finally {
-
-                btn.disabled = false;
-                btn.classList.remove("loading");
-                btn.innerText = "Enviar Escolhas";
-
-            }
-
-        }
-
-
-
-        /* =====================================================
-           INICIALIZAÇÃO
-        ====================================================== */
-
-        document.addEventListener("DOMContentLoaded", function () {
-
-            console.log("Sistema Férias 2027 carregado corretamente.");
+            updateMonthRestrictions();
 
         });
 
+    });
+}
 
-    </script>
+
+/* =====================================================
+   CALENDÁRIO INTELIGENTE
+===================================================== */
+
+function updateDateFields(optionNumber) {
+
+    const selects =
+        document.querySelectorAll(
+            `#periods${optionNumber} .month-select`
+        );
+
+    selects.forEach(select => {
+
+        const periodNumber = select.dataset.period;
+
+        const dateInput =
+            document.getElementById(
+                `data_${optionNumber}_${periodNumber}`
+            );
+
+        if (!dateInput) return;
+
+        const mes = parseInt(select.value);
+
+        if (!mes) {
+
+            dateInput.value = "";
+            dateInput.removeAttribute("min");
+            dateInput.removeAttribute("max");
+
+            return;
+        }
+
+        const primeiroDia =
+            `${ANO}-${String(mes).padStart(2,'0')}-01`;
+
+        const ultimoDiaDate =
+            new Date(ANO, mes, 0);
+
+        const ultimoDia =
+            formatDateISO(ultimoDiaDate);
+
+        /*
+           O calendário é direcionado ao mês selecionado
+        */
+
+        dateInput.min = primeiroDia;
+        dateInput.max = ultimoDia;
+
+        /*
+           Se a data atual não pertence ao mês selecionado,
+           define automaticamente o primeiro dia do mês.
+        */
+
+        if (!dateInput.value ||
+            dateInput.value.substring(0,7) !== primeiroDia.substring(0,7)) {
+
+            dateInput.value = primeiroDia;
+        }
+
+        /*
+           Ao alterar a data, garante que ela permaneça
+           dentro do mês escolhido.
+        */
+
+        dateInput.addEventListener("change", function() {
+
+            if (this.value.substring(0,7) !== primeiroDia.substring(0,7)) {
+
+                alert(
+                    "A data deve pertencer ao mês selecionado: " +
+                    MESES[mes - 1] + " de " + ANO
+                );
+
+                this.value = primeiroDia;
+            }
+
+        });
+
+    });
+}
+
+
+/* =====================================================
+   RESTRIÇÃO DE MESES REPETIDOS
+===================================================== */
+
+function updateMonthRestrictions() {
+
+    const allSelects =
+        document.querySelectorAll(".month-select");
+
+    const selectedValues = [];
+
+    allSelects.forEach(select => {
+
+        if (select.value) {
+            selectedValues.push({
+                value: select.value,
+                element: select
+            });
+        }
+    });
+
+    allSelects.forEach(select => {
+
+        const currentValue = select.value;
+
+        select.querySelectorAll("option").forEach(option => {
+
+            if (!option.value) return;
+
+            const isSelectedElsewhere =
+                selectedValues.some(item =>
+                    item.value === option.value &&
+                    item.element !== select
+                );
+
+            option.disabled = isSelectedElsewhere;
+
+        });
+
+        /*
+           Mantém o valor atual selecionado mesmo quando
+           houver restrição em outro campo.
+        */
+
+        const currentOption =
+            select.querySelector(`option[value="${currentValue}"]`);
+
+        if (currentOption) {
+            currentOption.disabled = false;
+        }
+
+    });
+}
+
+
+/* =====================================================
+   COLETA DOS DADOS
+===================================================== */
+
+function collectFormData() {
+
+    const options = [];
+
+    for (let i = 1; i <= 3; i++) {
+
+        const tipo =
+            document.getElementById("tipo" + i).value;
+
+        const periods = [];
+
+        const quantidade =
+            tipo === "30" ? 1 : 2;
+
+        for (let p = 1; p <= quantidade; p++) {
+
+            const mes =
+                document.getElementById(`mes_${i}_${p}`).value;
+
+            const data =
+                document.getElementById(`data_${i}_${p}`).value;
+
+            if (!mes || !data) {
+
+                throw new Error(
+                    `Preencha todos os campos da ${i}ª opção.`
+                );
+            }
+
+            periods.push({
+
+                mes: parseInt(mes),
+                mesNome: MESES[parseInt(mes) - 1],
+
+                inicio: data,
+
+                termino: addDays(
+                    data,
+                    tipo === "30" ? 30 : 15
+                )
+
+            });
+
+        }
+
+        options.push({
+
+            numero: i,
+            tipo: tipo,
+            periodos: periods
+
+        });
+
+    }
+
+    return options;
+}
+
+
+/* =====================================================
+   VALIDAÇÕES
+===================================================== */
+
+function validateOptions(options) {
+
+    const meses = [];
+
+    options.forEach(option => {
+
+        option.periodos.forEach(periodo => {
+
+            if (meses.includes(periodo.mes)) {
+
+                throw new Error(
+                    "Não é permitido escolher o mesmo mês em mais de uma opção ou período."
+                );
+            }
+
+            meses.push(periodo.mes);
+
+        });
+
+    });
+
+
+    /*
+       Validação adicional do 15 + 15
+       Os dois períodos devem ser meses diferentes.
+    */
+
+    options.forEach(option => {
+
+        if (option.tipo === "15+15") {
+
+            if (
+                option.periodos[0].mes ===
+                option.periodos[1].mes
+            ) {
+
+                throw new Error(
+                    `Na ${option.numero}ª opção, os dois períodos de 15 dias devem ser em meses diferentes.`
+                );
+            }
+
+        }
+
+    });
+
+
+    /*
+       Validação de opções idênticas
+    */
+
+    const assinaturas = options.map(option => {
+
+        return JSON.stringify({
+            tipo: option.tipo,
+            periodos: option.periodos.map(p => ({
+                mes: p.mes,
+                inicio: p.inicio
+            }))
+        });
+
+    });
+
+    if (
+        new Set(assinaturas).size !== assinaturas.length
+    ) {
+
+        throw new Error(
+            "As 3 opções de férias não podem ser iguais."
+        );
+    }
+
+}
+
+
+/* =====================================================
+   PREPARAÇÃO DA CONFIRMAÇÃO
+===================================================== */
+
+function prepareConfirmation() {
+
+    try {
+
+        const options = collectFormData();
+
+        validateOptions(options);
+
+        dadosFormulario = options;
+
+        renderConfirmation(options);
+
+        showSection("confirmationSection");
+
+    } catch (error) {
+
+        alert(error.message);
+
+    }
+
+}
+
+
+/* =====================================================
+   EXIBIÇÃO DA CONFIRMAÇÃO
+===================================================== */
+
+function renderConfirmation(options) {
+
+    const container =
+        document.getElementById("confirmationContent");
+
+    let html = "";
+
+    options.forEach(option => {
+
+        html += `
+            <div class="confirmation-item">
+
+                <strong>${option.numero}ª Opção</strong>
+
+                <div>
+                    Tipo de período:
+                    <b>
+                    ${option.tipo === "30"
+                        ? "30 dias diretos"
+                        : "15 + 15 dias"}
+                    </b>
+                </div>
+        `;
+
+        option.periodos.forEach((periodo, index) => {
+
+            html += `
+
+                <div style="margin-top:10px; padding-left:10px;">
+
+                    <b>
+                    ${option.tipo === "15+15"
+                        ? (index + 1) + "º Período de 15 dias"
+                        : "Período de 30 dias"}
+                    </b>
+
+                    <br>
+
+                    Mês:
+                    ${periodo.mesNome}
+
+                    <br>
+
+                    Data de início:
+                    ${formatDateBR(periodo.inicio)}
+
+                    <br>
+
+                    Data de término:
+                    ${formatDateBR(periodo.termino)}
+
+                </div>
+
+            `;
+
+        });
+
+        html += `</div>`;
+
+    });
+
+    container.innerHTML = html;
+}
+
+
+function backToForm() {
+
+    showSection("formSection");
+
+}
+
+
+/* =====================================================
+   ENVIO PARA GOOGLE SHEETS
+===================================================== */
+
+async function submitVacations() {
+
+    if (!usuarioAtual || !dadosFormulario.length) {
+
+        alert("Dados incompletos para envio.");
+
+        return;
+    }
+
+    showSection("loadingSection");
+
+    try {
+
+        const payload = {
+
+            acao: "registrarFerias",
+
+            cpf: usuarioAtual.cpf,
+
+            nome: usuarioAtual.nome,
+
+            opcoes: dadosFormulario,
+
+            dataHora: new Date().toISOString()
+
+        };
+
+        const response = await fetch(SCRIPT_URL, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
+
+            body: JSON.stringify(payload)
+
+        });
+
+        const result = await response.json();
+
+        if (!result.success) {
+
+            throw new Error(
+                result.message || "Não foi possível registrar as escolhas."
+            );
+
+        }
+
+        renderSuccessSummary();
+
+        showSection("successSection");
+
+    } catch (error) {
+
+        alert(error.message);
+
+        showSection("confirmationSection");
+
+    }
+
+}
+
+
+/* =====================================================
+   RESUMO FINAL
+===================================================== */
+
+function renderSuccessSummary() {
+
+    const container =
+        document.getElementById("successSummary");
+
+    let html = "";
+
+    dadosFormulario.forEach(option => {
+
+        html += `
+            <div class="confirmation-item">
+
+                <strong>${option.numero}ª Opção</strong>
+
+        `;
+
+        option.periodos.forEach((periodo, index) => {
+
+            html += `
+
+                <p>
+                    ${option.tipo === "15+15"
+                        ? (index + 1) + "º Período de 15 dias"
+                        : "30 dias diretos"}
+                    <br>
+
+                    <b>${periodo.mesNome}</b>
+
+                    <br>
+
+                    Início:
+                    ${formatDateBR(periodo.inicio)}
+
+                    <br>
+
+                    Término:
+                    ${formatDateBR(periodo.termino)}
+
+                </p>
+
+            `;
+
+        });
+
+        html += `</div>`;
+
+    });
+
+    container.innerHTML = html;
+}
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    console.log("Sistema de Férias 2027 - Versão 2.0 carregado.");
+
+});
+
+</script>
 
 </body>
-
 </html>
