@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,26 +11,59 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
+
         body {
             font-family: Arial, Helvetica, sans-serif;
         }
 
-        input[type="date"] {
-            min-height: 42px;
+        .hidden {
+            display: none !important;
         }
 
+        input,
         select,
-        input {
-            transition: all 0.2s ease;
+        button {
+            font-size: 16px;
         }
+
+        input[type="date"] {
+            appearance: auto;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading {
+            opacity: 0.7;
+            cursor: wait;
+        }
+
     </style>
+
 </head>
+
 
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4 text-gray-800">
 
     <div class="bg-white w-full max-w-md rounded-2xl shadow-xl p-6 space-y-6">
 
-        <!-- CABEÇALHO -->
+        <!-- =====================================================
+             CABEÇALHO
+        ====================================================== -->
+
         <div class="text-center">
 
             <h1 class="text-2xl font-bold text-blue-700">
@@ -44,7 +78,7 @@
 
 
         <!-- =====================================================
-             TELA 1 - LOGIN
+             TELA 1 — LOGIN
         ====================================================== -->
 
         <div id="tela-login" class="space-y-4">
@@ -52,6 +86,7 @@
             <h2 class="text-lg font-semibold text-center border-b pb-2">
                 Autenticação
             </h2>
+
 
             <div>
 
@@ -64,7 +99,9 @@
                     id="login-cpf"
                     placeholder="000.000.000-00"
                     maxlength="14"
-                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    autocomplete="off"
+                    class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                >
 
             </div>
 
@@ -79,7 +116,9 @@
                     type="password"
                     id="login-re"
                     placeholder="Digite seu RE"
-                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    autocomplete="off"
+                    class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                >
 
             </div>
 
@@ -87,18 +126,20 @@
             <button
                 onclick="autenticar()"
                 id="btn-login"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition">
-
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition"
+            >
                 Entrar
-
             </button>
+
+
+            <div id="mensagem-login" class="text-center text-sm hidden"></div>
 
         </div>
 
 
 
         <!-- =====================================================
-             TELA 2 - CONFIRMAÇÃO DE IDENTIDADE
+             TELA 2 — CONFIRMAÇÃO DE IDENTIDADE
         ====================================================== -->
 
         <div id="tela-confirmacao" class="hidden space-y-4 text-center">
@@ -111,29 +152,24 @@
                 O sistema localizou o seguinte cadastro:
             </p>
 
-            <p
-                id="nome-usuario"
-                class="text-xl font-bold text-blue-800 my-2">
-            </p>
+            <p id="nome-usuario" class="text-xl font-bold text-blue-800 my-2"></p>
 
 
             <div class="flex gap-3">
 
                 <button
                     onclick="reiniciar()"
-                    class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 rounded-lg transition">
-
+                    class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-3 rounded-lg transition"
+                >
                     Não sou eu
-
                 </button>
 
 
                 <button
                     onclick="avancarParaForm()"
-                    class="w-1/2 bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-lg transition">
-
+                    class="w-1/2 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition"
+                >
                     Confirmar e Avançar
-
                 </button>
 
             </div>
@@ -143,47 +179,48 @@
 
 
         <!-- =====================================================
-             TELA 3 - FORMULÁRIO DE OPÇÕES
+             TELA 3 — FORMULÁRIO
         ====================================================== -->
 
         <form
             id="tela-formulario"
             class="hidden space-y-6"
-            onsubmit="enviarFormulario(event)">
-
+            onsubmit="enviarFormulario(event)"
+        >
 
             <h2 class="text-lg font-semibold border-b pb-2">
                 Suas Opções de Interesse
             </h2>
 
 
-            <p class="text-xs text-amber-600 bg-amber-50 p-3 rounded border border-amber-200">
+            <div class="text-xs text-amber-700 bg-amber-50 p-3 rounded border border-amber-200">
 
-                Atenção: Você deve preencher obrigatoriamente as 3 opções.
+                <strong>Atenção:</strong>
+
+                Você deve preencher obrigatoriamente as 3 opções.
+
                 As opções não podem ser iguais.
 
-            </p>
+                Para períodos de 15 + 15 dias, os dois meses deverão ser diferentes.
+
+            </div>
 
 
+            <!-- CONTAINER DAS OPÇÕES -->
 
-            <!-- ÁREA DAS OPÇÕES -->
-
-            <div class="space-y-6 max-h-[55vh] overflow-y-auto pr-1">
-
+            <div class="space-y-6 max-h-[60vh] overflow-y-auto pr-1">
 
 
-                <!-- =================================================
+                <!-- =====================================================
                      OPÇÃO 1
-                ================================================== -->
+                ====================================================== -->
 
                 <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
 
-                    <h3 class="font-bold text-blue-700 text-lg">
+                    <h3 class="font-bold text-blue-700">
                         1ª Opção (Preferencial)
                     </h3>
 
-
-                    <!-- TIPO -->
 
                     <label class="block text-xs font-medium">
                         Tipo de Período
@@ -191,9 +228,10 @@
 
                     <select
                         id="tipo-1"
-                        onchange="controlarPeriodo(1)"
-                        class="w-full p-2 border rounded bg-white"
-                        required>
+                        onchange="alterarTipoPeriodo(1)"
+                        class="w-full p-3 border rounded-lg bg-white"
+                        required
+                    >
 
                         <option value="30 dias">
                             30 dias diretos
@@ -207,47 +245,58 @@
 
 
 
-                    <!-- PRIMEIRO PERÍODO -->
+                    <!-- MÊS PRIMEIRO PERÍODO -->
 
-                    <label class="block text-xs font-medium">
-                        Mês do 1º Período
-                    </label>
+                    <div>
 
-                    <select
-                        id="mes-1-1"
-                        onchange="atualizarCalendario('mes-1-1','data-1-1')"
-                        class="w-full p-2 border rounded bg-white"
-                        required>
+                        <label class="block text-xs font-medium mb-1" id="label-mes-1">
+                            Mês de Interesse
+                        </label>
 
-                        <option value="">
-                            Selecione o mês
-                        </option>
+                        <select
+                            id="mes-1"
+                            onchange="mesSelecionado(1, 'a')"
+                            class="w-full p-3 border rounded-lg bg-white"
+                            required
+                        >
 
-                        <option value="0">Janeiro</option>
-                        <option value="1">Fevereiro</option>
-                        <option value="2">Março</option>
-                        <option value="3">Abril</option>
-                        <option value="4">Maio</option>
-                        <option value="5">Junho</option>
-                        <option value="6">Julho</option>
-                        <option value="7">Agosto</option>
-                        <option value="8">Setembro</option>
-                        <option value="9">Outubro</option>
-                        <option value="10">Novembro</option>
-                        <option value="11">Dezembro</option>
+                            <option value="">Selecione o mês</option>
 
-                    </select>
+                            <option value="Janeiro">Janeiro</option>
+                            <option value="Fevereiro">Fevereiro</option>
+                            <option value="Março">Março</option>
+                            <option value="Abril">Abril</option>
+                            <option value="Maio">Maio</option>
+                            <option value="Junho">Junho</option>
+                            <option value="Julho">Julho</option>
+                            <option value="Agosto">Agosto</option>
+                            <option value="Setembro">Setembro</option>
+                            <option value="Outubro">Outubro</option>
+                            <option value="Novembro">Novembro</option>
+                            <option value="Dezembro">Dezembro</option>
+
+                        </select>
+
+                    </div>
 
 
-                    <label class="block text-xs font-medium">
-                        Data pretendida para início
-                    </label>
 
-                    <input
-                        type="date"
-                        id="data-1-1"
-                        class="w-full p-2 border rounded bg-white"
-                        required>
+                    <!-- DATA PRIMEIRO PERÍODO -->
+
+                    <div>
+
+                        <label class="block text-xs font-medium mb-1">
+                            Data pretendida para início
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data-1"
+                            class="w-full p-3 border rounded-lg bg-white"
+                            required
+                        >
+
+                    </div>
 
 
 
@@ -255,9 +304,10 @@
 
                     <div
                         id="segundo-periodo-1"
-                        class="hidden border-t pt-4 mt-4 space-y-3">
+                        class="hidden border-t pt-4 mt-4 space-y-3 fade-in"
+                    >
 
-                        <h4 class="font-semibold text-blue-700">
+                        <h4 class="font-bold text-blue-700 text-sm">
                             2º Período de 15 dias
                         </h4>
 
@@ -267,26 +317,25 @@
                         </label>
 
                         <select
-                            id="mes-1-2"
-                            onchange="atualizarCalendario('mes-1-2','data-1-2')"
-                            class="w-full p-2 border rounded bg-white">
+                            id="mes-1b"
+                            onchange="mesSelecionado(1, 'b')"
+                            class="w-full p-3 border rounded-lg bg-white"
+                        >
 
-                            <option value="">
-                                Selecione o mês
-                            </option>
+                            <option value="">Selecione o mês</option>
 
-                            <option value="0">Janeiro</option>
-                            <option value="1">Fevereiro</option>
-                            <option value="2">Março</option>
-                            <option value="3">Abril</option>
-                            <option value="4">Maio</option>
-                            <option value="5">Junho</option>
-                            <option value="6">Julho</option>
-                            <option value="7">Agosto</option>
-                            <option value="8">Setembro</option>
-                            <option value="9">Outubro</option>
-                            <option value="10">Novembro</option>
-                            <option value="11">Dezembro</option>
+                            <option value="Janeiro">Janeiro</option>
+                            <option value="Fevereiro">Fevereiro</option>
+                            <option value="Março">Março</option>
+                            <option value="Abril">Abril</option>
+                            <option value="Maio">Maio</option>
+                            <option value="Junho">Junho</option>
+                            <option value="Julho">Julho</option>
+                            <option value="Agosto">Agosto</option>
+                            <option value="Setembro">Setembro</option>
+                            <option value="Outubro">Outubro</option>
+                            <option value="Novembro">Novembro</option>
+                            <option value="Dezembro">Dezembro</option>
 
                         </select>
 
@@ -297,8 +346,9 @@
 
                         <input
                             type="date"
-                            id="data-1-2"
-                            class="w-full p-2 border rounded bg-white">
+                            id="data-1b"
+                            class="w-full p-3 border rounded-lg bg-white"
+                        >
 
                     </div>
 
@@ -306,13 +356,13 @@
 
 
 
-                <!-- =================================================
+                <!-- =====================================================
                      OPÇÃO 2
-                ================================================== -->
+                ====================================================== -->
 
                 <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
 
-                    <h3 class="font-bold text-blue-700 text-lg">
+                    <h3 class="font-bold text-blue-700">
                         2ª Opção (Alternativa)
                     </h3>
 
@@ -323,9 +373,10 @@
 
                     <select
                         id="tipo-2"
-                        onchange="controlarPeriodo(2)"
-                        class="w-full p-2 border rounded bg-white"
-                        required>
+                        onchange="alterarTipoPeriodo(2)"
+                        class="w-full p-3 border rounded-lg bg-white"
+                        required
+                    >
 
                         <option value="30 dias">
                             30 dias diretos
@@ -339,53 +390,63 @@
 
 
 
-                    <label class="block text-xs font-medium">
-                        Mês do 1º Período
-                    </label>
+                    <div>
 
-                    <select
-                        id="mes-2-1"
-                        onchange="atualizarCalendario('mes-2-1','data-2-1')"
-                        class="w-full p-2 border rounded bg-white"
-                        required>
+                        <label class="block text-xs font-medium mb-1">
+                            Mês de Interesse
+                        </label>
 
-                        <option value="">
-                            Selecione o mês
-                        </option>
+                        <select
+                            id="mes-2"
+                            onchange="mesSelecionado(2, 'a')"
+                            class="w-full p-3 border rounded-lg bg-white"
+                            required
+                        >
 
-                        <option value="0">Janeiro</option>
-                        <option value="1">Fevereiro</option>
-                        <option value="2">Março</option>
-                        <option value="3">Abril</option>
-                        <option value="4">Maio</option>
-                        <option value="5">Junho</option>
-                        <option value="6">Julho</option>
-                        <option value="7">Agosto</option>
-                        <option value="8">Setembro</option>
-                        <option value="9">Outubro</option>
-                        <option value="10">Novembro</option>
-                        <option value="11">Dezembro</option>
+                            <option value="">Selecione o mês</option>
 
-                    </select>
+                            <option value="Janeiro">Janeiro</option>
+                            <option value="Fevereiro">Fevereiro</option>
+                            <option value="Março">Março</option>
+                            <option value="Abril">Abril</option>
+                            <option value="Maio">Maio</option>
+                            <option value="Junho">Junho</option>
+                            <option value="Julho">Julho</option>
+                            <option value="Agosto">Agosto</option>
+                            <option value="Setembro">Setembro</option>
+                            <option value="Outubro">Outubro</option>
+                            <option value="Novembro">Novembro</option>
+                            <option value="Dezembro">Dezembro</option>
+
+                        </select>
+
+                    </div>
 
 
-                    <label class="block text-xs font-medium">
-                        Data pretendida para início
-                    </label>
 
-                    <input
-                        type="date"
-                        id="data-2-1"
-                        class="w-full p-2 border rounded bg-white"
-                        required>
+                    <div>
+
+                        <label class="block text-xs font-medium mb-1">
+                            Data pretendida para início
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data-2"
+                            class="w-full p-3 border rounded-lg bg-white"
+                            required
+                        >
+
+                    </div>
 
 
 
                     <div
                         id="segundo-periodo-2"
-                        class="hidden border-t pt-4 mt-4 space-y-3">
+                        class="hidden border-t pt-4 mt-4 space-y-3 fade-in"
+                    >
 
-                        <h4 class="font-semibold text-blue-700">
+                        <h4 class="font-bold text-blue-700 text-sm">
                             2º Período de 15 dias
                         </h4>
 
@@ -395,26 +456,25 @@
                         </label>
 
                         <select
-                            id="mes-2-2"
-                            onchange="atualizarCalendario('mes-2-2','data-2-2')"
-                            class="w-full p-2 border rounded bg-white">
+                            id="mes-2b"
+                            onchange="mesSelecionado(2, 'b')"
+                            class="w-full p-3 border rounded-lg bg-white"
+                        >
 
-                            <option value="">
-                                Selecione o mês
-                            </option>
+                            <option value="">Selecione o mês</option>
 
-                            <option value="0">Janeiro</option>
-                            <option value="1">Fevereiro</option>
-                            <option value="2">Março</option>
-                            <option value="3">Abril</option>
-                            <option value="4">Maio</option>
-                            <option value="5">Junho</option>
-                            <option value="6">Julho</option>
-                            <option value="7">Agosto</option>
-                            <option value="8">Setembro</option>
-                            <option value="9">Outubro</option>
-                            <option value="10">Novembro</option>
-                            <option value="11">Dezembro</option>
+                            <option value="Janeiro">Janeiro</option>
+                            <option value="Fevereiro">Fevereiro</option>
+                            <option value="Março">Março</option>
+                            <option value="Abril">Abril</option>
+                            <option value="Maio">Maio</option>
+                            <option value="Junho">Junho</option>
+                            <option value="Julho">Julho</option>
+                            <option value="Agosto">Agosto</option>
+                            <option value="Setembro">Setembro</option>
+                            <option value="Outubro">Outubro</option>
+                            <option value="Novembro">Novembro</option>
+                            <option value="Dezembro">Dezembro</option>
 
                         </select>
 
@@ -425,8 +485,9 @@
 
                         <input
                             type="date"
-                            id="data-2-2"
-                            class="w-full p-2 border rounded bg-white">
+                            id="data-2b"
+                            class="w-full p-3 border rounded-lg bg-white"
+                        >
 
                     </div>
 
@@ -434,13 +495,13 @@
 
 
 
-                <!-- =================================================
+                <!-- =====================================================
                      OPÇÃO 3
-                ================================================== -->
+                ====================================================== -->
 
                 <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
 
-                    <h3 class="font-bold text-blue-700 text-lg">
+                    <h3 class="font-bold text-blue-700">
                         3ª Opção (Alternativa)
                     </h3>
 
@@ -451,9 +512,10 @@
 
                     <select
                         id="tipo-3"
-                        onchange="controlarPeriodo(3)"
-                        class="w-full p-2 border rounded bg-white"
-                        required>
+                        onchange="alterarTipoPeriodo(3)"
+                        class="w-full p-3 border rounded-lg bg-white"
+                        required
+                    >
 
                         <option value="30 dias">
                             30 dias diretos
@@ -467,53 +529,63 @@
 
 
 
-                    <label class="block text-xs font-medium">
-                        Mês do 1º Período
-                    </label>
+                    <div>
 
-                    <select
-                        id="mes-3-1"
-                        onchange="atualizarCalendario('mes-3-1','data-3-1')"
-                        class="w-full p-2 border rounded bg-white"
-                        required>
+                        <label class="block text-xs font-medium mb-1">
+                            Mês de Interesse
+                        </label>
 
-                        <option value="">
-                            Selecione o mês
-                        </option>
+                        <select
+                            id="mes-3"
+                            onchange="mesSelecionado(3, 'a')"
+                            class="w-full p-3 border rounded-lg bg-white"
+                            required
+                        >
 
-                        <option value="0">Janeiro</option>
-                        <option value="1">Fevereiro</option>
-                        <option value="2">Março</option>
-                        <option value="3">Abril</option>
-                        <option value="4">Maio</option>
-                        <option value="5">Junho</option>
-                        <option value="6">Julho</option>
-                        <option value="7">Agosto</option>
-                        <option value="8">Setembro</option>
-                        <option value="9">Outubro</option>
-                        <option value="10">Novembro</option>
-                        <option value="11">Dezembro</option>
+                            <option value="">Selecione o mês</option>
 
-                    </select>
+                            <option value="Janeiro">Janeiro</option>
+                            <option value="Fevereiro">Fevereiro</option>
+                            <option value="Março">Março</option>
+                            <option value="Abril">Abril</option>
+                            <option value="Maio">Maio</option>
+                            <option value="Junho">Junho</option>
+                            <option value="Julho">Julho</option>
+                            <option value="Agosto">Agosto</option>
+                            <option value="Setembro">Setembro</option>
+                            <option value="Outubro">Outubro</option>
+                            <option value="Novembro">Novembro</option>
+                            <option value="Dezembro">Dezembro</option>
+
+                        </select>
+
+                    </div>
 
 
-                    <label class="block text-xs font-medium">
-                        Data pretendida para início
-                    </label>
 
-                    <input
-                        type="date"
-                        id="data-3-1"
-                        class="w-full p-2 border rounded bg-white"
-                        required>
+                    <div>
+
+                        <label class="block text-xs font-medium mb-1">
+                            Data pretendida para início
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data-3"
+                            class="w-full p-3 border rounded-lg bg-white"
+                            required
+                        >
+
+                    </div>
 
 
 
                     <div
                         id="segundo-periodo-3"
-                        class="hidden border-t pt-4 mt-4 space-y-3">
+                        class="hidden border-t pt-4 mt-4 space-y-3 fade-in"
+                    >
 
-                        <h4 class="font-semibold text-blue-700">
+                        <h4 class="font-bold text-blue-700 text-sm">
                             2º Período de 15 dias
                         </h4>
 
@@ -523,26 +595,25 @@
                         </label>
 
                         <select
-                            id="mes-3-2"
-                            onchange="atualizarCalendario('mes-3-2','data-3-2')"
-                            class="w-full p-2 border rounded bg-white">
+                            id="mes-3b"
+                            onchange="mesSelecionado(3, 'b')"
+                            class="w-full p-3 border rounded-lg bg-white"
+                        >
 
-                            <option value="">
-                                Selecione o mês
-                            </option>
+                            <option value="">Selecione o mês</option>
 
-                            <option value="0">Janeiro</option>
-                            <option value="1">Fevereiro</option>
-                            <option value="2">Março</option>
-                            <option value="3">Abril</option>
-                            <option value="4">Maio</option>
-                            <option value="5">Junho</option>
-                            <option value="6">Julho</option>
-                            <option value="7">Agosto</option>
-                            <option value="8">Setembro</option>
-                            <option value="9">Outubro</option>
-                            <option value="10">Novembro</option>
-                            <option value="11">Dezembro</option>
+                            <option value="Janeiro">Janeiro</option>
+                            <option value="Fevereiro">Fevereiro</option>
+                            <option value="Março">Março</option>
+                            <option value="Abril">Abril</option>
+                            <option value="Maio">Maio</option>
+                            <option value="Junho">Junho</option>
+                            <option value="Julho">Julho</option>
+                            <option value="Agosto">Agosto</option>
+                            <option value="Setembro">Setembro</option>
+                            <option value="Outubro">Outubro</option>
+                            <option value="Novembro">Novembro</option>
+                            <option value="Dezembro">Dezembro</option>
 
                         </select>
 
@@ -553,26 +624,32 @@
 
                         <input
                             type="date"
-                            id="data-3-2"
-                            class="w-full p-2 border rounded bg-white">
+                            id="data-3b"
+                            class="w-full p-3 border rounded-lg bg-white"
+                        >
 
                     </div>
 
                 </div>
 
+
             </div>
 
 
-            <!-- BOTÃO ENVIAR -->
+            <!-- =====================================================
+                 BOTÃO ENVIAR
+            ====================================================== -->
 
             <button
                 type="submit"
                 id="btn-enviar"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition">
-
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition"
+            >
                 Enviar Escolhas
-
             </button>
+
+
+            <div id="mensagem-formulario" class="text-center text-sm hidden"></div>
 
         </form>
 
@@ -580,272 +657,164 @@
 
 
 
-    <!-- =====================================================
-         JAVASCRIPT
-    ====================================================== -->
+    <!-- =========================================================
+         JAVASCRIPT PRINCIPAL
+    ========================================================== -->
 
     <script>
 
 
-        // =====================================================
-        // CONFIGURAÇÃO DO GOOGLE APPS SCRIPT
-        // =====================================================
+        /* =====================================================
+           CONFIGURAÇÃO DO SISTEMA
+        ====================================================== */
 
         const WEB_APP_URL =
             "https://script.google.com/macros/s/AKfycbzRmSXwxT0i7ttudFZ3S_AI0YFGogVeNu63WKhqBQcEInO33s6T7Ximzrt1OeLunweFZw/exec";
+
+
+        const ANO_FERIAS = 2027;
 
 
         let usuarioNome = "";
         let usuarioCpf = "";
 
 
-        // =====================================================
-        // LISTA DE MESES
-        // =====================================================
 
-        const nomesMeses = [
-            "Janeiro",
-            "Fevereiro",
-            "Março",
-            "Abril",
-            "Maio",
-            "Junho",
-            "Julho",
-            "Agosto",
-            "Setembro",
-            "Outubro",
-            "Novembro",
-            "Dezembro"
-        ];
+        /* =====================================================
+           LISTA DE MESES
+        ====================================================== */
 
+        const mesesNumeros = {
 
+            Janeiro: "01",
+            Fevereiro: "02",
+            Março: "03",
+            Abril: "04",
+            Maio: "05",
+            Junho: "06",
+            Julho: "07",
+            Agosto: "08",
+            Setembro: "09",
+            Outubro: "10",
+            Novembro: "11",
+            Dezembro: "12"
 
-        // =====================================================
-        // MÁSCARA DE CPF
-        // =====================================================
+        };
 
-        document.getElementById("login-cpf").addEventListener("input", function(e) {
 
-            let value = e.target.value.replace(/\D/g, "");
 
-            value = value.substring(0, 11);
+        /* =====================================================
+           MÁSCARA CPF
+        ====================================================== */
 
-            value = value.replace(/^(\d{3})(\d)/, "$1.$2");
-            value = value.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
-            value = value.replace(/\.(\d{3})(\d)/, ".$1-$2");
+        document
+            .getElementById("login-cpf")
+            .addEventListener("input", function (e) {
 
-            e.target.value = value;
+                let value = e.target.value.replace(/\D/g, "");
 
-        });
+                if (value.length > 11) {
+                    value = value.substring(0, 11);
+                }
 
+                value = value.replace(/(\d{3})(\d)/, "$1.$2");
+                value = value.replace(/(\d{3})(\d)/, "$1.$2");
+                value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 
+                e.target.value = value;
 
-        // =====================================================
-        // CONTROLE DOS PERÍODOS
-        // =====================================================
+            });
 
-        function controlarPeriodo(numero) {
 
-            const tipo = document.getElementById("tipo-" + numero).value;
 
-            const segundoPeriodo =
-                document.getElementById("segundo-periodo-" + numero);
+        /* =====================================================
+           ENTER NO LOGIN
+        ====================================================== */
 
-            const mes2 =
-                document.getElementById("mes-" + numero + "-2");
+        document
+            .getElementById("login-re")
+            .addEventListener("keypress", function (event) {
 
-            const data2 =
-                document.getElementById("data-" + numero + "-2");
+                if (event.key === "Enter") {
+                    autenticar();
+                }
 
+            });
 
-            if (tipo === "15+15 dias") {
 
-                segundoPeriodo.classList.remove("hidden");
 
-                mes2.required = true;
-                data2.required = true;
-
-            } else {
-
-                segundoPeriodo.classList.add("hidden");
-
-                mes2.required = false;
-                data2.required = false;
-
-                mes2.value = "";
-                data2.value = "";
-
-            }
-
-        }
-
-
-
-        // =====================================================
-        // ATUALIZA CALENDÁRIO CONFORME MÊS ESCOLHIDO
-        // =====================================================
-
-        function atualizarCalendario(selectId, inputId) {
-
-            const selectMes = document.getElementById(selectId);
-            const inputData = document.getElementById(inputId);
-
-            if (!selectMes || !inputData) return;
-
-
-            const mesSelecionado = selectMes.value;
-
-            if (mesSelecionado === "") {
-
-                inputData.min = "";
-                inputData.max = "";
-                inputData.value = "";
-
-                return;
-
-            }
-
-
-            const mes = parseInt(mesSelecionado);
-
-            const ano = 2027;
-
-
-            // Primeiro dia do mês
-            const primeiroDia = new Date(ano, mes, 1);
-
-            // Último dia do mês
-            const ultimoDia = new Date(ano, mes + 1, 0);
-
-
-            const mesFormatado = String(mes + 1).padStart(2, "0");
-
-            const ultimoDiaFormatado =
-                String(ultimoDia.getDate()).padStart(2, "0");
-
-
-            const dataMinima =
-                `${ano}-${mesFormatado}-01`;
-
-            const dataMaxima =
-                `${ano}-${mesFormatado}-${ultimoDiaFormatado}`;
-
-
-            // Limita o calendário ao mês selecionado
-            inputData.min = dataMinima;
-            inputData.max = dataMaxima;
-
-
-            // Se data atual estiver fora do mês, limpa
-            if (
-                inputData.value &&
-                (
-                    inputData.value < dataMinima ||
-                    inputData.value > dataMaxima
-                )
-            ) {
-
-                inputData.value = "";
-
-            }
-
-        }
-
-
-
-        // =====================================================
-        // VALIDAÇÃO DE MESES DIFERENTES PARA 15 + 15
-        // =====================================================
-
-        function validarMesesDiferentes(numero) {
-
-            const tipo =
-                document.getElementById("tipo-" + numero).value;
-
-            if (tipo !== "15+15 dias") return true;
-
-
-            const mes1 =
-                document.getElementById("mes-" + numero + "-1").value;
-
-            const mes2 =
-                document.getElementById("mes-" + numero + "-2").value;
-
-
-            if (!mes1 || !mes2) return true;
-
-
-            if (mes1 === mes2) {
-
-                alert(
-                    "Atenção: Para férias de 15 + 15 dias, os dois períodos devem obrigatoriamente ser em meses diferentes."
-                );
-
-                document.getElementById("mes-" + numero + "-2").value = "";
-
-                document.getElementById("data-" + numero + "-2").value = "";
-
-                document.getElementById("data-" + numero + "-2").min = "";
-                document.getElementById("data-" + numero + "-2").max = "";
-
-                return false;
-
-            }
-
-            return true;
-
-        }
-
-
-
-        // =====================================================
-        // EVENTOS AUTOMÁTICOS DOS MESES
-        // =====================================================
-
-        ["1", "2", "3"].forEach(function(numero) {
-
-            document
-                .getElementById("mes-" + numero + "-2")
-                .addEventListener("change", function() {
-
-                    validarMesesDiferentes(numero);
-
-                });
-
-        });
-
-
-
-        // =====================================================
-        // TROCA DE TELAS
-        // =====================================================
+        /* =====================================================
+           TROCA DE TELAS
+        ====================================================== */
 
         function trocarTela(idTela) {
 
-            document.getElementById("tela-login").classList.add("hidden");
+            document
+                .getElementById("tela-login")
+                .classList.add("hidden");
 
-            document.getElementById("tela-confirmacao").classList.add("hidden");
+            document
+                .getElementById("tela-confirmacao")
+                .classList.add("hidden");
 
-            document.getElementById("tela-formulario").classList.add("hidden");
+            document
+                .getElementById("tela-formulario")
+                .classList.add("hidden");
 
 
-            document.getElementById(idTela).classList.remove("hidden");
+            document
+                .getElementById(idTela)
+                .classList.remove("hidden");
 
         }
 
 
 
-        // =====================================================
-        // LOGIN
-        // =====================================================
+        /* =====================================================
+           MENSAGENS
+        ====================================================== */
+
+        function mostrarMensagem(elementoId, mensagem, tipo = "erro") {
+
+            const elemento = document.getElementById(elementoId);
+
+            elemento.innerText = mensagem;
+
+            elemento.classList.remove(
+                "hidden",
+                "text-red-600",
+                "text-green-600",
+                "text-blue-600"
+            );
+
+
+            if (tipo === "sucesso") {
+                elemento.classList.add("text-green-600");
+            }
+
+            else if (tipo === "info") {
+                elemento.classList.add("text-blue-600");
+            }
+
+            else {
+                elemento.classList.add("text-red-600");
+            }
+
+        }
+
+
+
+        /* =====================================================
+           AUTENTICAÇÃO
+        ====================================================== */
 
         async function autenticar() {
 
             const cpf =
-                document.getElementById("login-cpf").value;
+                document.getElementById("login-cpf").value.trim();
 
             const re =
-                document.getElementById("login-re").value;
+                document.getElementById("login-re").value.trim();
 
             const btn =
                 document.getElementById("btn-login");
@@ -853,14 +822,17 @@
 
             if (!cpf || !re) {
 
-                alert("Preencha todos os campos!");
+                mostrarMensagem(
+                    "mensagem-login",
+                    "Preencha todos os campos obrigatórios."
+                );
 
                 return;
-
             }
 
 
             btn.disabled = true;
+            btn.classList.add("loading");
             btn.innerText = "Verificando...";
 
 
@@ -869,6 +841,10 @@
                 const response = await fetch(WEB_APP_URL, {
 
                     method: "POST",
+
+                    headers: {
+                        "Content-Type": "text/plain;charset=utf-8"
+                    },
 
                     body: JSON.stringify({
 
@@ -881,6 +857,11 @@
                 });
 
 
+                if (!response.ok) {
+                    throw new Error("Erro HTTP " + response.status);
+                }
+
+
                 const res = await response.json();
 
 
@@ -890,30 +871,41 @@
                     usuarioCpf = cpf;
 
 
-                    document.getElementById("nome-usuario").innerText =
-                        res.nome;
+                    document
+                        .getElementById("nome-usuario")
+                        .innerText = res.nome;
 
 
                     trocarTela("tela-confirmacao");
 
-                } else {
+                }
 
-                    alert(res.msg || "CPF ou RE incorretos.");
+                else {
+
+                    mostrarMensagem(
+                        "mensagem-login",
+                        res.msg || "CPF ou RE incorretos."
+                    );
 
                 }
 
+            }
 
-            } catch (error) {
+            catch (error) {
 
-                console.error(error);
+                console.error("Erro no login:", error);
 
-                alert(
-                    "Erro ao conectar ao servidor. Verifique a internet e a implantação do Google Apps Script."
+                mostrarMensagem(
+                    "mensagem-login",
+                    "Erro ao conectar ao servidor. Verifique a internet e tente novamente."
                 );
 
-            } finally {
+            }
+
+            finally {
 
                 btn.disabled = false;
+                btn.classList.remove("loading");
                 btn.innerText = "Entrar";
 
             }
@@ -922,9 +914,9 @@
 
 
 
-        // =====================================================
-        // AVANÇAR PARA FORMULÁRIO
-        // =====================================================
+        /* =====================================================
+           AVANÇAR PARA FORMULÁRIO
+        ====================================================== */
 
         function avancarParaForm() {
 
@@ -934,9 +926,9 @@
 
 
 
-        // =====================================================
-        // REINICIAR SISTEMA
-        // =====================================================
+        /* =====================================================
+           REINICIAR SISTEMA
+        ====================================================== */
 
         function reiniciar() {
 
@@ -946,95 +938,467 @@
 
 
 
-        // =====================================================
-        // GERAR DESCRIÇÃO DO PERÍODO
-        // =====================================================
+        /* =====================================================
+           ALTERAÇÃO DO TIPO DE PERÍODO
+        ====================================================== */
 
-        function gerarDescricaoPeriodo(numero) {
+        function alterarTipoPeriodo(opcao) {
 
             const tipo =
-                document.getElementById("tipo-" + numero).value;
+                document.getElementById(`tipo-${opcao}`).value;
+
+            const segundoPeriodo =
+                document.getElementById(`segundo-periodo-${opcao}`);
 
 
-            const mes1Select =
-                document.getElementById("mes-" + numero + "-1");
+            const mesSegundo =
+                document.getElementById(`mes-${opcao}b`);
 
-            const data1 =
-                document.getElementById("data-" + numero + "-1").value;
-
-
-            const mes1 =
-                nomesMeses[parseInt(mes1Select.value)];
+            const dataSegundo =
+                document.getElementById(`data-${opcao}b`);
 
 
-            if (tipo === "30 dias") {
+            if (tipo === "15+15 dias") {
 
-                return `30 dias diretos em ${mes1} (Início: ${data1})`;
+                segundoPeriodo.classList.remove("hidden");
+
+                mesSegundo.required = true;
+                dataSegundo.required = true;
 
             }
 
+            else {
 
-            const mes2Select =
-                document.getElementById("mes-" + numero + "-2");
+                segundoPeriodo.classList.add("hidden");
 
-            const data2 =
-                document.getElementById("data-" + numero + "-2").value;
+                mesSegundo.required = false;
+                dataSegundo.required = false;
 
+                mesSegundo.value = "";
+                dataSegundo.value = "";
 
-            const mes2 =
-                nomesMeses[parseInt(mes2Select.value)];
+                dataSegundo.removeAttribute("min");
+                dataSegundo.removeAttribute("max");
 
-
-            return `15 dias em ${mes1} (Início: ${data1}) + 15 dias em ${mes2} (Início: ${data2})`;
+            }
 
         }
 
 
 
-        // =====================================================
-        // ENVIO DO FORMULÁRIO
-        // =====================================================
+        /* =====================================================
+           ATUALIZA CALENDÁRIO CONFORME O MÊS SELECIONADO
+        ====================================================== */
+
+        function mesSelecionado(opcao, periodo) {
+
+            const selectId =
+                periodo === "a"
+                    ? `mes-${opcao}`
+                    : `mes-${opcao}b`;
+
+
+            const dataId =
+                periodo === "a"
+                    ? `data-${opcao}`
+                    : `data-${opcao}b`;
+
+
+            const selectMes =
+                document.getElementById(selectId);
+
+            const inputData =
+                document.getElementById(dataId);
+
+
+            if (!selectMes || !inputData) return;
+
+
+            const mesSelecionado = selectMes.value;
+
+
+            if (!mesSelecionado) return;
+
+
+            const numeroMes =
+                mesesNumeros[mesSelecionado];
+
+
+            if (!numeroMes) return;
+
+
+            /*
+                Descobre o último dia do mês.
+            */
+
+            const ultimoDia =
+                new Date(
+                    ANO_FERIAS,
+                    parseInt(numeroMes),
+                    0
+                ).getDate();
+
+
+            /*
+                Define limites do calendário.
+            */
+
+            const dataMinima =
+                `${ANO_FERIAS}-${numeroMes}-01`;
+
+            const dataMaxima =
+                `${ANO_FERIAS}-${numeroMes}-${String(ultimoDia).padStart(2, "0")}`;
+
+
+            inputData.min = dataMinima;
+            inputData.max = dataMaxima;
+
+
+            /*
+                Sempre que trocar o mês, posiciona a data
+                no primeiro dia daquele mês.
+
+                Isso faz o calendário retornar para
+                o mês escolhido pelo usuário.
+            */
+
+            let dia = "01";
+
+
+            if (inputData.value) {
+
+                const partes =
+                    inputData.value.split("-");
+
+
+                if (partes.length === 3) {
+
+                    const diaAtual =
+                        parseInt(partes[2]);
+
+
+                    if (
+                        !isNaN(diaAtual) &&
+                        diaAtual >= 1 &&
+                        diaAtual <= ultimoDia
+                    ) {
+
+                        dia =
+                            String(diaAtual).padStart(2, "0");
+
+                    }
+
+                }
+
+            }
+
+
+            inputData.value =
+                `${ANO_FERIAS}-${numeroMes}-${dia}`;
+
+
+            /*
+                Tenta abrir automaticamente o calendário.
+                Funciona nos navegadores que suportam showPicker().
+            */
+
+            try {
+
+                if (typeof inputData.showPicker === "function") {
+
+                    inputData.showPicker();
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Calendário automático não suportado neste navegador."
+                );
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           VALIDAÇÃO DE DATAS
+        ====================================================== */
+
+        function validarDataNoMes(mes, data) {
+
+            if (!mes || !data) return false;
+
+
+            const numeroMes =
+                mesesNumeros[mes];
+
+
+            const partes =
+                data.split("-");
+
+
+            if (partes.length !== 3) return false;
+
+
+            const ano = parseInt(partes[0]);
+            const mesData = partes[1];
+
+
+            return (
+                ano === ANO_FERIAS &&
+                mesData === numeroMes
+            );
+
+        }
+
+
+
+        /* =====================================================
+           VALIDAÇÃO DE MESES DIFERENTES — 15 + 15
+        ====================================================== */
+
+        function validarMeses15Mais15(opcao) {
+
+            const tipo =
+                document.getElementById(`tipo-${opcao}`).value;
+
+
+            if (tipo !== "15+15 dias") {
+                return true;
+            }
+
+
+            const mes1 =
+                document.getElementById(`mes-${opcao}`).value;
+
+            const mes2 =
+                document.getElementById(`mes-${opcao}b`).value;
+
+
+            if (!mes1 || !mes2) {
+
+                alert(
+                    `Opção ${opcao}: informe os dois meses do período 15 + 15 dias.`
+                );
+
+                return false;
+
+            }
+
+
+            if (mes1 === mes2) {
+
+                alert(
+                    `Opção ${opcao}: os dois períodos de 15 dias devem obrigatoriamente ser em meses diferentes.`
+                );
+
+
+                document
+                    .getElementById(`mes-${opcao}b`)
+                    .value = "";
+
+
+                document
+                    .getElementById(`data-${opcao}b`)
+                    .value = "";
+
+
+                return false;
+
+            }
+
+
+            return true;
+
+        }
+
+
+
+        /* =====================================================
+           VALIDAÇÃO GERAL DE DATAS
+        ====================================================== */
+
+        function validarTodasDatas() {
+
+            for (let opcao = 1; opcao <= 3; opcao++) {
+
+                const tipo =
+                    document.getElementById(`tipo-${opcao}`).value;
+
+
+                const mes1 =
+                    document.getElementById(`mes-${opcao}`).value;
+
+                const data1 =
+                    document.getElementById(`data-${opcao}`).value;
+
+
+                if (!validarDataNoMes(mes1, data1)) {
+
+                    alert(
+                        `Opção ${opcao}: a data do início deve pertencer ao mês selecionado.`
+                    );
+
+                    return false;
+
+                }
+
+
+                if (tipo === "15+15 dias") {
+
+                    const mes2 =
+                        document.getElementById(`mes-${opcao}b`).value;
+
+                    const data2 =
+                        document.getElementById(`data-${opcao}b`).value;
+
+
+                    if (!validarDataNoMes(mes2, data2)) {
+
+                        alert(
+                            `Opção ${opcao}: a segunda data deve pertencer ao segundo mês selecionado.`
+                        );
+
+                        return false;
+
+                    }
+
+                }
+
+            }
+
+
+            return true;
+
+        }
+
+
+
+        /* =====================================================
+           CRIAÇÃO DO RESUMO DAS OPÇÕES
+        ====================================================== */
+
+        function obterResumoOpcao(opcao) {
+
+            const tipo =
+                document.getElementById(`tipo-${opcao}`).value;
+
+
+            const mes1 =
+                document.getElementById(`mes-${opcao}`).value;
+
+            const data1 =
+                document.getElementById(`data-${opcao}`).value;
+
+
+            let resumo = "";
+
+
+            if (tipo === "30 dias") {
+
+                resumo =
+                    `30 dias diretos em ${mes1} (Início: ${data1})`;
+
+            }
+
+            else {
+
+                const mes2 =
+                    document.getElementById(`mes-${opcao}b`).value;
+
+                const data2 =
+                    document.getElementById(`data-${opcao}b`).value;
+
+
+                resumo =
+                    `15 + 15 dias: 1º período em ${mes1} (Início: ${data1}) + 2º período em ${mes2} (Início: ${data2})`;
+
+            }
+
+
+            return resumo;
+
+        }
+
+
+
+        /* =====================================================
+           VALIDAÇÃO DE DUPLICIDADE
+        ====================================================== */
+
+        function validarDuplicidade() {
+
+            const opcoes = [
+
+                obterResumoOpcao(1).toLowerCase(),
+                obterResumoOpcao(2).toLowerCase(),
+                obterResumoOpcao(3).toLowerCase()
+
+            ];
+
+
+            if (
+                opcoes[0] === opcoes[1] ||
+                opcoes[0] === opcoes[2] ||
+                opcoes[1] === opcoes[2]
+            ) {
+
+                alert(
+                    "Erro: Não é permitido escolher opções de férias iguais."
+                );
+
+                return false;
+
+            }
+
+
+            return true;
+
+        }
+
+
+
+        /* =====================================================
+           ENVIO DO FORMULÁRIO
+        ====================================================== */
 
         async function enviarFormulario(e) {
 
             e.preventDefault();
 
 
-            // Validar meses diferentes
-            if (!validarMesesDiferentes(1)) return;
-            if (!validarMesesDiferentes(2)) return;
-            if (!validarMesesDiferentes(3)) return;
+            /*
+                Validação dos meses 15 + 15.
+            */
+
+            for (let opcao = 1; opcao <= 3; opcao++) {
+
+                if (!validarMeses15Mais15(opcao)) {
+                    return;
+                }
+
+            }
 
 
-            // Gerar opções
-            const op1 = gerarDescricaoPeriodo(1);
-            const op2 = gerarDescricaoPeriodo(2);
-            const op3 = gerarDescricaoPeriodo(3);
+            /*
+                Validação das datas.
+            */
 
-
-            // Validação de duplicidade
-            const resumo1 =
-                op1.toLowerCase().replace(/\s+/g, "");
-
-            const resumo2 =
-                op2.toLowerCase().replace(/\s+/g, "");
-
-            const resumo3 =
-                op3.toLowerCase().replace(/\s+/g, "");
-
-
-            if (
-                resumo1 === resumo2 ||
-                resumo1 === resumo3 ||
-                resumo2 === resumo3
-            ) {
-
-                alert(
-                    "Erro: Não é permitido escolher períodos iguais entre as opções."
-                );
-
+            if (!validarTodasDatas()) {
                 return;
+            }
 
+
+            /*
+                Validação de duplicidade.
+            */
+
+            if (!validarDuplicidade()) {
+                return;
             }
 
 
@@ -1043,7 +1407,13 @@
 
 
             btn.disabled = true;
+            btn.classList.add("loading");
             btn.innerText = "Enviando...";
+
+
+            const op1 = obterResumoOpcao(1);
+            const op2 = obterResumoOpcao(2);
+            const op3 = obterResumoOpcao(3);
 
 
             try {
@@ -1051,6 +1421,10 @@
                 const response = await fetch(WEB_APP_URL, {
 
                     method: "POST",
+
+                    headers: {
+                        "Content-Type": "text/plain;charset=utf-8"
+                    },
 
                     body: JSON.stringify({
 
@@ -1071,6 +1445,11 @@
                 });
 
 
+                if (!response.ok) {
+                    throw new Error("Erro HTTP " + response.status);
+                }
+
+
                 const res = await response.json();
 
 
@@ -1082,26 +1461,33 @@
 
                     reiniciar();
 
-                } else {
+                }
+
+                else {
 
                     alert(
-                        res.msg || "Erro ao salvar dados."
+                        res.msg ||
+                        "Erro ao salvar dados."
                     );
 
                 }
 
+            }
 
-            } catch (error) {
+            catch (error) {
 
-                console.error(error);
+                console.error("Erro ao enviar formulário:", error);
 
                 alert(
-                    "Erro ao enviar dados ao servidor."
+                    "Erro ao enviar dados. Verifique sua conexão com a internet."
                 );
 
-            } finally {
+            }
+
+            finally {
 
                 btn.disabled = false;
+                btn.classList.remove("loading");
                 btn.innerText = "Enviar Escolhas";
 
             }
@@ -1110,15 +1496,13 @@
 
 
 
-        // =====================================================
-        // INICIALIZAÇÃO
-        // =====================================================
+        /* =====================================================
+           INICIALIZAÇÃO
+        ====================================================== */
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
 
-            controlarPeriodo(1);
-            controlarPeriodo(2);
-            controlarPeriodo(3);
+            console.log("Sistema Férias 2027 carregado corretamente.");
 
         });
 
