@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento de Férias 2027</title>
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4 text-gray-800">
+
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-xl p-6 space-y-6">
+        <div class="text-center">
+            <h1 class="text-2xl font-bold text-blue-700">Férias 2027</h1>
+            <p class="text-sm text-gray-500">Formulário Oficial de Escolha de Período</p>
+        </div>
+
+        <!-- TELA 1: LOGIN -->
+        <div id="tela-login" class="space-y-4">
+            <h2 class="text-lg font-semibold text-center border-b pb-2">Autenticação</h2>
+            <div>
+                <label class="block text-sm font-medium mb-1">CPF</label>
+                <input type="text" id="login-cpf" placeholder="000.000.000-00" maxlength="14" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">RE (Senha)</label>
+                <input type="password" id="login-re" placeholder="Digite seu RE" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+            <button onclick="autenticar()" id="btn-login" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition">Entrar</button>
+        </div>
+
+        <!-- TELA 2: CONFIRMAÇÃO DE IDENTIDADE -->
+        <div id="tela-confirmacao" class="hidden space-y-4 text-center">
+            <h2 class="text-lg font-semibold border-b pb-2">Confirme sua Identidade</h2>
+            <p class="text-gray-600">O sistema localizou o seguinte cadastro:</p>
+            <p id="nome-usuario" class="text-xl font-bold text-blue-800 my-2"></p>
+            <div class="flex gap-3">
+                <button onclick="reiniciar()" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 rounded-lg transition">Não sou eu</button>
+                <button onclick="avancarParaForm()" class="w-1/2 bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-lg transition">Confirmar e Avançar</button>
+            </div>
+        </div>
+
+        <!-- TELA 3: FORMULÁRIO DE OPÇÕES -->
+        <form id="tela-formulario" class="hidden space-y-6" onsubmit="enviarFormulario(event)">
+            <h2 class="text-lg font-semibold border-b pb-2">Suas Opções de Interesse</h2>
+            <p class="text-xs text-amber-600 bg-amber-50 p-2 rounded border border-amber-200">Aviso: Você deve preencher 3 opções obrigatoriamente. Elas não podem ser iguais.</p>
+
+            <!-- Função para gerar os blocos de opções repetidos -->
+            <div class="space-y-6 max-h-[50vh] overflow-y-auto pr-1">
+                <!-- Opção 1 -->
+                <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
+                    <h3 class="font-bold text-blue-700">1ª Opção (Preferencial)</h3>
+                    <label class="block text-xs font-medium">Tipo de Período</label>
+                    <select id="tipo-1" class="w-full p-2 border rounded bg-white" required>
+                        <option value="30 dias">30 dias diretos</option>
+                        <option value="15+15 dias">15 + 15 dias</option>
+                    </select>
+                    <label class="block text-xs font-medium">Mês/Período de Interesse</label>
+                    <input type="text" id="mes-1" placeholder="Ex: Janeiro ou Jan/Dez" class="w-full p-2 border rounded bg-white" required>
+                    <label class="block text-xs font-medium">Data pretendida para início</label>
+                    <input type="date" id="data-1" class="w-full p-2 border rounded bg-white" required>
+                </div>
+
+                <!-- Opção 2 -->
+                <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
+                    <h3 class="font-bold text-blue-700">2ª Opção (Alternativa)</h3>
+                    <label class="block text-xs font-medium">Tipo de Período</label>
+                    <select id="tipo-2" class="w-full p-2 border rounded bg-white" required>
+                        <option value="30 dias">30 dias diretos</option>
+                        <option value="15+15 dias">15 + 15 dias</option>
+                    </select>
+                    <label class="block text-xs font-medium">Mês/Período de Interesse</label>
+                    <input type="text" id="mes-2" placeholder="Ex: Fevereiro" class="w-full p-2 border rounded bg-white" required>
+                    <label class="block text-xs font-medium">Data pretendida para início</label>
+                    <input type="date" id="data-2" class="w-full p-2 border rounded bg-white" required>
+                </div>
+
+                <!-- Opção 3 -->
+                <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
+                    <h3 class="font-bold text-blue-700">3ª Opção (Alternativa)</h3>
+                    <label class="block text-xs font-medium">Tipo de Período</label>
+                    <select id="tipo-3" class="w-full p-2 border rounded bg-white" required>
+                        <option value="30 dias">30 dias diretos</option>
+                        <option value="15+15 dias">15 + 15 dias</option>
+                    </select>
+                    <label class="block text-xs font-medium">Mês/Período de Interesse</label>
+                    <input type="text" id="mes-3" placeholder="Ex: Março" class="w-full p-2 border rounded bg-white" required>
+                    <label class="block text-xs font-medium">Data pretendida para início</label>
+                    <input type="date" id="data-3" class="w-full p-2 border rounded bg-white" required>
+                </div>
+            </div>
+
+            <button type="submit" id="btn-enviar" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition">Enviar Escolhas</button>
+        </form>
+    </div>
+
+    <script>
+        // CONFIGURAÇÃO: Insira o link gerado no Apps Script aqui
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzRmSXwxT0i7ttudFZ3S_AI0YFGogVeNu63WKhqBQcEInO33s6T7Ximzrt1OeLunweFZw/exec";
+
+        let usuarioNome = "";
+        let usuarioCpf = "";
+
+        // Máscara de CPF automática
+        document.getElementById('login-cpf').addEventListener('input', function (e) {
+            var value = e.target.value.replace(/\D/g, '');
+            var cpf = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
+            if(value.length <= 11) {
+                e.target.value = value.replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+            }
+        });
+
+        async function autenticar() {
+            const cpf = document.getElementById('login-cpf').value;
+            const re = document.getElementById('login-re').value;
+            const btn = document.getElementById('btn-login');
+
+            if (!cpf || !re) return alert("Preencha todos os campos!");
+
+            btn.disabled = true;
+            btn.innerText = "Verificando...";
+
+            try {
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ acao: 'login', cpf: cpf, re: re })
+                });
+                const res = await response.json();
+
+                if (res.sucesso) {
+                    usuarioNome = res.nome;
+                    usuarioCpf = cpf;
+                    document.getElementById('nome-usuario').innerText = res.nome;
+                    trocarTela('tela-confirmacao');
+                } else {
+                    alert(res.msg);
+                }
+            } catch (error) {
+                alert("Erro ao conectar ao servidor. Verifique a internet.");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Entrar";
+            }
+        }
+
+        function trocarTela(idTela) {
+            document.getElementById('tela-login').classList.add('hidden');
+            document.getElementById('tela-confirmacao').classList.add('hidden');
+            document.getElementById('tela-formulario').classList.add('hidden');
+            document.getElementById(idTela).classList.remove('hidden');
+        }
+
+        function avancarParaForm() { trocarTela('tela-formulario'); }
+        function reiniciar() { window.location.reload(); }
+
+        async function enviarFormulario(e) {
+            e.preventDefault();
+
+            // Captura os valores informados
+            const op1 = `${document.getElementById('tipo-1').value} em ${document.getElementById('mes-1').value} (Início: ${document.getElementById('data-1').value})`;
+            const op2 = `${document.getElementById('tipo-2').value} em ${document.getElementById('mes-2').value} (Início: ${document.getElementById('data-2').value})`;
+            const op3 = `${document.getElementById('tipo-3').value} em ${document.getElementById('mes-3').value} (Início: ${document.getElementById('data-3').value})`;
+
+            // Validação estrita de duplicidade
+            const resumo1 = document.getElementById('mes-1').value.trim().toLowerCase() + document.getElementById('tipo-1').value;
+            const resumo2 = document.getElementById('mes-2').value.trim().toLowerCase() + document.getElementById('tipo-2').value;
+            const resumo3 = document.getElementById('mes-3').value.trim().toLowerCase() + document.getElementById('tipo-3').value;
+
+            if (resumo1 === resumo2 || resumo1 === resumo3 || resumo2 === resumo3) {
+                return alert("Erro: Não é permitido escolher períodos/meses iguais entre as opções.");
+            }
+
+            const btn = document.getElementById('btn-enviar');
+            btn.disabled = true;
+            btn.innerText = "Enviando...";
+
+            try {
+const response = await fetch(WEB_APP_URL, {
+method: 'POST',
+body: JSON.stringify({ acao: 'salvar', cpf: usuarioCpf, nome: usuarioNome, op1: op1, op2: op2, op3: op3 })});
+const res = await response.json();
+
+if (res.sucesso) {alert("Sucesso! Suas opções de férias foram registradas.");
+reiniciar();
+} else {alert("Erro ao salvar dados.");
+}} catch (error) {alert("Erro ao enviar dados.");
+} finally {btn.disabled = false;
+btn.innerText = "Enviar Escolhas";}}
