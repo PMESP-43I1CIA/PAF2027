@@ -500,120 +500,92 @@ document.addEventListener("DOMContentLoaded", function() {
    LOGIN
 ===================================================== */
 
-async function login() {
+async function fazerLogin() {
 
-    const cpf = document.getElementById("cpf").value.trim();
-    const senha = document.getElementById("senha").value.trim();
-    const btn = document.getElementById("btnLogin");
+    const cpfInput = document.getElementById("cpf").value;
+    const reInput = document.getElementById("re").value;
+
+    const cpf = cpfInput.replace(/\D/g, "").trim();
+    const re = reInput.trim();
+
     const mensagem = document.getElementById("mensagemLogin");
 
     mensagem.innerHTML = "";
+    mensagem.style.display = "none";
 
-    if(!cpf || !senha) {
-
-        mensagem.innerHTML =
-        '<div class="alert alert-error">Informe CPF e RE.</div>';
-
+    if (!cpf || !re) {
+        mensagem.innerHTML = "Informe o CPF e o RE.";
+        mensagem.style.display = "block";
         return;
     }
 
-    btn.disabled = true;
-    btn.innerText = "Verificando...";
+    const botao = document.querySelector("#formLogin button[type='submit']");
+
+    if (botao) {
+        botao.disabled = true;
+        botao.innerText = "Autenticando...";
+    }
 
     try {
 
-        const resposta = await fetch(API_URL, {
+        const resposta = await fetch(
+            "https://script.google.com/macros/s/AKfycbw7xc9mAHE3oWoEmeFj1OT3Xahj0LamRw0-EfAbDBbhNhytmLnw3wyXOj0OrZVtYO4ZGQ/exec",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
+                body: JSON.stringify({
+                    acao: "login",
+                    cpf: cpf,
+                    re: re
+                })
+            }
+        );
 
-            method: "POST",
+        const resultado = await resposta.json();
 
-            headers: {
-                "Content-Type": "text/plain;charset=utf-8"
-            },
+        if (resultado.sucesso === true) {
 
-            body: JSON.stringify({
+            usuarioLogado = resultado.usuario;
 
-                acao: "login",
-                cpf: cpf,
-                senha: senha
+            document.getElementById("login").style.display = "none";
+            document.getElementById("sistema").style.display = "block";
 
-            })
+            const nomeUsuario = document.getElementById("nomeUsuario");
 
-        });
-
-        const dados = await resposta.json();
-
-        console.log("Resposta Login:", dados);
-
-        if(dados.sucesso === true) {
-
-            // Verificar se já realizou escolha
-            if(
-                dados.jaEscolheu === true ||
-                dados.status === "JA_ENVIOU" ||
-                dados.status === "JÁ ENVIOU"
-            ) {
-
-                mensagem.innerHTML =
-                '<div class="alert alert-warning">' +
-                '<strong>Atenção!</strong><br>' +
-                'Sua escolha de férias já foi registrada anteriormente. ' +
-                'Não é permitido realizar um novo envio.' +
-                '</div>';
-
-                btn.disabled = false;
-                btn.innerText = "Entrar";
-
-                return;
+            if (nomeUsuario) {
+                nomeUsuario.innerText =
+                    "Usuário autenticado: " + resultado.usuario.nome;
             }
 
-
-            usuarioAtual = dados;
-
-            document.getElementById("usuarioLogado").innerText =
-                "Usuário autenticado: " +
-                (dados.nome || dados.usuario || "Servidor autenticado");
-
-
-            document.getElementById("telaLogin").classList.add("hidden");
-
-            document.getElementById("telaEscolhas").classList.remove("hidden");
-
-            // Recriar campos
-            for(let i = 1; i <= 3; i++) {
-                alterarTipo(i);
-            }
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
+            carregarSistema();
 
         } else {
 
             mensagem.innerHTML =
-            '<div class="alert alert-error">' +
-            (dados.mensagem || "CPF ou RE inválidos.") +
-            '</div>';
+                resultado.mensagem || "CPF ou RE inválidos.";
 
+            mensagem.style.display = "block";
         }
 
-    } catch(erro) {
+    } catch (erro) {
 
-        console.error(erro);
+        console.error("Erro no login:", erro);
 
         mensagem.innerHTML =
-        '<div class="alert alert-error">' +
-        'Erro ao conectar ao servidor. Verifique sua internet ou tente novamente.' +
-        '</div>';
+            "Erro ao conectar ao servidor. Verifique sua internet.";
 
+        mensagem.style.display = "block";
+
+    } finally {
+
+        if (botao) {
+            botao.disabled = false;
+            botao.innerText = "Entrar";
+        }
     }
-
-    btn.disabled = false;
-    btn.innerText = "Entrar";
-
 }
-
-
 /* =====================================================
    ALTERAÇÃO DO TIPO DE PERÍODO
 ===================================================== */
