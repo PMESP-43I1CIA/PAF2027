@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,1911 +9,1509 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
+        * {
+            box-sizing: border-box;
         }
 
-        .hidden {
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #eef2f7;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #1f2937;
+        }
+
+        .container-principal {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: #ffffff;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .campo {
+            width: 100%;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        .campo:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+        }
+
+        .campo:disabled {
+            background: #f3f4f6;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .campo-mes {
+            font-size: 14px;
+        }
+
+        .bloco-opcao {
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            padding: 16px;
+            background: #ffffff;
+        }
+
+        .titulo-opcao {
+            color: #0b3b91;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 14px;
+        }
+
+        .botao {
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-weight: bold;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .botao:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .modal-fundo {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 1000;
+        }
+
+        .modal-conteudo {
+            width: 100%;
+            max-width: 460px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .texto-resumo {
+            white-space: pre-line;
+            line-height: 1.6;
+        }
+
+        .oculto {
             display: none !important;
         }
 
-        input:focus,
-        select:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        input[type="date"] {
+            min-height: 44px;
         }
 
-        .modal-overlay {
-            background: rgba(0, 0, 0, 0.55);
-            backdrop-filter: blur(3px);
+        select {
+            min-height: 44px;
         }
 
-        .animate-fade {
-            animation: fadeIn .3s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
+        @media (max-width: 500px) {
+            .container-principal {
+                min-height: 100vh;
             }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .modal-fundo {
+                align-items: flex-end;
+                padding: 0;
+            }
+
+            .modal-conteudo {
+                border-radius: 16px 16px 0 0;
+                max-height: 92vh;
             }
         }
-
-        .loading {
-            pointer-events: none;
-            opacity: .7;
-        }
-
     </style>
 </head>
 
-<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4 text-gray-800">
+<body>
 
-    <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl overflow-hidden">
+<div class="container-principal">
 
-        <!-- CABEÇALHO -->
-        <div class="bg-blue-700 text-white p-6 text-center">
+    <!-- CABEÇALHO -->
+    <header class="bg-blue-900 text-white px-5 py-5">
+        <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-blue-900 font-bold text-lg">
+                PM
+            </div>
 
-            <h1 class="text-2xl font-bold">
-                Agendamento de Férias 2027
-            </h1>
+            <div>
+                <h1 class="text-xl font-bold">
+                    Agendamento de Férias
+                </h1>
 
-            <p class="text-blue-100 text-sm mt-1">
-                Sistema Oficial de Escolha de Período
+                <p class="text-blue-100 text-sm">
+                    Exercício 2027
+                </p>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- ÁREA DE LOGIN -->
+    <section id="telaLogin" class="px-5 py-6">
+
+        <div class="text-center mb-6">
+            <h2 class="text-xl font-bold text-gray-800">
+                Acesso ao Sistema
+            </h2>
+
+            <p class="text-sm text-gray-500 mt-1">
+                Informe seus dados funcionais para continuar.
             </p>
+        </div>
+
+        <div class="space-y-4">
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">
+                    CPF
+                </label>
+
+                <input
+                    type="text"
+                    id="cpf"
+                    class="campo"
+                    placeholder="Digite o CPF"
+                    maxlength="14"
+                    autocomplete="off"
+                    inputmode="numeric"
+                >
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">
+                    RE
+                </label>
+
+                <input
+                    type="text"
+                    id="re"
+                    class="campo"
+                    placeholder="Digite o RE"
+                    autocomplete="off"
+                >
+            </div>
+
+            <button
+                type="button"
+                id="btnLogin"
+                class="botao w-full bg-blue-800 hover:bg-blue-900 text-white"
+                onclick="realizarLogin()"
+            >
+                Entrar
+            </button>
+
+            <div
+                id="mensagemLogin"
+                class="text-sm text-center text-red-600 min-h-[22px]"
+            ></div>
+
+        </div>
+
+        <div class="mt-8 border-t pt-4 text-center text-xs text-gray-400">
+            Elaborado por: Cb PM Ciquiroli
+        </div>
+
+    </section>
+
+
+    <!-- ÁREA DO FORMULÁRIO -->
+    <section id="telaFormulario" class="oculto">
+
+        <div class="px-5 pt-5">
+
+            <div class="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-5">
+                <div class="text-xs text-gray-500">
+                    Servidor
+                </div>
+
+                <div
+                    id="nomeServidor"
+                    class="font-bold text-gray-900 uppercase mt-1"
+                ></div>
+            </div>
+
+            <div class="mb-5">
+                <h2 class="text-lg font-bold text-gray-800">
+                    Escolha suas opções de férias
+                </h2>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Preencha as três opções em ordem de preferência.
+                </p>
+            </div>
 
         </div>
 
 
-        <div class="p-6">
+        <form id="formFerias" class="px-5 space-y-4">
 
-            <!-- ============================= -->
-            <!-- TELA LOGIN -->
-            <!-- ============================= -->
+            <!-- OPÇÃO 1 -->
+            <div class="bloco-opcao">
 
-            <div id="tela-login" class="space-y-5 animate-fade">
-
-                <div class="text-center">
-
-                    <h2 class="text-xl font-bold text-gray-700">
-                        Autenticação
-                    </h2>
-
-                    <p class="text-sm text-gray-500 mt-1">
-                        Informe seu CPF e RE para acessar o sistema.
-                    </p>
-
+                <div class="titulo-opcao">
+                    1ª Opção
                 </div>
 
-                <div>
+                <div class="space-y-3">
 
-                    <label class="block text-sm font-semibold mb-1">
-                        CPF
-                    </label>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Tipo de férias
+                        </label>
 
-                    <input
-                        type="text"
-                        id="login-cpf"
-                        placeholder="000.000.000-00"
-                        maxlength="14"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg">
+                        <select
+                            id="tipo1"
+                            class="campo"
+                            onchange="alterarTipo(1)"
+                            required
+                        >
+                            <option value="">Selecione o tipo</option>
+                            <option value="30">30 dias</option>
+                            <option value="15+15">15+15 dias</option>
+                        </select>
+                    </div>
+
+
+                    <!-- PERÍODO 1 -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Mês do início
+                        </label>
+
+                        <select
+                            id="mes1"
+                            class="campo campo-mes"
+                            onchange="alterarMes(1, 1)"
+                            required
+                        >
+                            <option value="">Selecione o mês</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Data de início
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data1"
+                            class="campo"
+                            disabled
+                            required
+                        >
+                    </div>
+
+
+                    <!-- PERÍODO 2 -->
+                    <div
+                        id="segundoPeriodo1"
+                        class="oculto border-t pt-4 mt-4 space-y-3"
+                    >
+
+                        <div class="font-semibold text-sm text-gray-700">
+                            2º Período
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">
+                                Mês do início
+                            </label>
+
+                            <select
+                                id="mes1b"
+                                class="campo campo-mes"
+                                onchange="alterarMes(1, 2)"
+                            >
+                                <option value="">Selecione o mês</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">
+                                Data de início
+                            </label>
+
+                            <input
+                                type="date"
+                                id="data1b"
+                                class="campo"
+                                disabled
+                            >
+                        </div>
+
+                    </div>
 
                 </div>
+            </div>
 
 
-                <div>
+            <!-- OPÇÃO 2 -->
+            <div class="bloco-opcao">
 
-                    <label class="block text-sm font-semibold mb-1">
-                        RE (Senha)
-                    </label>
-
-                    <input
-                        type="password"
-                        id="login-re"
-                        placeholder="Digite seu RE"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg">
-
+                <div class="titulo-opcao">
+                    2ª Opção
                 </div>
 
+                <div class="space-y-3">
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Tipo de férias
+                        </label>
+
+                        <select
+                            id="tipo2"
+                            class="campo"
+                            onchange="alterarTipo(2)"
+                            required
+                        >
+                            <option value="">Selecione o tipo</option>
+                            <option value="30">30 dias</option>
+                            <option value="15+15">15+15 dias</option>
+                        </select>
+                    </div>
+
+
+                    <!-- PERÍODO 1 -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Mês do início
+                        </label>
+
+                        <select
+                            id="mes2"
+                            class="campo campo-mes"
+                            onchange="alterarMes(2, 1)"
+                            required
+                        >
+                            <option value="">Selecione o mês</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Data de início
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data2"
+                            class="campo"
+                            disabled
+                            required
+                        >
+                    </div>
+
+
+                    <!-- PERÍODO 2 -->
+                    <div
+                        id="segundoPeriodo2"
+                        class="oculto border-t pt-4 mt-4 space-y-3"
+                    >
+
+                        <div class="font-semibold text-sm text-gray-700">
+                            2º Período
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">
+                                Mês do início
+                            </label>
+
+                            <select
+                                id="mes2b"
+                                class="campo campo-mes"
+                                onchange="alterarMes(2, 2)"
+                            >
+                                <option value="">Selecione o mês</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">
+                                Data de início
+                            </label>
+
+                            <input
+                                type="date"
+                                id="data2b"
+                                class="campo"
+                                disabled
+                            >
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- OPÇÃO 3 -->
+            <div class="bloco-opcao">
+
+                <div class="titulo-opcao">
+                    3ª Opção
+                </div>
+
+                <div class="space-y-3">
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Tipo de férias
+                        </label>
+
+                        <select
+                            id="tipo3"
+                            class="campo"
+                            onchange="alterarTipo(3)"
+                            required
+                        >
+                            <option value="">Selecione o tipo</option>
+                            <option value="30">30 dias</option>
+                            <option value="15+15">15+15 dias</option>
+                        </select>
+                    </div>
+
+
+                    <!-- PERÍODO 1 -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Mês do início
+                        </label>
+
+                        <select
+                            id="mes3"
+                            class="campo campo-mes"
+                            onchange="alterarMes(3, 1)"
+                            required
+                        >
+                            <option value="">Selecione o mês</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Data de início
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data3"
+                            class="campo"
+                            disabled
+                            required
+                        >
+                    </div>
+
+
+                    <!-- PERÍODO 2 -->
+                    <div
+                        id="segundoPeriodo3"
+                        class="oculto border-t pt-4 mt-4 space-y-3"
+                    >
+
+                        <div class="font-semibold text-sm text-gray-700">
+                            2º Período
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">
+                                Mês do início
+                            </label>
+
+                            <select
+                                id="mes3b"
+                                class="campo campo-mes"
+                                onchange="alterarMes(3, 2)"
+                            >
+                                <option value="">Selecione o mês</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">
+                                Data de início
+                            </label>
+
+                            <input
+                                type="date"
+                                id="data3b"
+                                class="campo"
+                                disabled
+                            >
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div
+                id="mensagemFormulario"
+                class="text-sm text-center text-red-600 min-h-[22px]"
+            ></div>
+
+
+            <!-- BOTÕES -->
+            <div class="flex gap-3 pt-2 pb-4">
 
                 <button
-                    onclick="autenticar()"
-                    id="btn-login"
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition">
-
-                    Entrar
-
+                    type="button"
+                    class="botao flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800"
+                    onclick="voltarLogin()"
+                >
+                    Voltar
                 </button>
-
-            </div>
-
-
-            <!-- ============================= -->
-            <!-- TELA CONFIRMAÇÃO IDENTIDADE -->
-            <!-- ============================= -->
-
-            <div id="tela-confirmacao" class="hidden space-y-5 text-center animate-fade">
-
-                <div>
-
-                    <div class="text-4xl mb-3">
-                        👤
-                    </div>
-
-                    <h2 class="text-xl font-bold text-gray-700">
-                        Confirme sua Identidade
-                    </h2>
-
-                    <p class="text-gray-500 text-sm mt-2">
-                        O sistema localizou o seguinte cadastro:
-                    </p>
-
-                </div>
-
-
-                <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
-
-                    <p id="nome-usuario"
-                       class="text-xl font-bold text-blue-800 uppercase">
-                    </p>
-
-                    <p id="cpf-confirmacao"
-                       class="text-sm text-gray-500 mt-1">
-                    </p>
-
-                </div>
-
-
-                <div class="flex gap-3">
-
-                    <button
-                        onclick="reiniciar()"
-                        class="w-1/2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 rounded-lg">
-
-                        Não sou eu
-
-                    </button>
-
-
-                    <button
-                        onclick="avancarParaForm()"
-                        class="w-1/2 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg">
-
-                        Confirmar
-
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <!-- ============================= -->
-            <!-- TELA FORMULÁRIO -->
-            <!-- ============================= -->
-
-            <form
-                id="tela-formulario"
-                class="hidden space-y-6 animate-fade"
-                onsubmit="enviarFormulario(event)">
-
-                <div class="text-center">
-
-                    <h2 class="text-xl font-bold text-gray-700">
-                        Escolha seus Períodos de Férias
-                    </h2>
-
-                    <p class="text-sm text-gray-500 mt-1">
-                        Selecione três opções em ordem de preferência.
-                    </p>
-
-                </div>
-
-
-                <!-- USUÁRIO LOGADO -->
-
-                <div class="bg-blue-50 border border-blue-200 rounded-xl p-3">
-
-                    <p class="text-xs text-gray-500">
-                        Usuário autenticado
-                    </p>
-
-                    <p id="usuario-logado"
-                       class="font-bold text-blue-800 uppercase">
-                    </p>
-
-                </div>
-
-
-                <!-- AVISO -->
-
-                <div class="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3">
-
-                    <strong>Atenção:</strong>
-
-                    Preencha obrigatoriamente as três opções.
-                    Os meses não poderão ser repetidos.
-
-                </div>
-
-
-                <!-- CONTAINER OPÇÕES -->
-
-                <div class="space-y-6 max-h-[60vh] overflow-y-auto pr-1">
-
-
-                    <!-- OPÇÃO 1 -->
-
-                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-4">
-
-                        <h3 class="font-bold text-blue-700 text-lg">
-                            1ª Opção — Preferencial
-                        </h3>
-
-
-                        <div>
-
-                            <label class="block text-sm font-semibold mb-1">
-                                Tipo de Período
-                            </label>
-
-                            <select
-                                id="tipo-1"
-                                class="w-full p-3 border border-gray-300 rounded-lg bg-white"
-                                onchange="alterarTipo(1)"
-                                required>
-
-                                <option value="">Selecione</option>
-                                <option value="30 dias">30 dias diretos</option>
-                                <option value="15+15 dias">15 + 15 dias</option>
-
-                            </select>
-
-                        </div>
-
-
-                        <div id="mes-container-1">
-
-                            <label class="block text-sm font-semibold mb-1">
-                                Mês do Período
-                            </label>
-
-                            <select
-                                id="mes-1"
-                                class="w-full p-3 border border-gray-300 rounded-lg bg-white"
-                                onchange="mesSelecionado(1)"
-                                required>
-
-                                <option value="">Selecione o mês</option>
-
-                            </select>
-
-                        </div>
-
-
-                        <!-- DATAS 30 DIAS -->
-
-                        <div id="data-container-1">
-
-                            <label class="block text-sm font-semibold mb-1">
-                                Data de Início
-                            </label>
-
-                            <input
-                                type="date"
-                                id="data-1"
-                                class="w-full p-3 border border-gray-300 rounded-lg bg-white"
-                                onchange="validarData(1)"
-                                required>
-
-                            <p class="text-xs text-gray-500 mt-1">
-                                A data será limitada ao mês escolhido.
-                            </p>
-
-                        </div>
-
-
-                        <!-- SEGUNDO PERÍODO 15+15 -->
-
-                        <div id="segundo-periodo-1" class="hidden border-t pt-4 space-y-4">
-
-                            <h4 class="font-bold text-gray-700">
-                                Segundo Período — 15 dias
-                            </h4>
-
-                            <div>
-
-                                <label class="block text-sm font-semibold mb-1">
-                                    Segundo Mês
-                                </label>
-
-                                <select
-                                    id="mes-1-2"
-                                    class="w-full p-3 border border-gray-300 rounded-lg bg-white"
-                                    onchange="mesSelecionadoSegundo(1)"
-                                    required>
-
-                                    <option value="">Selecione o mês</option>
-
-                                </select>
-
-                            </div>
-
-
-                            <div>
-
-                                <label class="block text-sm font-semibold mb-1">
-                                    Data de Início do Segundo Período
-                                </label>
-
-                                <input
-                                    type="date"
-                                    id="data-1-2"
-                                    class="w-full p-3 border border-gray-300 rounded-lg bg-white"
-                                    onchange="validarDataSegundo(1)"
-                                    required>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- RESUMO -->
-
-                        <div
-                            id="resumo-1"
-                            class="hidden bg-white border border-blue-200 rounded-lg p-3 text-sm text-gray-600">
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- OPÇÃO 2 -->
-
-                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-4">
-
-                        <h3 class="font-bold text-blue-700 text-lg">
-                            2ª Opção — Alternativa
-                        </h3>
-
-
-                        <div>
-
-                            <label class="block text-sm font-semibold mb-1">
-                                Tipo de Período
-                            </label>
-
-                            <select
-                                id="tipo-2"
-                                class="w-full p-3 border border-gray-300 rounded-lg bg-white"
-                                onchange="alterarTipo(2)"
-                                required>
-
-                                <option value="">Selecione</option>
-                                <option value="30 dias">30 dias diretos</option>
-                                <option value="15+15 dias">15 + 15 dias</option>
-
-                            </select>
-
-                        </div>
-
-
-                        <div>
-
-                            <label class="block text-sm font-semibold mb-1">
-                                Mês do Período
-                            </label>
-
-                            <select
-                                id="mes-2"
-                                class="w-full p-3 border border-gray-300 rounded-lg bg-white"
-                                onchange="mesSelecionado(2)"
-                                required>
-
-                                <option value="">Selecione o mês</option>
-
-                            </select>
-
-                        </div>
-
-
-                        <div>
-
-                            <label class="block text-sm font-semibold mb-1">
-                                Data de Início
-                            </label>
-
-                            <input
-                                type="date"
-                                id="data-2"
-                                class="w-full p-3 border border-gray-300 rounded-lg bg-white"
-                                onchange="validarData(2)"
-                                required>
-
-                        </div>
-
-
-                        <div id="segundo-periodo-2" class="hidden border-t pt-4 space-y-4">
-
-                            <h4 class="font-bold text-gray-700">
-                                Segundo Período — 15 dias
-                            </h4>
-
-                            <div>
-
-                                <label class="block text-sm font-semibold mb-1">
-                                    Segundo Mês
-                                </label>
-
-                                <select
-                                    id="mes-2-2"
-                                    class="w-full p-3 border border-gray-300 rounded-lg bg-white"
-                                    onchange="mesSelecionadoSegundo(2)"
-                                    required>
-
-                                    <option value="">Selecione o mês</option>
-
-                                </select>
-
-                            </div>
-
-
-                            <div>
-
-                                <label class="block text-sm font-semibold mb-1">
-                                    Data de Início do Segundo Período
-                                </label>
-
-                                <input
-                                    type="date"
-                                    id="data-2-2"
-                                    class="w-full p-3 border border-gray-300 rounded-lg bg-white"
-                                    onchange="validarDataSegundo(2)"
-                                    required>
-
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            id="resumo-2"
-                            class="hidden bg-white border border-blue-200 rounded-lg p-3 text-sm text-gray-600">
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- OPÇÃO 3 -->
-
-                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-4">
-
-                        <h3 class="font-bold text-blue-700 text-lg">
-                            3ª Opção — Alternativa
-                        </h3>
-
-
-                        <div>
-
-                            <label class="block text-sm font-semibold mb-1">
-                                Tipo de Período
-                            </label>
-
-                            <select
-                                id="tipo-3"
-                                class="w-full p-3 border border-gray-300 rounded-lg bg-white"
-                                onchange="alterarTipo(3)"
-                                required>
-
-                                <option value="">Selecione</option>
-                                <option value="30 dias">30 dias diretos</option>
-                                <option value="15+15 dias">15 + 15 dias</option>
-
-                            </select>
-
-                        </div>
-
-
-                        <div>
-
-                            <label class="block text-sm font-semibold mb-1">
-                                Mês do Período
-                            </label>
-
-                            <select
-                                id="mes-3"
-                                class="w-full p-3 border border-gray-300 rounded-lg bg-white"
-                                onchange="mesSelecionado(3)"
-                                required>
-
-                                <option value="">Selecione o mês</option>
-
-                            </select>
-
-                        </div>
-
-
-                        <div>
-
-                            <label class="block text-sm font-semibold mb-1">
-                                Data de Início
-                            </label>
-
-                            <input
-                                type="date"
-                                id="data-3"
-                                class="w-full p-3 border border-gray-300 rounded-lg bg-white"
-                                onchange="validarData(3)"
-                                required>
-
-                        </div>
-
-
-                        <div id="segundo-periodo-3" class="hidden border-t pt-4 space-y-4">
-
-                            <h4 class="font-bold text-gray-700">
-                                Segundo Período — 15 dias
-                            </h4>
-
-                            <div>
-
-                                <label class="block text-sm font-semibold mb-1">
-                                    Segundo Mês
-                                </label>
-
-                                <select
-                                    id="mes-3-2"
-                                    class="w-full p-3 border border-gray-300 rounded-lg bg-white"
-                                    onchange="mesSelecionadoSegundo(3)"
-                                    required>
-
-                                    <option value="">Selecione o mês</option>
-
-                                </select>
-
-                            </div>
-
-
-                            <div>
-
-                                <label class="block text-sm font-semibold mb-1">
-                                    Data de Início do Segundo Período
-                                </label>
-
-                                <input
-                                    type="date"
-                                    id="data-3-2"
-                                    class="w-full p-3 border border-gray-300 rounded-lg bg-white"
-                                    onchange="validarDataSegundo(3)"
-                                    required>
-
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            id="resumo-3"
-                            class="hidden bg-white border border-blue-200 rounded-lg p-3 text-sm text-gray-600">
-
-                        </div>
-
-                    </div>
-
-                </div>
-
 
                 <button
                     type="submit"
-                    id="btn-enviar"
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition">
-
-                    Conferir Escolhas
-
-                </button>
-
-            </form>
-
-
-        </div>
-
-
-        <!-- RODAPÉ -->
-
-        <div class="border-t bg-gray-50 text-center py-3">
-
-            <p class="text-xs text-gray-400">
-                Sistema de Agendamento de Férias 2027
-            </p>
-
-            <p class="text-xs text-gray-400 mt-1">
-                Elaborado por: Cb PM Ciquiroli
-            </p>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- ============================= -->
-    <!-- MODAL CONFIRMAÇÃO -->
-    <!-- ============================= -->
-
-    <div
-        id="modal-confirmacao"
-        class="hidden fixed inset-0 modal-overlay flex items-center justify-center p-4 z-50">
-
-        <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-fade">
-
-            <div class="bg-blue-700 text-white p-5 text-center">
-
-                <h2 class="text-xl font-bold">
-                    Confirmação das Escolhas
-                </h2>
-
-                <p class="text-sm text-blue-100 mt-1">
-                    Confira atentamente antes de enviar.
-                </p>
-
-            </div>
-
-
-            <div class="p-5 max-h-[70vh] overflow-y-auto space-y-4">
-
-                <div class="bg-gray-50 rounded-lg p-3">
-
-                    <p class="text-xs text-gray-500">
-                        Servidor
-                    </p>
-
-                    <p id="modal-nome"
-                       class="font-bold text-gray-800 uppercase">
-                    </p>
-
-                </div>
-
-
-                <div id="modal-opcoes" class="space-y-3">
-
-                </div>
-
-
-                <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-700">
-
-                    Após o envio, não será possível realizar uma nova escolha através deste sistema.
-
-                </div>
-
-            </div>
-
-
-            <div class="p-4 border-t flex gap-3">
-
-                <button
-                    onclick="fecharModal()"
-                    class="w-1/2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 rounded-lg">
-
-                    Voltar
-
-                </button>
-
-
-                <button
-                    onclick="confirmarEnvio()"
-                    id="btn-confirmar-envio"
-                    class="w-1/2 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg">
-
+                    id="btnEnviar"
+                    class="botao flex-1 bg-green-700 hover:bg-green-800 text-white"
+                >
                     Confirmar e Enviar
-
                 </button>
 
             </div>
 
-
-            <div class="border-t bg-gray-50 text-center py-2">
-
-                <p class="text-xs text-gray-400">
-                    Elaborado por: Cb PM Ciquiroli
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
+        </form>
 
 
+        <footer class="border-t py-4 text-center text-xs text-gray-400">
+            Elaborado por: Cb PM Ciquiroli
+        </footer>
 
-    <!-- ============================= -->
-    <!-- MODAL SUCESSO -->
-    <!-- ============================= -->
+    </section>
 
-    <div
-        id="modal-sucesso"
-        class="hidden fixed inset-0 modal-overlay flex items-center justify-center p-4 z-50">
+</div>
 
-        <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 text-center animate-fade">
 
-            <div class="text-5xl mb-4">
-                ✅
-            </div>
+<!-- MODAL DE CONFIRMAÇÃO -->
+<div
+    id="modalConfirmacao"
+    class="modal-fundo oculto"
+>
 
-            <h2 class="text-xl font-bold text-green-700">
-                Escolhas Registradas!
+    <div class="modal-conteudo">
+
+        <div class="bg-blue-900 text-white px-5 py-4 rounded-t-xl">
+            <h2 class="text-lg font-bold">
+                Confirmar agendamento
             </h2>
 
-            <p class="text-gray-600 mt-3 text-sm">
-                Suas opções de férias foram registradas com sucesso.
+            <p class="text-blue-100 text-sm mt-1">
+                Confira cuidadosamente suas opções.
             </p>
-
-            <p class="text-gray-500 text-sm mt-2">
-                O sistema retornará à tela de login.
-            </p>
-
-            <button
-                onclick="fecharSucesso()"
-                class="mt-5 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg">
-
-                Voltar ao Login
-
-            </button>
+        </div>
 
 
-            <div class="border-t mt-5 pt-3">
+        <div class="p-5">
 
-                <p class="text-xs text-gray-400">
-                    Elaborado por: Cb PM Ciquiroli
-                </p>
+            <div
+                id="resumoConfirmacao"
+                class="texto-resumo text-sm text-gray-700 bg-gray-50 border rounded-lg p-4"
+            ></div>
+
+            <div class="flex gap-3 mt-5">
+
+                <button
+                    type="button"
+                    class="botao flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800"
+                    onclick="fecharConfirmacao()"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="button"
+                    id="btnConfirmarEnvio"
+                    class="botao flex-1 bg-green-700 hover:bg-green-800 text-white"
+                    onclick="enviarDados()"
+                >
+                    Confirmar
+                </button>
 
             </div>
 
         </div>
 
+        <div class="border-t py-3 text-center text-xs text-gray-400">
+            Elaborado por: Cb PM Ciquiroli
+        </div>
+
     </div>
 
+</div>
+
+
+<!-- MODAL DE SUCESSO -->
+<div
+    id="modalSucesso"
+    class="modal-fundo oculto"
+>
+
+    <div class="modal-conteudo">
+
+        <div class="p-6 text-center">
+
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
+                <span class="text-3xl text-green-700">✓</span>
+            </div>
+
+            <h2 class="text-xl font-bold text-green-700 mb-3">
+                Agendamento realizado com sucesso!
+            </h2>
+
+            <div
+                id="mensagemSucesso"
+                class="text-sm text-gray-600"
+            >
+                Suas opções de férias foram registradas corretamente.
+            </div>
+
+            <button
+                type="button"
+                class="botao w-full mt-6 bg-blue-800 hover:bg-blue-900 text-white"
+                onclick="location.reload()"
+            >
+                Voltar à tela inicial
+            </button>
+
+        </div>
+
+        <div class="border-t py-3 text-center text-xs text-gray-400">
+            Elaborado por: Cb PM Ciquiroli
+        </div>
+
+    </div>
+
+</div>
 
 
 <script>
 
-/* =====================================================
-   CONFIGURAÇÃO PRINCIPAL
-===================================================== */
-
-const WEB_APP_URL =
-"https://script.google.com/macros/s/AKfycbw7xc9mAHE3oWoEmeFj1OT3Xahj0LamRw0-EfAbDBbhNhytmLnw3wyXOj0OrZVtYO4ZGQ/exec";
-
-
-let usuarioNome = "";
-let usuarioCpf = "";
-
-let dadosFormulario = {};
-
-const ANO = 2027;
-
-
-/* =====================================================
-   MESES
-===================================================== */
-
-const MESES = [
-
-    { numero: "01", nome: "Janeiro" },
-    { numero: "02", nome: "Fevereiro" },
-    { numero: "03", nome: "Março" },
-    { numero: "04", nome: "Abril" },
-    { numero: "05", nome: "Maio" },
-    { numero: "06", nome: "Junho" },
-    { numero: "07", nome: "Julho" },
-    { numero: "08", nome: "Agosto" },
-    { numero: "09", nome: "Setembro" },
-    { numero: "10", nome: "Outubro" },
-    { numero: "11", nome: "Novembro" },
-    { numero: "12", nome: "Dezembro" }
-
-];
-
-
-/* =====================================================
-   INICIALIZAÇÃO
-===================================================== */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    aplicarMascaraCPF();
-
-    preencherTodosMeses();
-
-});
-
-
-/* =====================================================
-   MÁSCARA CPF
-===================================================== */
-
-function aplicarMascaraCPF() {
-
-    const campo = document.getElementById("login-cpf");
-
-    campo.addEventListener("input", function () {
-
-        let valor = campo.value.replace(/\D/g, "");
-
-        valor = valor.substring(0, 11);
-
-        if (valor.length <= 3) {
-
-            campo.value = valor;
-
-        } else if (valor.length <= 6) {
-
-            campo.value =
-                valor.replace(/(\d{3})(\d+)/, "$1.$2");
-
-        } else if (valor.length <= 9) {
-
-            campo.value =
-                valor.replace(/(\d{3})(\d{3})(\d+)/, "$1.$2.$3");
-
-        } else {
-
-            campo.value =
-                valor.replace(
-                    /(\d{3})(\d{3})(\d{3})(\d{1,2})/,
-                    "$1.$2.$3-$4"
-                );
-
-        }
-
-    });
-
-}
-
-
-/* =====================================================
-   PREENCHER MESES
-===================================================== */
-
-function preencherTodosMeses() {
-
-    for (let i = 1; i <= 3; i++) {
-
-        preencherSelectMes(document.getElementById(`mes-${i}`));
-
-        preencherSelectMes(document.getElementById(`mes-${i}-2`));
-
-    }
-
-}
-
-
-function preencherSelectMes(select) {
-
-    if (!select) return;
-
-    select.innerHTML =
-        `<option value="">Selecione o mês</option>`;
-
-    MESES.forEach(m => {
-
-        const option = document.createElement("option");
-
-        option.value = m.numero;
-
-        option.textContent = m.nome;
-
-        select.appendChild(option);
-
-    });
-
-}
-
-
-/* =====================================================
-   AUTENTICAÇÃO
-===================================================== */
-
-async function autenticar() {
-
-    const cpfCampo = document.getElementById("login-cpf");
-    const reCampo = document.getElementById("login-re");
-    const btn = document.getElementById("btn-login");
-
-    const cpf = cpfCampo.value.trim();
-    const re = reCampo.value.trim();
-
-    if (!cpf || !re) {
-
-        alert("Preencha o CPF e o RE.");
-
-        return;
-
-    }
-
-
-    btn.disabled = true;
-    btn.classList.add("loading");
-    btn.innerText = "Verificando...";
-
-
-    try {
-
-        const response = await fetch(WEB_APP_URL, {
-
-            method: "POST",
-
-            body: JSON.stringify({
-
-                acao: "login",
-
-                cpf: cpf,
-
-                re: re
-
-            })
-
-        });
-
-
-        const resultado = await response.json();
-
-
-        if (resultado.sucesso) {
-
-            usuarioNome = resultado.nome;
-            usuarioCpf = cpf;
-
-            document.getElementById("nome-usuario").innerText =
-                usuarioNome;
-
-            document.getElementById("cpf-confirmacao").innerText =
-                "CPF: " + cpf;
-
-            trocarTela("tela-confirmacao");
-
-        } else {
-
-            alert(resultado.msg || "CPF ou RE inválidos.");
-
-        }
-
-
-    } catch (erro) {
-
-        console.error(erro);
-
-        alert(
-            "Erro ao conectar ao servidor.\n\n" +
-            "Verifique sua conexão com a internet."
-        );
-
-    } finally {
-
-        btn.disabled = false;
-        btn.classList.remove("loading");
-        btn.innerText = "Entrar";
-
-    }
-
-}
-
-
-/* =====================================================
-   TROCA DE TELAS
-===================================================== */
-
-function trocarTela(idTela) {
-
-    const telas = [
-
-        "tela-login",
-        "tela-confirmacao",
-        "tela-formulario"
-
+    /*
+     * URL ATUAL DO GOOGLE APPS SCRIPT
+     */
+    const URL_APPS_SCRIPT =
+        "https://script.google.com/macros/s/AKfycbw7xc9mAHE3oWoEmeFj1OT3Xahj0LamRw0-EfAbDBbhNhytmLnw3wyXOj0OrZVtYO4ZGQ/exec";
+
+
+    /*
+     * VARIÁVEIS DO USUÁRIO LOGADO
+     */
+    let cpfUsuario = "";
+    let nomeUsuario = "";
+
+
+    /*
+     * MESES
+     */
+    const meses = [
+        { valor: "01", nome: "Janeiro" },
+        { valor: "02", nome: "Fevereiro" },
+        { valor: "03", nome: "Março" },
+        { valor: "04", nome: "Abril" },
+        { valor: "05", nome: "Maio" },
+        { valor: "06", nome: "Junho" },
+        { valor: "07", nome: "Julho" },
+        { valor: "08", nome: "Agosto" },
+        { valor: "09", nome: "Setembro" },
+        { valor: "10", nome: "Outubro" },
+        { valor: "11", nome: "Novembro" },
+        { valor: "12", nome: "Dezembro" }
     ];
 
-    telas.forEach(id => {
 
-        document.getElementById(id).classList.add("hidden");
-
-    });
-
-
-    document.getElementById(idTela).classList.remove("hidden");
-
-}
-
-
-function avancarParaForm() {
-
-    document.getElementById("usuario-logado").innerText =
-        usuarioNome;
-
-    limparFormulario();
-
-    trocarTela("tela-formulario");
-
-}
-
-
-function reiniciar() {
-
-    location.reload();
-
-}
-
-
-/* =====================================================
-   LIMPAR FORMULÁRIO
-===================================================== */
-
-function limparFormulario() {
-
-    for (let i = 1; i <= 3; i++) {
-
-        document.getElementById(`tipo-${i}`).value = "";
-
-        document.getElementById(`mes-${i}`).value = "";
-
-        document.getElementById(`data-${i}`).value = "";
-
-        document.getElementById(`mes-${i}-2`).value = "";
-
-        document.getElementById(`data-${i}-2`).value = "";
-
-        document.getElementById(`segundo-periodo-${i}`)
-            .classList.add("hidden");
-
-        document.getElementById(`resumo-${i}`)
-            .classList.add("hidden");
-
-        bloquearDatas(i);
-
-    }
-
-}
-
-
-/* =====================================================
-   ALTERAÇÃO DO TIPO DE PERÍODO
-===================================================== */
-
-function alterarTipo(opcao) {
-
-    const tipo = document.getElementById(`tipo-${opcao}`).value;
-
-    const segundoPeriodo =
-        document.getElementById(`segundo-periodo-${opcao}`);
-
-
-    const mesPrincipal =
-        document.getElementById(`mes-${opcao}`);
-
-    const mesSegundo =
-        document.getElementById(`mes-${opcao}-2`);
-
-    const dataPrincipal =
-        document.getElementById(`data-${opcao}`);
-
-    const dataSegundo =
-        document.getElementById(`data-${opcao}-2`);
-
-
-    // Limpa campos quando troca o tipo
-
-    mesPrincipal.value = "";
-    mesSegundo.value = "";
-
-    dataPrincipal.value = "";
-    dataSegundo.value = "";
-
-
-    if (tipo === "15+15 dias") {
-
-        segundoPeriodo.classList.remove("hidden");
-
-        mesSegundo.required = true;
-        dataSegundo.required = true;
-
-    } else {
-
-        segundoPeriodo.classList.add("hidden");
-
-        mesSegundo.required = false;
-        dataSegundo.required = false;
-
-    }
-
-
-    atualizarBloqueiosMeses();
-
-}
-
-
-/* =====================================================
-   MÊS PRINCIPAL SELECIONADO
-===================================================== */
-
-function mesSelecionado(opcao) {
-
-    const mes =
-        document.getElementById(`mes-${opcao}`).value;
-
-    const tipo =
-        document.getElementById(`tipo-${opcao}`).value;
-
-    const data =
-        document.getElementById(`data-${opcao}`);
-
-
-    if (!mes) {
-
-        data.value = "";
-
-        data.removeAttribute("min");
-        data.removeAttribute("max");
-
-        return;
-
-    }
-
-
-    // Primeiro dia do mês selecionado
-
-    const inicio = `${ANO}-${mes}-01`;
-
-    // Último dia do mês
-
-    const ultimoDia = new Date(
-        ANO,
-        parseInt(mes),
-        0
-    ).getDate();
-
-
-    const fim =
-        `${ANO}-${mes}-${String(ultimoDia).padStart(2, "0")}`;
-
-
-    data.min = inicio;
-    data.max = fim;
-
-
-    // IMPORTANTE:
-    // Só preenche automaticamente se estiver vazio.
-    // Não força Janeiro.
-
-    if (!data.value) {
-
-        data.value = inicio;
-
-    } else {
-
-        // Se a data atual estiver fora do mês escolhido,
-        // reposiciona para o primeiro dia.
-
-        if (!data.value.startsWith(`${ANO}-${mes}`)) {
-
-            data.value = inicio;
-
-        }
-
-    }
-
-
-    atualizarResumo(opcao);
-
-    atualizarBloqueiosMeses();
-
-}
-
-
-/* =====================================================
-   MÊS SEGUNDO PERÍODO
-===================================================== */
-
-function mesSelecionadoSegundo(opcao) {
-
-    const mesPrincipal =
-        document.getElementById(`mes-${opcao}`).value;
-
-    const mesSegundo =
-        document.getElementById(`mes-${opcao}-2`).value;
-
-    const dataSegundo =
-        document.getElementById(`data-${opcao}-2`);
-
-
-    if (!mesSegundo) {
-
-        dataSegundo.value = "";
-
-        dataSegundo.removeAttribute("min");
-        dataSegundo.removeAttribute("max");
-
-        return;
-
-    }
-
-
-    // Impede meses iguais dentro do 15 + 15
-
-    if (mesSegundo === mesPrincipal) {
-
-        alert(
-            "No período de 15 + 15 dias, os dois meses devem ser diferentes."
+    /*
+     * INICIALIZAÇÃO
+     */
+    document.addEventListener("DOMContentLoaded", function () {
+
+        preencherMeses();
+
+        document.getElementById("formFerias").addEventListener(
+            "submit",
+            function (event) {
+                event.preventDefault();
+                abrirConfirmacao();
+            }
         );
 
-        mesSegundo.value = "";
+    });
 
-        dataSegundo.value = "";
 
-        return;
+    /*
+     * FORMATA CPF
+     */
+    document.getElementById("cpf").addEventListener("input", function (event) {
 
-    }
+        let valor = event.target.value.replace(/\D/g, "");
 
-
-    const inicio = `${ANO}-${mesSegundo}-01`;
-
-    const ultimoDia = new Date(
-        ANO,
-        parseInt(mesSegundo),
-        0
-    ).getDate();
-
-    const fim =
-        `${ANO}-${mesSegundo}-${String(ultimoDia).padStart(2, "0")}`;
-
-
-    dataSegundo.min = inicio;
-    dataSegundo.max = fim;
-
-
-    if (!dataSegundo.value ||
-        !dataSegundo.value.startsWith(`${ANO}-${mesSegundo}`)) {
-
-        dataSegundo.value = inicio;
-
-    }
-
-
-    atualizarResumo(opcao);
-
-    atualizarBloqueiosMeses();
-
-}
-
-
-/* =====================================================
-   VALIDAR DATA PRINCIPAL
-===================================================== */
-
-function validarData(opcao) {
-
-    const mes =
-        document.getElementById(`mes-${opcao}`).value;
-
-    const data =
-        document.getElementById(`data-${opcao}`).value;
-
-
-    if (!mes || !data) return;
-
-
-    if (!data.startsWith(`${ANO}-${mes}`)) {
-
-        alert("A data deve pertencer ao mês selecionado.");
-
-        document.getElementById(`data-${opcao}`).value =
-            `${ANO}-${mes}-01`;
-
-    }
-
-
-    atualizarResumo(opcao);
-
-}
-
-
-/* =====================================================
-   VALIDAR DATA SEGUNDO PERÍODO
-===================================================== */
-
-function validarDataSegundo(opcao) {
-
-    const mes =
-        document.getElementById(`mes-${opcao}-2`).value;
-
-    const data =
-        document.getElementById(`data-${opcao}-2`).value;
-
-
-    if (!mes || !data) return;
-
-
-    if (!data.startsWith(`${ANO}-${mes}`)) {
-
-        alert("A data deve pertencer ao mês selecionado.");
-
-        document.getElementById(`data-${opcao}-2`).value =
-            `${ANO}-${mes}-01`;
-
-    }
-
-
-    atualizarResumo(opcao);
-
-}
-
-
-/* =====================================================
-   BLOQUEIO DE DATAS
-===================================================== */
-
-function bloquearDatas(opcao) {
-
-    const data =
-        document.getElementById(`data-${opcao}`);
-
-    const dataSegundo =
-        document.getElementById(`data-${opcao}-2`);
-
-
-    data.removeAttribute("min");
-    data.removeAttribute("max");
-
-    dataSegundo.removeAttribute("min");
-    dataSegundo.removeAttribute("max");
-
-}
-
-
-/* =====================================================
-   BLOQUEIO INTELIGENTE DE MESES
-===================================================== */
-
-function atualizarBloqueiosMeses() {
-
-    const escolhidos = [];
-
-
-    // Coleta todos os meses principais
-
-    for (let i = 1; i <= 3; i++) {
-
-        const mes =
-            document.getElementById(`mes-${i}`).value;
-
-        if (mes) escolhidos.push(mes);
-
-
-        const tipo =
-            document.getElementById(`tipo-${i}`).value;
-
-
-        if (tipo === "15+15 dias") {
-
-            const mes2 =
-                document.getElementById(`mes-${i}-2`).value;
-
-            if (mes2) escolhidos.push(mes2);
-
+        if (valor.length > 11) {
+            valor = valor.substring(0, 11);
         }
 
-    }
-
-
-    // Atualiza os selects principais
-
-    for (let i = 1; i <= 3; i++) {
-
-        const selectPrincipal =
-            document.getElementById(`mes-${i}`);
-
-        aplicarBloqueioSelect(selectPrincipal, escolhidos, selectPrincipal.value);
-
-    }
-
-
-    // Atualiza os selects segundos
-
-    for (let i = 1; i <= 3; i++) {
-
-        const tipo =
-            document.getElementById(`tipo-${i}`).value;
-
-        if (tipo === "15+15 dias") {
-
-            const selectSegundo =
-                document.getElementById(`mes-${i}-2`);
-
-            aplicarBloqueioSelect(selectSegundo, escolhidos, selectSegundo.value);
-
+        if (valor.length <= 3) {
+            event.target.value = valor;
         }
-
-    }
-
-}
-
-
-function aplicarBloqueioSelect(select, escolhidos, valorAtual) {
-
-    if (!select) return;
-
-
-    Array.from(select.options).forEach(option => {
-
-        if (option.value === "") return;
-
-
-        const estaEscolhido =
-            escolhidos.includes(option.value);
-
-
-        option.disabled =
-            estaEscolhido && option.value !== valorAtual;
+        else if (valor.length <= 6) {
+            event.target.value =
+                valor.substring(0, 3) + "." +
+                valor.substring(3);
+        }
+        else if (valor.length <= 9) {
+            event.target.value =
+                valor.substring(0, 3) + "." +
+                valor.substring(3, 6) + "." +
+                valor.substring(6);
+        }
+        else {
+            event.target.value =
+                valor.substring(0, 3) + "." +
+                valor.substring(3, 6) + "." +
+                valor.substring(6, 9) + "-" +
+                valor.substring(9, 11);
+        }
 
     });
 
-}
+
+    /*
+     * PERMITE ENTER NO LOGIN
+     */
+    document.getElementById("re").addEventListener("keydown", function (event) {
+
+        if (event.key === "Enter") {
+            realizarLogin();
+        }
+
+    });
 
 
-/* =====================================================
-   ATUALIZAR RESUMO DA OPÇÃO
-===================================================== */
-
-function atualizarResumo(opcao) {
-
-    const tipo =
-        document.getElementById(`tipo-${opcao}`).value;
-
-    const mes =
-        document.getElementById(`mes-${opcao}`).value;
-
-    const data =
-        document.getElementById(`data-${opcao}`).value;
-
-
-    if (!tipo || !mes || !data) {
-
-        document.getElementById(`resumo-${opcao}`)
-            .classList.add("hidden");
-
-        return;
-
+    /*
+     * LIMPA CPF
+     */
+    function limparCPF(valor) {
+        return String(valor || "").replace(/\D/g, "");
     }
 
 
-    const nomeMes =
-        MESES.find(m => m.numero === mes)?.nome;
+    /*
+     * PREENCHIMENTO DOS MESES
+     */
+    function preencherMeses() {
 
+        for (let i = 1; i <= 3; i++) {
 
-    let texto =
-        `<strong>${tipo}</strong><br>` +
-        `Início: ${formatarData(data)}`;
+            const selects = [
+                document.getElementById(`mes${i}`),
+                document.getElementById(`mes${i}b`)
+            ];
 
+            selects.forEach(function (select) {
 
-    if (tipo === "30 dias") {
+                select.innerHTML = '<option value="">Selecione o mês</option>';
 
-        const termino = calcularTermino(data, 30);
+                meses.forEach(function (mes) {
 
-        texto += `<br>Término: ${formatarData(termino)}`;
+                    const option = document.createElement("option");
 
-    }
+                    option.value = mes.valor;
+                    option.textContent = mes.nome;
 
+                    select.appendChild(option);
 
-    if (tipo === "15+15 dias") {
+                });
 
-        const mes2 =
-            document.getElementById(`mes-${opcao}-2`).value;
-
-        const data2 =
-            document.getElementById(`data-${opcao}-2`).value;
-
-
-        if (mes2 && data2) {
-
-            texto =
-                `<strong>15 + 15 dias</strong><br>` +
-                `1º Período: ${formatarData(data)} até ${formatarData(calcularTermino(data, 15))}<br>` +
-                `2º Período: ${formatarData(data2)} até ${formatarData(calcularTermino(data2, 15))}`;
+            });
 
         }
 
     }
 
 
-    const resumo =
-        document.getElementById(`resumo-${opcao}`);
+    /*
+     * LOGIN
+     */
+    async function realizarLogin() {
 
-    resumo.innerHTML = texto;
+        const cpfCampo = document.getElementById("cpf");
+        const reCampo = document.getElementById("re");
+        const btnLogin = document.getElementById("btnLogin");
+        const mensagem = document.getElementById("mensagemLogin");
 
-    resumo.classList.remove("hidden");
+        const cpf = limparCPF(cpfCampo.value);
+        const re = reCampo.value.trim();
 
-}
+        mensagem.textContent = "";
 
-
-/* =====================================================
-   CALCULAR TÉRMINO
-===================================================== */
-
-function calcularTermino(dataInicial, quantidadeDias) {
-
-    const data = new Date(dataInicial + "T00:00:00");
-
-    data.setDate(data.getDate() + quantidadeDias - 1);
-
-    return data.toISOString().split("T")[0];
-
-}
-
-
-/* =====================================================
-   FORMATAR DATA
-===================================================== */
-
-function formatarData(data) {
-
-    if (!data) return "";
-
-    const partes = data.split("-");
-
-    return `${partes[2]}/${partes[1]}/${partes[0]}`;
-
-}
-
-
-/* =====================================================
-   VALIDAR FORMULÁRIO
-===================================================== */
-
-function validarFormulario() {
-
-    const meses = [];
-
-    const dados = [];
-
-
-    for (let i = 1; i <= 3; i++) {
-
-        const tipo =
-            document.getElementById(`tipo-${i}`).value;
-
-        const mes =
-            document.getElementById(`mes-${i}`).value;
-
-        const data =
-            document.getElementById(`data-${i}`).value;
-
-
-        if (!tipo || !mes || !data) {
-
-            alert(`Preencha completamente a ${i}ª opção.`);
-
-            return false;
-
+        if (cpf.length !== 11) {
+            mensagem.textContent = "Informe um CPF válido.";
+            return;
         }
 
+        if (!re) {
+            mensagem.textContent = "Informe o RE.";
+            return;
+        }
 
-        meses.push(mes);
+        btnLogin.disabled = true;
+        btnLogin.textContent = "Consultando...";
 
+        try {
 
-        if (tipo === "15+15 dias") {
+            const resposta = await fetch(URL_APPS_SCRIPT, {
+                method: "POST",
+                body: JSON.stringify({
+                    acao: "login",
+                    cpf: cpf,
+                    re: re
+                })
+            });
 
-            const mes2 =
-                document.getElementById(`mes-${i}-2`).value;
+            const texto = await resposta.text();
 
-            const data2 =
-                document.getElementById(`data-${i}-2`).value;
+            let resultado;
 
+            try {
+                resultado = JSON.parse(texto);
+            }
+            catch (erro) {
+                console.error("Resposta recebida no login:", texto);
+                throw new Error("Resposta inválida do servidor.");
+            }
 
-            if (!mes2 || !data2) {
+            if (resultado.sucesso) {
 
-                alert(`Preencha os dois períodos da ${i}ª opção.`);
+                cpfUsuario = cpf;
+                nomeUsuario = resultado.nome || "";
 
-                return false;
+                document.getElementById("nomeServidor").textContent =
+                    nomeUsuario.toUpperCase();
+
+                document.getElementById("telaLogin").classList.add("oculto");
+                document.getElementById("telaFormulario").classList.remove("oculto");
+
+                window.scrollTo(0, 0);
+
+            }
+            else {
+
+                mensagem.textContent =
+                    resultado.msg ||
+                    resultado.mensagem ||
+                    "CPF ou RE não localizado.";
 
             }
 
+        }
+        catch (erro) {
 
-            if (mes === mes2) {
+            console.error("Erro no login:", erro);
 
-                alert(
-                    `Na ${i}ª opção, os meses do período 15 + 15 devem ser diferentes.`
-                );
+            mensagem.textContent =
+                "Erro ao acessar o servidor. Tente novamente.";
 
-                return false;
+        }
+        finally {
 
-            }
-
-
-            meses.push(mes2);
+            btnLogin.disabled = false;
+            btnLogin.textContent = "Entrar";
 
         }
 
+    }
 
-        dados.push({
 
-            tipo,
-            mes,
-            data
+    /*
+     * ALTERAÇÃO DO TIPO DE FÉRIAS
+     */
+    function alterarTipo(opcao) {
+
+        const tipo = document.getElementById(`tipo${opcao}`).value;
+
+        const segundoPeriodo = document.getElementById(`segundoPeriodo${opcao}`);
+
+        const mesSegundo = document.getElementById(`mes${opcao}b`);
+        const dataSegundo = document.getElementById(`data${opcao}b`);
+
+        if (tipo === "15+15") {
+
+            segundoPeriodo.classList.remove("oculto");
+
+            mesSegundo.required = true;
+            dataSegundo.required = true;
+
+        }
+        else {
+
+            segundoPeriodo.classList.add("oculto");
+
+            mesSegundo.required = false;
+            dataSegundo.required = false;
+
+            mesSegundo.value = "";
+            dataSegundo.value = "";
+
+            dataSegundo.disabled = true;
+
+        }
+
+        atualizarBloqueiosMeses();
+
+    }
+
+
+    /*
+     * ALTERAÇÃO DO MÊS
+     */
+    function alterarMes(opcao, periodo) {
+
+        const sufixo = periodo === 1 ? "" : "b";
+
+        const selectMes = document.getElementById(`mes${opcao}${sufixo}`);
+        const inputData = document.getElementById(`data${opcao}${sufixo}`);
+
+        const mes = selectMes.value;
+
+        if (!mes) {
+
+            inputData.value = "";
+            inputData.disabled = true;
+            inputData.removeAttribute("min");
+            inputData.removeAttribute("max");
+
+            atualizarBloqueiosMeses();
+
+            return;
+        }
+
+        const ano = 2027;
+
+        const primeiroDia = `${ano}-${mes}-01`;
+
+        const ultimoDiaNumero = new Date(
+            ano,
+            Number(mes),
+            0
+        ).getDate();
+
+        const ultimoDia =
+            `${ano}-${mes}-${String(ultimoDiaNumero).padStart(2, "0")}`;
+
+        inputData.disabled = false;
+
+        inputData.min = primeiroDia;
+        inputData.max = ultimoDia;
+
+        /*
+         * Caso a data anteriormente escolhida seja de outro mês,
+         * ela é apagada.
+         */
+        if (
+            inputData.value &&
+            (
+                inputData.value < primeiroDia ||
+                inputData.value > ultimoDia
+            )
+        ) {
+            inputData.value = "";
+        }
+
+        atualizarBloqueiosMeses();
+
+    }
+
+
+    /*
+     * IMPEDE MESES REPETIDOS ENTRE AS OPÇÕES
+     *
+     * O mês atualmente selecionado continua habilitado.
+     * Apenas os meses utilizados em outros campos ficam bloqueados.
+     */
+    function atualizarBloqueiosMeses() {
+
+        const todosSelects = [];
+
+        for (let i = 1; i <= 3; i++) {
+
+            todosSelects.push(document.getElementById(`mes${i}`));
+
+            const tipo = document.getElementById(`tipo${i}`).value;
+
+            if (tipo === "15+15") {
+                todosSelects.push(document.getElementById(`mes${i}b`));
+            }
+
+        }
+
+        const valoresSelecionados = todosSelects
+            .map(select => select.value)
+            .filter(valor => valor !== "");
+
+        todosSelects.forEach(function (selectAtual) {
+
+            const valorAtual = selectAtual.value;
+
+            Array.from(selectAtual.options).forEach(function (option) {
+
+                if (!option.value) {
+                    return;
+                }
+
+                option.disabled =
+                    valoresSelecionados.includes(option.value) &&
+                    option.value !== valorAtual;
+
+            });
 
         });
 
     }
 
 
-    // Verifica duplicidade global de meses
+    /*
+     * FORMATA DATA
+     */
+    function formatarData(data) {
 
-    const duplicados =
-        meses.filter((item, index) => meses.indexOf(item) !== index);
+        if (!data) {
+            return "";
+        }
 
+        const partes = data.split("-");
 
-    if (duplicados.length > 0) {
+        if (partes.length !== 3) {
+            return data;
+        }
 
-        alert(
-            "Não é permitido utilizar o mesmo mês em mais de uma opção ou período."
-        );
-
-        return false;
-
-    }
-
-
-    return true;
-
-}
-
-
-/* =====================================================
-   ENVIO DO FORMULÁRIO
-===================================================== */
-
-function enviarFormulario(event) {
-
-    event.preventDefault();
-
-
-    if (!validarFormulario()) return;
-
-
-    dadosFormulario = {
-
-
-        op1: montarDescricao(1),
-
-        op2: montarDescricao(2),
-
-        op3: montarDescricao(3)
-
-
-    };
-
-
-    mostrarModalConfirmacao();
-
-}
-
-
-/* =====================================================
-   MONTAR DESCRIÇÃO PARA PLANILHA
-===================================================== */
-
-function montarDescricao(opcao) {
-
-    const tipo =
-        document.getElementById(`tipo-${opcao}`).value;
-
-    const mes =
-        document.getElementById(`mes-${opcao}`).value;
-
-    const data =
-        document.getElementById(`data-${opcao}`).value;
-
-
-    if (tipo === "30 dias") {
-
-        const termino =
-            calcularTermino(data, 30);
-
-
-        return `${tipo} | ${nomeMes(mes)} | Início: ${formatarData(data)} | Término: ${formatarData(termino)}`;
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
 
     }
 
 
-    if (tipo === "15+15 dias") {
+    /*
+     * OBTÉM NOME DO MÊS
+     */
+    function nomeDoMes(valor) {
 
-        const mes2 =
-            document.getElementById(`mes-${opcao}-2`).value;
+        const mes = meses.find(item => item.valor === valor);
 
-        const data2 =
-            document.getElementById(`data-${opcao}-2`).value;
-
-
-        const termino1 =
-            calcularTermino(data, 15);
-
-        const termino2 =
-            calcularTermino(data2, 15);
-
-
-        return `${tipo} | 1º Período: ${nomeMes(mes)} | Início: ${formatarData(data)} | Término: ${formatarData(termino1)} | 2º Período: ${nomeMes(mes2)} | Início: ${formatarData(data2)} | Término: ${formatarData(termino2)}`;
-
-    }
-
-}
-
-
-/* =====================================================
-   NOME DO MÊS
-===================================================== */
-
-function nomeMes(numero) {
-
-    return MESES.find(m => m.numero === numero)?.nome || "";
-
-}
-
-
-/* =====================================================
-   MODAL DE CONFIRMAÇÃO
-===================================================== */
-
-function mostrarModalConfirmacao() {
-
-    document.getElementById("modal-nome").innerText =
-        usuarioNome;
-
-
-    let html = "";
-
-
-    for (let i = 1; i <= 3; i++) {
-
-        html += `
-
-            <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
-
-                <p class="font-bold text-blue-700 mb-2">
-                    ${i}ª Opção
-                </p>
-
-                <p class="text-sm text-gray-700 leading-relaxed">
-                    ${dadosFormulario[`op${i}`]}
-                </p>
-
-            </div>
-
-        `;
+        return mes ? mes.nome : "";
 
     }
 
 
-    document.getElementById("modal-opcoes").innerHTML =
-        html;
+    /*
+     * CALCULA DATA FINAL
+     *
+     * 30 dias = início + 29 dias
+     * 15 dias = início + 14 dias
+     */
+    function calcularDataFinal(dataInicial, quantidadeDias) {
+
+        if (!dataInicial) {
+            return "";
+        }
+
+        const data = new Date(dataInicial + "T00:00:00");
+
+        data.setDate(data.getDate() + quantidadeDias - 1);
+
+        const ano = data.getFullYear();
+        const mes = String(data.getMonth() + 1).padStart(2, "0");
+        const dia = String(data.getDate()).padStart(2, "0");
+
+        return `${dia}/${mes}/${ano}`;
+
+    }
 
 
-    document.getElementById("modal-confirmacao")
-        .classList.remove("hidden");
+    /*
+     * OBTÉM OS DADOS DE UMA OPÇÃO
+     */
+    function obterDadosOpcao(opcao) {
 
-}
+        const tipo = document.getElementById(`tipo${opcao}`).value;
 
+        const mes1 = document.getElementById(`mes${opcao}`).value;
+        const data1 = document.getElementById(`data${opcao}`).value;
 
-function fecharModal() {
+        const mes2 = document.getElementById(`mes${opcao}b`).value;
+        const data2 = document.getElementById(`data${opcao}b`).value;
 
-    document.getElementById("modal-confirmacao")
-        .classList.add("hidden");
+        return {
+            tipo: tipo,
+            mes1: mes1,
+            data1: data1,
+            mes2: mes2,
+            data2: data2
+        };
 
-}
-
-
-/* =====================================================
-   CONFIRMAR E ENVIAR
-===================================================== */
-
-async function confirmarEnvio() {
-
-    const btn =
-        document.getElementById("btn-confirmar-envio");
-
-
-    btn.disabled = true;
-    btn.classList.add("loading");
-    btn.innerText = "Enviando...";
+    }
 
 
-    try {
+    /*
+     * GERA O TEXTO COMPLETO DA OPÇÃO
+     */
+    function obterResumoOpcao(opcao) {
 
-        const response = await fetch(WEB_APP_URL, {
+        const dados = obterDadosOpcao(opcao);
 
-            method: "POST",
+        if (dados.tipo === "30") {
 
-            body: JSON.stringify({
+            const mes = nomeDoMes(dados.mes1);
+            const inicio = formatarData(dados.data1);
+            const termino = calcularDataFinal(dados.data1, 30);
 
-                acao: "salvar",
-
-                cpf: usuarioCpf,
-
-                nome: usuarioNome,
-
-                op1: dadosFormulario.op1,
-
-                op2: dadosFormulario.op2,
-
-                op3: dadosFormulario.op3
-
-            })
-
-        });
-
-
-        const resultado =
-            await response.json();
-
-
-        if (resultado.sucesso) {
-
-            document.getElementById("modal-confirmacao")
-                .classList.add("hidden");
-
-
-            document.getElementById("modal-sucesso")
-                .classList.remove("hidden");
-
-
-        } else {
-
-            alert(
-                resultado.msg ||
-                "Erro ao salvar os dados."
+            return (
+                `30 dias | ${mes} | Início: ${inicio} | Término: ${termino}`
             );
 
         }
 
+        if (dados.tipo === "15+15") {
 
-    } catch (erro) {
+            const mes1 = nomeDoMes(dados.mes1);
+            const inicio1 = formatarData(dados.data1);
+            const termino1 = calcularDataFinal(dados.data1, 15);
 
-        console.error(erro);
+            const mes2 = nomeDoMes(dados.mes2);
+            const inicio2 = formatarData(dados.data2);
+            const termino2 = calcularDataFinal(dados.data2, 15);
 
-        alert(
-            "Erro ao enviar dados.\n\n" +
-            "Verifique sua conexão com a internet."
-        );
+            return (
+                `15+15 dias | ` +
+                `1º Período: ${mes1} | Início: ${inicio1} | Término: ${termino1} | ` +
+                `2º Período: ${mes2} | Início: ${inicio2} | Término: ${termino2}`
+            );
 
-    } finally {
+        }
 
-        btn.disabled = false;
-        btn.classList.remove("loading");
-        btn.innerText = "Confirmar e Enviar";
+        return "";
 
     }
 
-}
+
+    /*
+     * VALIDA O FORMULÁRIO
+     */
+    function validarFormulario() {
+
+        const mensagem = document.getElementById("mensagemFormulario");
+
+        mensagem.textContent = "";
+
+        const mesesEscolhidos = [];
+
+        for (let i = 1; i <= 3; i++) {
+
+            const tipo = document.getElementById(`tipo${i}`).value;
+            const mes1 = document.getElementById(`mes${i}`).value;
+            const data1 = document.getElementById(`data${i}`).value;
+
+            if (!tipo) {
+                mensagem.textContent = `Selecione o tipo da ${i}ª opção.`;
+                return false;
+            }
+
+            if (!mes1) {
+                mensagem.textContent = `Selecione o mês da ${i}ª opção.`;
+                return false;
+            }
+
+            if (!data1) {
+                mensagem.textContent = `Selecione a data da ${i}ª opção.`;
+                return false;
+            }
+
+            mesesEscolhidos.push(mes1);
+
+            if (tipo === "15+15") {
+
+                const mes2 = document.getElementById(`mes${i}b`).value;
+                const data2 = document.getElementById(`data${i}b`).value;
+
+                if (!mes2) {
+                    mensagem.textContent =
+                        `Selecione o mês do 2º período da ${i}ª opção.`;
+                    return false;
+                }
+
+                if (!data2) {
+                    mensagem.textContent =
+                        `Selecione a data do 2º período da ${i}ª opção.`;
+                    return false;
+                }
+
+                if (mes1 === mes2) {
+                    mensagem.textContent =
+                        `Os dois períodos da ${i}ª opção devem possuir meses diferentes.`;
+                    return false;
+                }
+
+                mesesEscolhidos.push(mes2);
+
+            }
+
+        }
 
 
-/* =====================================================
-   FECHAR SUCESSO E VOLTAR LOGIN
-===================================================== */
+        const mesesRepetidos = mesesEscolhidos.filter(
+            (mes, indice) =>
+                mesesEscolhidos.indexOf(mes) !== indice
+        );
 
-function fecharSucesso() {
+        if (mesesRepetidos.length > 0) {
+            mensagem.textContent =
+                "Não é permitido repetir meses entre as opções de férias.";
+            return false;
+        }
 
-    document.getElementById("modal-sucesso")
-        .classList.add("hidden");
 
-    location.reload();
+        /*
+         * Verifica se as datas estão dentro do mês escolhido.
+         */
+        for (let i = 1; i <= 3; i++) {
 
-}
+            const tipo = document.getElementById(`tipo${i}`).value;
+
+            const mes1 = document.getElementById(`mes${i}`).value;
+            const data1 = document.getElementById(`data${i}`).value;
+
+            const mesData1 = data1.substring(5, 7);
+
+            if (mes1 !== mesData1) {
+                mensagem.textContent =
+                    `A data da ${i}ª opção deve pertencer ao mês selecionado.`;
+                return false;
+            }
+
+            if (tipo === "15+15") {
+
+                const mes2 = document.getElementById(`mes${i}b`).value;
+                const data2 = document.getElementById(`data${i}b`).value;
+
+                const mesData2 = data2.substring(5, 7);
+
+                if (mes2 !== mesData2) {
+                    mensagem.textContent =
+                        `A data do 2º período da ${i}ª opção deve pertencer ao mês selecionado.`;
+                    return false;
+                }
+
+            }
+
+        }
+
+        return true;
+
+    }
+
+
+    /*
+     * ABRE MODAL DE CONFIRMAÇÃO
+     */
+    function abrirConfirmacao() {
+
+        if (!validarFormulario()) {
+            return;
+        }
+
+        const resumo = document.getElementById("resumoConfirmacao");
+
+        let texto = "";
+
+        texto += `Servidor: ${nomeUsuario}\n\n`;
+
+        for (let i = 1; i <= 3; i++) {
+
+            texto += `${i}ª OPÇÃO\n`;
+            texto += obterResumoOpcao(i);
+            texto += "\n\n";
+
+        }
+
+        texto +=
+            "Confira todas as informações antes de confirmar o envio.";
+
+        resumo.textContent = texto;
+
+        document.getElementById("modalConfirmacao").classList.remove("oculto");
+
+    }
+
+
+    /*
+     * FECHA MODAL DE CONFIRMAÇÃO
+     */
+    function fecharConfirmacao() {
+
+        document.getElementById("modalConfirmacao").classList.add("oculto");
+
+    }
+
+
+    /*
+     * ENVIO DOS DADOS
+     *
+     * CORREÇÃO PRINCIPAL:
+     * Não utilizar headers Content-Type: application/json.
+     * O Apps Script recebe o JSON através de e.postData.contents.
+     */
+    async function enviarDados() {
+
+        const botaoEnviar = document.getElementById("btnConfirmarEnvio");
+
+        botaoEnviar.disabled = true;
+        botaoEnviar.textContent = "Enviando...";
+
+        const dados = {
+            acao: "salvar",
+            cpf: cpfUsuario,
+            nome: nomeUsuario,
+            op1: obterResumoOpcao(1),
+            op2: obterResumoOpcao(2),
+            op3: obterResumoOpcao(3)
+        };
+
+
+        try {
+
+            const resposta = await fetch(URL_APPS_SCRIPT, {
+                method: "POST",
+                body: JSON.stringify(dados)
+            });
+
+            const texto = await resposta.text();
+
+            console.log("Resposta do servidor:", texto);
+
+            let resultado;
+
+            try {
+                resultado = JSON.parse(texto);
+            }
+            catch (erro) {
+                console.error("Resposta inválida:", texto);
+                throw new Error("Resposta inválida do servidor.");
+            }
+
+
+            if (resultado.sucesso) {
+
+                document.getElementById("modalConfirmacao")
+                    .classList.add("oculto");
+
+                document.getElementById("modalSucesso")
+                    .classList.remove("oculto");
+
+                document.getElementById("mensagemSucesso").textContent =
+                    resultado.msg ||
+                    resultado.mensagem ||
+                    "Suas opções de férias foram registradas corretamente.";
+
+            }
+            else {
+
+                alert(
+                    resultado.msg ||
+                    resultado.mensagem ||
+                    "Erro ao salvar os dados."
+                );
+
+            }
+
+        }
+        catch (erro) {
+
+            console.error("Erro ao enviar dados:", erro);
+
+            alert(
+                "Erro ao salvar os dados."
+            );
+
+        }
+        finally {
+
+            botaoEnviar.disabled = false;
+            botaoEnviar.textContent = "Confirmar";
+
+        }
+
+    }
+
+
+    /*
+     * VOLTAR PARA O LOGIN
+     */
+    function voltarLogin() {
+
+        if (
+            !confirm(
+                "Deseja realmente voltar? Os dados preenchidos serão perdidos."
+            )
+        ) {
+            return;
+        }
+
+        cpfUsuario = "";
+        nomeUsuario = "";
+
+        document.getElementById("formFerias").reset();
+
+        for (let i = 1; i <= 3; i++) {
+
+            const segundoPeriodo =
+                document.getElementById(`segundoPeriodo${i}`);
+
+            segundoPeriodo.classList.add("oculto");
+
+            document.getElementById(`mes${i}`).value = "";
+            document.getElementById(`data${i}`).value = "";
+            document.getElementById(`data${i}`).disabled = true;
+
+            document.getElementById(`mes${i}b`).value = "";
+            document.getElementById(`data${i}b`).value = "";
+            document.getElementById(`data${i}b`).disabled = true;
+
+            document.getElementById(`mes${i}b`).required = false;
+            document.getElementById(`data${i}b`).required = false;
+
+        }
+
+        document.getElementById("telaFormulario").classList.add("oculto");
+        document.getElementById("telaLogin").classList.remove("oculto");
+
+        document.getElementById("cpf").value = "";
+        document.getElementById("re").value = "";
+
+        document.getElementById("mensagemLogin").textContent = "";
+
+        window.scrollTo(0, 0);
+
+        atualizarBloqueiosMeses();
+
+    }
+
 
 </script>
 
