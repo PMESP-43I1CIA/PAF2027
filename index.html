@@ -912,36 +912,24 @@ function atualizarCampos() {
 
 function atualizarRestricoesMeses() {
 
-    const selecionados = {};
-
+    const selecionados = [];
 
     for (let i = 1; i <= 3; i++) {
-
-        const tipo = document.getElementById("tipo" + i).value;
 
         const mes = document.getElementById("mes" + i).value;
 
         const mesb = document.getElementById("mes" + i + "b").value;
 
+        if (mes) selecionados.push(mes);
 
-        if (mes) {
-
-            selecionados["mes" + i] = mes;
-
-        }
-
-        if (mesb) {
-
-            selecionados["mes" + i + "b"] = mesb;
-
-        }
+        if (mesb) selecionados.push(mesb);
 
     }
 
 
-    for (let i = 1; i <= 3; i++) {
+    // Desabilita meses já escolhidos em outras opções
 
-        const tipo = document.getElementById("tipo" + i).value;
+    for (let i = 1; i <= 3; i++) {
 
         const selects = [
 
@@ -959,49 +947,14 @@ function atualizarRestricoesMeses() {
 
             Array.from(select.options).forEach(option => {
 
-                option.disabled = false;
-
-            });
+                if (!option.value) return;
 
 
-            Object.entries(selecionados).forEach(([chave, valor]) => {
-
-                if (chave !== select.id && valor === optionValue(select)) {
-
-                }
-
-            });
+                const escolhidoEmOutroCampo = selecionados.includes(option.value) &&
+                    option.value !== valorAtual;
 
 
-            Object.entries(selecionados).forEach(([chave, valor]) => {
-
-                if (chave !== select.id && valor === select.options[0].value) {
-
-                }
-
-            });
-
-
-            Array.from(select.options).forEach(option => {
-
-                if (option.value === "") return;
-
-
-                let deveDesabilitar = false;
-
-
-                Object.entries(selecionados).forEach(([chave, valor]) => {
-
-                    if (chave !== select.id && option.value === valor) {
-
-                        deveDesabilitar = true;
-
-                    }
-
-                });
-
-
-                option.disabled = deveDesabilitar;
+                option.disabled = escolhidoEmOutroCampo;
 
             });
 
@@ -1013,7 +966,7 @@ function atualizarRestricoesMeses() {
     }
 
 
-    // Impedir meses iguais dentro do mesmo período 15+15
+    // Impede meses iguais dentro do mesmo período 15 + 15
 
     for (let i = 1; i <= 3; i++) {
 
@@ -1045,7 +998,6 @@ function atualizarRestricoesMeses() {
     }
 
 }
-
 
 // ============================================================
 // FUNÇÃO AUXILIAR
