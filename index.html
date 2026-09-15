@@ -3,106 +3,1296 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Férias 2027 - Sistema de Agendamento</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f1f4f8;color:#17202a}
-.card{width:min(560px,94%);margin:28px auto;background:#fff;border-radius:16px;padding:26px;box-shadow:0 10px 30px #00000012}
-h1{text-align:center;color:#2463e8;margin:0 0 6px;font-size:25px}h2{font-size:18px;border-bottom:1px solid #e1e6ed;padding-bottom:12px}
-.sub{text-align:center;color:#65748b;margin-bottom:22px;font-size:13px}
-label{display:block;font-size:13px;font-weight:bold;margin:13px 0 7px}
-input,select{width:100%;padding:12px;border:1px solid #ccd7e5;border-radius:8px;background:#fff;font-size:14px}
-button{width:100%;padding:13px;border:0;border-radius:8px;background:#2463e8;color:#fff;font-weight:bold;cursor:pointer;margin-top:18px}
-button:disabled{opacity:.6;cursor:not-allowed}.hidden{display:none!important}
-.user{background:#eef5ff;color:#1648b5;padding:10px;border-radius:8px;font-size:13px;margin:14px 0}
-.alert{background:#fff8e8;border:1px solid #f0ca74;color:#965800;padding:12px;border-radius:7px;font-size:12px;line-height:1.45}
-.option{border:1px solid #d9e1ec;border-radius:12px;padding:15px;margin:15px 0;background:#fcfdff}
-.option h3{margin:0 0 12px;color:#1354c7;font-size:15px}.preview{margin-top:12px;background:#f4f7fb;padding:10px;border-radius:7px;font-size:12px;line-height:1.6}
-footer{text-align:center;border-top:1px solid #eee;margin-top:20px;padding-top:13px;color:#9aa5b5;font-size:10px}
-.msg{text-align:center;font-size:12px;margin-top:10px;color:#d22}.ok{color:#087c3e}
-.modal{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:18px;z-index:5}
-.modalbox{background:#fff;width:min(520px,100%);max-height:90vh;overflow:auto;border-radius:14px;padding:22px;box-shadow:0 15px 50px #0005}
-.summary{background:#f5f8fc;border:1px solid #dce5f0;border-radius:9px;padding:14px;font-size:13px;line-height:1.7}
-.actions{display:flex;gap:10px}.actions button{flex:1}.cancel{background:#6c7785}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f1f4f8;
+    color: #1f2937;
+}
+
+.container {
+    width: 100%;
+    max-width: 520px;
+    margin: 35px auto;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    padding: 28px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    color: #2563eb;
+    margin: 0;
+    font-size: 28px;
+}
+
+.header p {
+    color: #64748b;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 10px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 16px;
+    margin-bottom: 7px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fff;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37,99,235,0.1);
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+button:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.alert {
+    padding: 13px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.alert-info {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e40af;
+}
+
+.alert-warning {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    color: #c2410c;
+}
+
+.alert-success {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #047857;
+}
+
+.alert-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+}
+
+.usuario-logado {
+    background: #eff6ff;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 20px;
+    color: #1d4ed8;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.opcao {
+    border: 1px solid #dbe3ed;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 16px;
+    background: #ffffff;
+}
+
+.opcao h3 {
+    color: #2563eb;
+    font-size: 16px;
+    margin-top: 0;
+}
+
+.resumo {
+    background: #f1f5f9;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 15px;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+.modal {
+    width: 100%;
+    max-width: 480px;
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+.modal h2 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.modal-content {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.8;
+    white-space: pre-line;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    margin-top: 0;
+}
+
+.btn-cancelar {
+    background: #64748b;
+}
+
+.btn-cancelar:hover {
+    background: #475569;
+}
+
+.footer {
+    text-align: center;
+    font-size: 10px;
+    color: #94a3b8;
+    border-top: 1px solid #e5e7eb;
+    margin-top: 25px;
+    padding-top: 12px;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #64748b;
+}
+
+@media(max-width: 600px) {
+
+    .container {
+        margin: 15px;
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+}
+
 </style>
 </head>
+
 <body>
-<div class="card" id="loginCard">
-<h1>Férias 2027</h1><div class="sub">Formulário Oficial de Escolha de Período</div>
-<h2>Autenticação</h2>
-<label>CPF</label><input id="cpf" maxlength="14" placeholder="000.000.000-00">
-<label>RE (Senha)</label><input id="re" type="password" placeholder="Digite seu RE">
-<button id="loginBtn">Entrar</button><div id="loginMsg" class="msg"></div>
-<footer>Elaborado por: Cb PM Ciquiroli</footer>
+
+<div class="container">
+
+    <!-- CABEÇALHO -->
+    <div class="header">
+        <h1>Férias 2027</h1>
+        <p>Formulário Oficial de Escolha de Período</p>
+    </div>
+
+
+    <!-- TELA DE LOGIN -->
+    <div id="telaLogin">
+
+        <h2>Autenticação</h2>
+
+        <label for="cpf">CPF</label>
+        <input
+            type="text"
+            id="cpf"
+            placeholder="000.000.000-00"
+            maxlength="14"
+            autocomplete="off"
+        >
+
+        <label for="senha">RE (Senha)</label>
+        <input
+            type="password"
+            id="senha"
+            placeholder="Digite seu RE"
+            autocomplete="off"
+        >
+
+        <button id="btnLogin" onclick="login()">
+            Entrar
+        </button>
+
+        <div id="mensagemLogin"></div>
+
+    </div>
+
+
+    <!-- TELA DE ESCOLHAS -->
+    <div id="telaEscolhas" class="hidden">
+
+        <div id="usuarioLogado" class="usuario-logado"></div>
+
+        <h2>Suas Opções de Interesse</h2>
+
+        <div class="alert alert-warning">
+            <strong>Atenção:</strong><br>
+            Você deverá preencher obrigatoriamente as 3 opções.
+            As opções não podem ser iguais.
+            Para períodos de 15 + 15 dias, os dois meses deverão ser diferentes.
+        </div>
+
+
+        <!-- OPÇÃO 1 -->
+        <div class="opcao">
+
+            <h3>1ª Opção (Preferencial)</h3>
+
+            <label>Tipo de Período</label>
+
+            <select id="tipo1" onchange="alterarTipo(1)">
+                <option value="30">30 dias diretos</option>
+                <option value="15+15">15 + 15 dias</option>
+            </select>
+
+            <div id="mes1-container"></div>
+
+            <div id="resumo1" class="resumo">
+                Selecione o mês desejado.
+            </div>
+
+        </div>
+
+
+        <!-- OPÇÃO 2 -->
+        <div class="opcao">
+
+            <h3>2ª Opção (Alternativa)</h3>
+
+            <label>Tipo de Período</label>
+
+            <select id="tipo2" onchange="alterarTipo(2)">
+                <option value="30">30 dias diretos</option>
+                <option value="15+15">15 + 15 dias</option>
+            </select>
+
+            <div id="mes2-container"></div>
+
+            <div id="resumo2" class="resumo">
+                Selecione o mês desejado.
+            </div>
+
+        </div>
+
+
+        <!-- OPÇÃO 3 -->
+        <div class="opcao">
+
+            <h3>3ª Opção (Alternativa)</h3>
+
+            <label>Tipo de Período</label>
+
+            <select id="tipo3" onchange="alterarTipo(3)">
+                <option value="30">30 dias diretos</option>
+                <option value="15+15">15 + 15 dias</option>
+            </select>
+
+            <div id="mes3-container"></div>
+
+            <div id="resumo3" class="resumo">
+                Selecione o mês desejado.
+            </div>
+
+        </div>
+
+
+        <button id="btnEnviar" onclick="abrirConfirmacao()">
+            Confirmar e Enviar Escolhas
+        </button>
+
+    </div>
+
+
+    <!-- LOADING -->
+    <div id="loading" class="loading hidden">
+        Processando, aguarde...
+    </div>
+
+
+    <!-- RODAPÉ -->
+    <div class="footer">
+        Elaborado por: Cb PM Ciquiroli
+    </div>
+
 </div>
 
-<div class="card hidden" id="appCard">
-<h1>Férias 2027</h1><div class="sub">Formulário de Escolha de Período da 1ª Cia/PM do 43ºBPM/I</div>
-<div class="user">Usuário autenticado: <b id="nomeUsuario"></b></div>
-<h2>Suas Opções de Interesse</h2>
-<div class="alert"><b>Atenção:</b><br>Preencha as 3 opções. As opções não podem ser iguais. Nos períodos de 15 + 15 dias, os dois meses devem ser diferentes entre si e das demais opções.</div>
-<form id="form">
-<div class="option"><h3>1ª Opção (Preferencial)</h3><label>Tipo de Período</label><select id="tipo1"></select><div id="campos1"></div><div class="preview" id="prev1"></div></div>
-<div class="option"><h3>2ª Opção (Alternativa)</h3><label>Tipo de Período</label><select id="tipo2"></select><div id="campos2"></div><div class="preview" id="prev2"></div></div>
-<div class="option"><h3>3ª Opção (Alternativa)</h3><label>Tipo de Período</label><select id="tipo3"></select><div id="campos3"></div><div class="preview" id="prev3"></div></div>
-<button type="submit" id="sendBtn">Confirmar e Enviar Escolhas</button><div id="sendMsg" class="msg"></div>
-</form><footer>Elaborado por: Cb PM Ciquiroli</footer>
+
+<!-- MODAL DE CONFIRMAÇÃO -->
+
+<div id="modalConfirmacao" class="modal-overlay hidden">
+
+    <div class="modal">
+
+        <h2>Confirmação das Escolhas de Férias 2027</h2>
+
+        <div id="textoConfirmacao" class="modal-content"></div>
+
+        <div class="modal-buttons">
+
+            <button class="btn-cancelar" onclick="fecharModal()">
+                Cancelar
+            </button>
+
+            <button onclick="enviarEscolhas()">
+                Confirmar Envio
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
 
-<div class="modal hidden" id="modal"><div class="modalbox"><h2>Confirmação das Escolhas de Férias 2027</h2><div class="summary" id="summary"></div><div class="actions"><button class="cancel" id="cancelBtn">Cancelar</button><button id="confirmBtn">Confirmar envio</button></div></div></div>
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbw7xc9mAHE3oWoEmeFj1OT3Xahj0LamRw0-EfAbDBbhNhytmLnw3wyXOj0OrZVtYO4ZGQ/exec";
-const meses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-let usuario={};
 
-const $=id=>document.getElementById(id);
-function cpfLimpo(v){return v.replace(/\D/g,"")}
-function dataBR(v){return v?new Date(v+"T12:00:00").toLocaleDateString("pt-BR"):""}
-function fim(v,dias){let x=new Date(v+"T12:00:00");x.setDate(x.getDate()+dias-1);return x.toLocaleDateString("pt-BR")}
-function optionHtml(id){return `<option value="">Selecione</option>`+meses.map((m,i)=>`<option value="${i+1}">${m}</option>`).join("")}
-function fillTipos(id){$(id).innerHTML='<option value="30">30 dias diretos</option><option value="15+15">15 + 15 dias</option>'}
-function render(n){
-  const tipo=$("tipo"+n).value, box=$("campos"+n);
-  box.innerHTML="";
-  if(tipo==="30") box.innerHTML='<label>Mês de Interesse</label><select id="m'+n+'">'+optionHtml()+'</select><label>Data pretendida para início</label><input id="d'+n+'" type="date" min="2027-01-01" max="2027-12-31">';
-  if(tipo==="15+15") box.innerHTML='<label>Mês do 1º Período</label><select id="m'+n+'a">'+optionHtml()+'</select><label>Data pretendida para início do 1º período</label><input id="d'+n+'a" type="date" min="2027-01-01" max="2027-12-31"><label>Mês do 2º Período</label><select id="m'+n+'b">'+optionHtml()+'</select><label>Data pretendida para início do 2º período</label><input id="d'+n+'b" type="date" min="2027-01-01" max="2027-12-31">';
-  [...box.querySelectorAll("select,input")].forEach(e=>e.addEventListener("change",()=>{limitarMeses();preview(n)}));
-  preview(n);limitarMeses();
+/* =====================================================
+   CONFIGURAÇÃO PRINCIPAL
+===================================================== */
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbw7xc9mAHE3oWoEmeFj1OT3Xahj0LamRw0-EfAbDBbhNhytmLnw3wyXOj0OrZVtYO4ZGQ/exec";
+
+
+let usuarioAtual = null;
+
+
+/* =====================================================
+   MESES
+===================================================== */
+
+const meses = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro"
+];
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    // Máscara CPF
+    document.getElementById("cpf").addEventListener("input", function(e) {
+
+        let valor = e.target.value.replace(/\D/g, "");
+
+        valor = valor.substring(0,11);
+
+        valor = valor.replace(
+            /(\d{3})(\d)/,
+            "$1.$2"
+        );
+
+        valor = valor.replace(
+            /(\d{3})(\d)/,
+            "$1.$2"
+        );
+
+        valor = valor.replace(
+            /(\d{3})(\d{1,2})$/,
+            "$1-$2"
+        );
+
+        e.target.value = valor;
+
+    });
+
+
+    // Criar opções iniciais
+    for(let i = 1; i <= 3; i++) {
+        alterarTipo(i);
+    }
+
+});
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function login() {
+
+    const cpf = document.getElementById("cpf").value.trim();
+    const senha = document.getElementById("senha").value.trim();
+    const btn = document.getElementById("btnLogin");
+    const mensagem = document.getElementById("mensagemLogin");
+
+    mensagem.innerHTML = "";
+
+    if(!cpf || !senha) {
+
+        mensagem.innerHTML =
+        '<div class="alert alert-error">Informe CPF e RE.</div>';
+
+        return;
+    }
+
+    btn.disabled = true;
+    btn.innerText = "Verificando...";
+
+    try {
+
+        const resposta = await fetch(API_URL, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
+
+            body: JSON.stringify({
+
+                acao: "login",
+                cpf: cpf,
+                senha: senha
+
+            })
+
+        });
+
+        const dados = await resposta.json();
+
+        console.log("Resposta Login:", dados);
+
+        if(dados.sucesso === true) {
+
+            // Verificar se já realizou escolha
+            if(
+                dados.jaEscolheu === true ||
+                dados.status === "JA_ENVIOU" ||
+                dados.status === "JÁ ENVIOU"
+            ) {
+
+                mensagem.innerHTML =
+                '<div class="alert alert-warning">' +
+                '<strong>Atenção!</strong><br>' +
+                'Sua escolha de férias já foi registrada anteriormente. ' +
+                'Não é permitido realizar um novo envio.' +
+                '</div>';
+
+                btn.disabled = false;
+                btn.innerText = "Entrar";
+
+                return;
+            }
+
+
+            usuarioAtual = dados;
+
+            document.getElementById("usuarioLogado").innerText =
+                "Usuário autenticado: " +
+                (dados.nome || dados.usuario || "Servidor autenticado");
+
+
+            document.getElementById("telaLogin").classList.add("hidden");
+
+            document.getElementById("telaEscolhas").classList.remove("hidden");
+
+            // Recriar campos
+            for(let i = 1; i <= 3; i++) {
+                alterarTipo(i);
+            }
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        } else {
+
+            mensagem.innerHTML =
+            '<div class="alert alert-error">' +
+            (dados.mensagem || "CPF ou RE inválidos.") +
+            '</div>';
+
+        }
+
+    } catch(erro) {
+
+        console.error(erro);
+
+        mensagem.innerHTML =
+        '<div class="alert alert-error">' +
+        'Erro ao conectar ao servidor. Verifique sua internet ou tente novamente.' +
+        '</div>';
+
+    }
+
+    btn.disabled = false;
+    btn.innerText = "Entrar";
+
 }
-function limitarMeses(){
-  let usados=[];
-  for(let n=1;n<=3;n++){
-    ["m"+n,"m"+n+"a","m"+n+"b"].forEach(id=>{let e=$(id);if(e&&e.value)usados.push(e.value)});
-  }
-  for(let n=1;n<=3;n++)["m"+n,"m"+n+"a","m"+n+"b"].forEach(id=>{
-    let e=$(id);if(!e)return;let atual=e.value;
-    [...e.options].forEach(o=>o.disabled=o.value && o.value!==atual && usados.includes(o.value));
-  });
+
+
+/* =====================================================
+   ALTERAÇÃO DO TIPO DE PERÍODO
+===================================================== */
+
+function alterarTipo(numero) {
+
+    const tipo = document.getElementById("tipo" + numero).value;
+
+    const container =
+        document.getElementById("mes" + numero + "-container");
+
+    container.innerHTML = "";
+
+
+    if(tipo === "30") {
+
+        container.innerHTML = `
+
+            <label>Mês de Interesse</label>
+
+            <select id="mes${numero}" onchange="atualizarResumo(${numero})">
+                ${gerarMeses()}
+            </select>
+
+            <label>Data pretendida para início</label>
+
+            <input
+                type="date"
+                id="data${numero}"
+                onchange="atualizarResumo(${numero})"
+            >
+
+        `;
+
+        atualizarResumo(numero);
+
+    }
+
+
+    if(tipo === "15+15") {
+
+        container.innerHTML = `
+
+            <label>Mês do 1º Período</label>
+
+            <select id="mes${numero}a" onchange="atualizarDatas15(${numero})">
+                ${gerarMeses()}
+            </select>
+
+            <label>Data pretendida para início do 1º período</label>
+
+            <input
+                type="date"
+                id="data${numero}a"
+                onchange="atualizarResumo(${numero})"
+            >
+
+
+            <label>Mês do 2º Período</label>
+
+            <select id="mes${numero}b" onchange="atualizarDatas15(${numero})">
+                ${gerarMeses()}
+            </select>
+
+            <label>Data pretendida para início do 2º período</label>
+
+            <input
+                type="date"
+                id="data${numero}b"
+                onchange="atualizarResumo(${numero})"
+            >
+
+        `;
+
+        // Definir meses diferentes inicialmente
+        document.getElementById("mes" + numero + "a").value = "Janeiro";
+        document.getElementById("mes" + numero + "b").value = "Fevereiro";
+
+        atualizarDatas15(numero);
+        atualizarResumo(numero);
+
+    }
+
 }
-function getData(n){
- let t=$("tipo"+n).value;
- if(t==="30"){let m=$("m"+n).value,d=$("d"+n).value;return {tipo:t,m1:m,d1:d,text:`30 dias diretos - ${meses[m-1]}<br>${dataBR(d)} até ${fim(d,30)}`}}
- let ma=$("m"+n+"a").value,mb=$("m"+n+"b").value,da=$("d"+n+"a").value,db=$("d"+n+"b").value;
- return {tipo:t,m1:ma,m2:mb,d1:da,d2:db,text:`15 + 15 dias - ${meses[ma-1]} / ${meses[mb-1]}<br>1º Período: ${dataBR(da)} até ${fim(da,15)}<br>2º Período: ${dataBR(db)} até ${fim(db,15)}`};
+
+
+/* =====================================================
+   GERAR MESES
+===================================================== */
+
+function gerarMeses() {
+
+    return meses.map((mes, index) => {
+
+        return `<option value="${mes}">
+            ${mes}
+        </option>`;
+
+    }).join("");
+
 }
-function preview(n){let e=$("prev"+n);try{let x=getData(n);e.innerHTML=x.m1&&x.d1?`Período: ${x.text}`:"Preencha os dados desta opção."; }catch(_){e.innerHTML="Preencha os dados desta opção."}}
-function valida(){
- let a=[1,2,3].map(getData), mesesUsados=[];
- for(let x of a){if(!x.m1||!x.d1||(x.tipo==="15+15"&&(!x.m2||!x.d2)))return "Preencha todos os campos das 3 opções.";mesesUsados.push(x.m1);if(x.tipo==="15+15")mesesUsados.push(x.m2)}
- if(new Set(mesesUsados).size!==mesesUsados.length)return "As opções e os meses dos períodos 15 + 15 devem ser diferentes.";
- return null;
+
+
+/* =====================================================
+   ATUALIZAÇÃO AUTOMÁTICA DAS DATAS
+===================================================== */
+
+function atualizarDatas15(numero) {
+
+    const mes1 =
+        document.getElementById("mes" + numero + "a").value;
+
+    const mes2 =
+        document.getElementById("mes" + numero + "b").value;
+
+
+    // Impedir meses iguais
+    if(mes1 === mes2) {
+
+        alert("Os dois períodos de 15 dias deverão ser em meses diferentes.");
+
+        // Selecionar automaticamente próximo mês
+        const index = meses.indexOf(mes1);
+
+        const proximo =
+            meses[(index + 1) % 12];
+
+        document.getElementById("mes" + numero + "b").value = proximo;
+
+    }
+
+
+    // Direcionar automaticamente as datas para o mês escolhido
+    definirDataMes(
+        "data" + numero + "a",
+        document.getElementById("mes" + numero + "a").value,
+        2027
+    );
+
+    definirDataMes(
+        "data" + numero + "b",
+        document.getElementById("mes" + numero + "b").value,
+        2027
+    );
+
+    atualizarResumo(numero);
+
 }
-function abrirResumo(){
- let a=[1,2,3].map(getData);$("summary").innerHTML=`<b>Servidor:</b> ${usuario.nome}<br><br>`+a.map((x,i)=>`<b>${i+1}ª OPÇÃO:</b><br>${x.text}`).join("<br><br>");$("modal").classList.remove("hidden");
+
+
+/* =====================================================
+   DEFINIR DATA CONFORME MÊS
+===================================================== */
+
+function definirDataMes(campoId, mesNome, ano) {
+
+    const input = document.getElementById(campoId);
+
+    if(!input) return;
+
+    const indice = meses.indexOf(mesNome);
+
+    if(indice === -1) return;
+
+    const mesNumero =
+        String(indice + 1).padStart(2, "0");
+
+    // Sempre primeiro dia do mês escolhido
+    input.value = `${ano}-${mesNumero}-01`;
+
 }
-async function post(payload){
- let r=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
- return await r.json();
+
+
+/* =====================================================
+   ATUALIZAR RESUMO DOS PERÍODOS
+===================================================== */
+
+function atualizarResumo(numero) {
+
+    const tipo =
+        document.getElementById("tipo" + numero).value;
+
+    const resumo =
+        document.getElementById("resumo" + numero);
+
+
+    if(tipo === "30") {
+
+        const mes =
+            document.getElementById("mes" + numero).value;
+
+        const data =
+            document.getElementById("data" + numero).value;
+
+        if(!data) {
+
+            resumo.innerText =
+                "Período de 30 dias - " + mes;
+
+            return;
+        }
+
+        const inicio =
+            converterData(data);
+
+        const fim =
+            adicionarDias(data, 29);
+
+        resumo.innerText =
+            "Período: 30 dias diretos - " + mes +
+            "\n" +
+            inicio + " até " + fim;
+
+    }
+
+
+    if(tipo === "15+15") {
+
+        const mes1 =
+            document.getElementById("mes" + numero + "a").value;
+
+        const mes2 =
+            document.getElementById("mes" + numero + "b").value;
+
+        const data1 =
+            document.getElementById("data" + numero + "a").value;
+
+        const data2 =
+            document.getElementById("data" + numero + "b").value;
+
+
+        if(!data1 || !data2) {
+
+            resumo.innerText =
+                "Período 15 + 15 dias - " +
+                mes1 + " / " + mes2;
+
+            return;
+        }
+
+
+        const fim1 =
+            adicionarDias(data1, 14);
+
+        const fim2 =
+            adicionarDias(data2, 14);
+
+
+        resumo.innerText =
+            "Período 15 + 15 dias - " +
+            mes1 + " / " + mes2 +
+            "\n" +
+            "1º Período: " +
+            converterData(data1) +
+            " até " +
+            fim1 +
+            "\n" +
+            "2º Período: " +
+            converterData(data2) +
+            " até " +
+            fim2;
+
+    }
+
 }
-$("loginBtn").onclick=async()=>{let msg=$("loginMsg");msg.textContent="Conectando...";try{let r=await post({acao:"login",cpf:cpfLimpo($("cpf").value),re:$("re").value});if(!r.sucesso)throw Error(r.msg);usuario=r;$("nomeUsuario").textContent=r.nome;$("loginCard").classList.add("hidden");$("appCard").classList.remove("hidden");[1,2,3].forEach(n=>{fillTipos("tipo"+n);$("tipo"+n).onchange=()=>render(n);render(n)});}catch(e){msg.textContent=e.message||"Erro ao conectar ao servidor."}};
-$("form").onsubmit=e=>{e.preventDefault();let erro=valida();if(erro){$("sendMsg").textContent=erro;return}abrirResumo()};
-$("cancelBtn").onclick=()=>$("modal").classList.add("hidden");
-$("confirmBtn").onclick=async()=>{let b=$("confirmBtn");b.disabled=true;b.textContent="Enviando...";try{let a=[1,2,3].map(getData);let r=await post({acao:"salvar",cpf:usuario.cpf,nome:usuario.nome,op1:a[0].text.replace(/<br>/g," | "),op2:a[1].text.replace(/<br>/g," | "),op3:a[2].text.replace(/<br>/g," | ")});if(!r.sucesso)throw Error(r.msg);$("modal").classList.add("hidden");$("sendMsg").className="msg ok";$("sendMsg").textContent=r.msg+" Protocolo: "+(r.protocolo||"gerado");$("form").reset();}catch(e){alert("Erro ao enviar dados: "+e.message)}finally{b.disabled=false;b.textContent="Confirmar envio"}};
+
+
+/* =====================================================
+   DATAS
+===================================================== */
+
+function converterData(data) {
+
+    if(!data) return "";
+
+    const partes = data.split("-");
+
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
+
+}
+
+
+function adicionarDias(data, dias) {
+
+    const d = new Date(data + "T00:00:00");
+
+    d.setDate(d.getDate() + dias);
+
+    const dia =
+        String(d.getDate()).padStart(2, "0");
+
+    const mes =
+        String(d.getMonth() + 1).padStart(2, "0");
+
+    const ano =
+        d.getFullYear();
+
+    return `${dia}/${mes}/${ano}`;
+
+}
+
+
+/* =====================================================
+   VALIDAÇÃO DAS ESCOLHAS
+===================================================== */
+
+function validarEscolhas() {
+
+    const escolhas = [];
+
+    for(let i = 1; i <= 3; i++) {
+
+        const tipo =
+            document.getElementById("tipo" + i).value;
+
+        if(tipo === "30") {
+
+            const mes =
+                document.getElementById("mes" + i).value;
+
+            const data =
+                document.getElementById("data" + i).value;
+
+            if(!mes || !data) {
+                alert(`Preencha todos os campos da ${i}ª opção.`);
+                return false;
+            }
+
+            escolhas.push({
+                tipo: tipo,
+                mes: mes,
+                data: data
+            });
+
+        }
+
+
+        if(tipo === "15+15") {
+
+            const mes1 =
+                document.getElementById("mes" + i + "a").value;
+
+            const mes2 =
+                document.getElementById("mes" + i + "b").value;
+
+            const data1 =
+                document.getElementById("data" + i + "a").value;
+
+            const data2 =
+                document.getElementById("data" + i + "b").value;
+
+            if(!mes1 || !mes2 || !data1 || !data2) {
+
+                alert(`Preencha todos os campos da ${i}ª opção.`);
+
+                return false;
+            }
+
+            if(mes1 === mes2) {
+
+                alert(
+                    `Na ${i}ª opção, os meses dos períodos devem ser diferentes.`
+                );
+
+                return false;
+            }
+
+            escolhas.push({
+                tipo: tipo,
+                mes1: mes1,
+                mes2: mes2,
+                data1: data1,
+                data2: data2
+            });
+
+        }
+
+    }
+
+
+    // Verificar opções iguais
+    const identificadores =
+        escolhas.map(e => JSON.stringify(e));
+
+    const unicos =
+        new Set(identificadores);
+
+    if(unicos.size !== identificadores.length) {
+
+        alert("As 3 opções devem ser diferentes.");
+
+        return false;
+    }
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   MODAL DE CONFIRMAÇÃO
+===================================================== */
+
+function abrirConfirmacao() {
+
+    if(!validarEscolhas()) return;
+
+
+    let texto = "";
+
+    for(let i = 1; i <= 3; i++) {
+
+        const tipo =
+            document.getElementById("tipo" + i).value;
+
+
+        texto += `${i}ª OPÇÃO:\n`;
+
+
+        if(tipo === "30") {
+
+            const mes =
+                document.getElementById("mes" + i).value;
+
+            const data =
+                document.getElementById("data" + i).value;
+
+            texto +=
+                "30 dias diretos - " + mes + "\n";
+
+            texto +=
+                converterData(data) +
+                " até " +
+                adicionarDias(data, 29) +
+                "\n\n";
+
+        }
+
+
+        if(tipo === "15+15") {
+
+            const mes1 =
+                document.getElementById("mes" + i + "a").value;
+
+            const mes2 =
+                document.getElementById("mes" + i + "b").value;
+
+            const data1 =
+                document.getElementById("data" + i + "a").value;
+
+            const data2 =
+                document.getElementById("data" + i + "b").value;
+
+            texto +=
+                "15 + 15 dias - " +
+                mes1 + " / " + mes2 + "\n";
+
+            texto +=
+                "1º Período: " +
+                converterData(data1) +
+                " até " +
+                adicionarDias(data1, 14) +
+                "\n";
+
+            texto +=
+                "2º Período: " +
+                converterData(data2) +
+                " até " +
+                adicionarDias(data2, 14) +
+                "\n\n";
+
+        }
+
+    }
+
+
+    document.getElementById("textoConfirmacao").innerText =
+        texto;
+
+
+    document.getElementById("modalConfirmacao")
+        .classList.remove("hidden");
+
+}
+
+
+/* =====================================================
+   FECHAR MODAL
+===================================================== */
+
+function fecharModal() {
+
+    document.getElementById("modalConfirmacao")
+        .classList.add("hidden");
+
+}
+
+
+/* =====================================================
+   ENVIO PARA GOOGLE APPS SCRIPT
+===================================================== */
+
+async function enviarEscolhas() {
+
+    const btn =
+        document.querySelector("#modalConfirmacao .modal-buttons button:last-child");
+
+    btn.disabled = true;
+    btn.innerText = "Enviando...";
+
+
+    try {
+
+        const opcoes = [];
+
+        for(let i = 1; i <= 3; i++) {
+
+            const tipo =
+                document.getElementById("tipo" + i).value;
+
+
+            if(tipo === "30") {
+
+                opcoes.push({
+
+                    tipoPeriodo: "30 dias diretos",
+
+                    mes: document.getElementById("mes" + i).value,
+
+                    dataInicio:
+                        document.getElementById("data" + i).value,
+
+                    dataFim:
+                        adicionarDias(
+                            document.getElementById("data" + i).value,
+                            29
+                        )
+
+                });
+
+            }
+
+
+            if(tipo === "15+15") {
+
+                const data1 =
+                    document.getElementById("data" + i + "a").value;
+
+                const data2 =
+                    document.getElementById("data" + i + "b").value;
+
+
+                opcoes.push({
+
+                    tipoPeriodo: "15 + 15 dias",
+
+                    mes1:
+                        document.getElementById("mes" + i + "a").value,
+
+                    mes2:
+                        document.getElementById("mes" + i + "b").value,
+
+                    dataInicio1: data1,
+
+                    dataFim1: adicionarDias(data1, 14),
+
+                    dataInicio2: data2,
+
+                    dataFim2: adicionarDias(data2, 14)
+
+                });
+
+            }
+
+        }
+
+
+        const dadosEnvio = {
+
+            acao: "enviarEscolhas",
+
+            cpf: usuarioAtual.cpf || document.getElementById("cpf").value,
+
+            nome: usuarioAtual.nome || "",
+
+            re: usuarioAtual.re || usuarioAtual.senha || "",
+
+            opcao1: opcoes[0],
+
+            opcao2: opcoes[1],
+
+            opcao3: opcoes[2]
+
+        };
+
+
+        console.log("Dados enviados:", dadosEnvio);
+
+
+        const resposta = await fetch(API_URL, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
+
+            body: JSON.stringify(dadosEnvio)
+
+        });
+
+
+        const resultado = await resposta.json();
+
+        console.log("Resposta envio:", resultado);
+
+
+        if(resultado.sucesso === true) {
+
+            fecharModal();
+
+
+            alert(
+                "Escolhas enviadas com sucesso!\n\n" +
+                "Seu registro foi realizado no sistema de Férias 2027."
+            );
+
+
+            // LIMPAR SESSÃO E VOLTAR PARA LOGIN
+            usuarioAtual = null;
+
+            document.getElementById("telaEscolhas")
+                .classList.add("hidden");
+
+            document.getElementById("telaLogin")
+                .classList.remove("hidden");
+
+
+            document.getElementById("cpf").value = "";
+            document.getElementById("senha").value = "";
+
+            document.getElementById("mensagemLogin").innerHTML =
+                '<div class="alert alert-success">' +
+                'Escolha registrada com sucesso. Obrigado!' +
+                '</div>';
+
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        } else {
+
+            alert(
+                resultado.mensagem ||
+                "Erro ao enviar dados."
+            );
+
+        }
+
+    } catch(erro) {
+
+        console.error("Erro envio:", erro);
+
+        alert(
+            "Erro ao enviar dados. Verifique sua conexão com a internet."
+        );
+
+    }
+
+
+    btn.disabled = false;
+    btn.innerText = "Confirmar Envio";
+
+}
+
 </script>
+
 </body>
 </html>
