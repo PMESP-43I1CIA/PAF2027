@@ -2,14 +2,16 @@
 <html lang="pt-BR">
 
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Férias 2027 - Sistema de Agendamento</title>
 
 <style>
+
+/* =====================================================
+   CONFIGURAÇÃO GERAL
+===================================================== */
 
 * {
     box-sizing: border-box;
@@ -21,31 +23,51 @@ body {
 
     font-family: Arial, Helvetica, sans-serif;
 
-    background: #f1f3f6;
+    background: #eef1f5;
 
     color: #222;
 
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: flex-start;
+
+    padding: 30px 15px;
+
 }
+
+
+/* =====================================================
+   CONTAINER PRINCIPAL
+===================================================== */
 
 .container {
 
     width: 100%;
 
-    max-width: 600px;
-
-    margin: 30px auto;
+    max-width: 550px;
 
     background: white;
 
     border-radius: 16px;
 
-    padding: 30px;
+    padding: 28px;
 
     box-shadow: 0 8px 25px rgba(0,0,0,0.10);
 
+    margin-bottom: 30px;
+
 }
 
-.header {
+
+/* =====================================================
+   CABEÇALHO
+===================================================== */
+
+header {
 
     text-align: center;
 
@@ -53,99 +75,112 @@ body {
 
 }
 
-.header h1 {
+header h1 {
 
-    margin: 0;
+    color: #1769e0;
 
-    color: #2563eb;
+    font-size: 27px;
 
-    font-size: 28px;
+    margin: 0 0 8px 0;
 
 }
 
-.header p {
+header p {
 
-    color: #64748b;
-
-    margin-top: 8px;
+    color: #777;
 
     font-size: 14px;
 
+    margin: 0;
+
 }
 
-h2 {
+
+/* =====================================================
+   SEÇÕES
+===================================================== */
+
+.section-title {
 
     font-size: 18px;
 
-    border-bottom: 1px solid #e5e7eb;
+    font-weight: bold;
 
-    padding-bottom: 10px;
-
-    margin-top: 25px;
-
-}
-
-h3 {
-
-    color: #1557c0;
-
-    font-size: 16px;
+    margin-top: 20px;
 
     margin-bottom: 18px;
 
+    padding-bottom: 10px;
+
+    border-bottom: 1px solid #ddd;
+
 }
+
+
+/* =====================================================
+   CAMPOS
+===================================================== */
 
 label {
 
     display: block;
 
-    font-weight: bold;
-
     font-size: 13px;
 
-    margin-bottom: 7px;
+    font-weight: bold;
+
+    margin-top: 15px;
+
+    margin-bottom: 6px;
 
 }
 
-input, select {
+input,
+select {
 
     width: 100%;
 
     padding: 12px;
 
-    border: 1px solid #cbd5e1;
+    border: 1px solid #ccd5e0;
 
-    border-radius: 8px;
+    border-radius: 7px;
 
-    font-size: 15px;
-
-    margin-bottom: 15px;
+    font-size: 14px;
 
     background: white;
 
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
 
     outline: none;
 
-    border-color: #2563eb;
+    border-color: #1769e0;
 
-    box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
+    box-shadow: 0 0 0 2px rgba(23,105,224,0.10);
 
 }
+
+
+/* =====================================================
+   BOTÕES
+===================================================== */
 
 button {
 
     width: 100%;
 
-    padding: 14px;
+    padding: 13px;
+
+    margin-top: 20px;
 
     border: none;
 
-    border-radius: 8px;
+    border-radius: 7px;
 
-    background: #2563eb;
+    background: #1769e0;
 
     color: white;
 
@@ -155,65 +190,75 @@ button {
 
     cursor: pointer;
 
-    transition: 0.2s;
-
 }
 
 button:hover {
 
-    background: #1d4ed8;
+    background: #1258bd;
 
 }
 
 button:disabled {
 
-    background: #94a3b8;
+    background: #aeb9c8;
 
     cursor: not-allowed;
 
 }
 
-.hidden {
 
-    display: none !important;
+/* =====================================================
+   BOTÃO SECUNDÁRIO
+===================================================== */
 
-}
+.btn-secondary {
 
-.error {
-
-    color: #dc2626;
-
-    font-size: 13px;
-
-    text-align: center;
-
-    margin-top: 10px;
+    background: #6c757d;
 
 }
 
-.success {
+.btn-secondary:hover {
 
-    color: #15803d;
-
-    font-size: 14px;
-
-    text-align: center;
-
-    margin-top: 10px;
+    background: #545b62;
 
 }
 
-.warning {
 
-    background: #fff7ed;
+/* =====================================================
+   LOGIN
+===================================================== */
 
-    border: 1px solid #fdba74;
+#loginSection {
 
-    color: #9a3412;
+    display: block;
 
-    padding: 14px;
+}
+
+
+/* =====================================================
+   SISTEMA PRINCIPAL
+===================================================== */
+
+#formSection {
+
+    display: none;
+
+}
+
+
+/* =====================================================
+   USUÁRIO AUTENTICADO
+===================================================== */
+
+.user-box {
+
+    background: #eaf3ff;
+
+    color: #1452a5;
 
     border-radius: 8px;
+
+    padding: 12px;
 
     font-size: 13px;
 
@@ -221,13 +266,47 @@ button:disabled {
 
 }
 
+
+/* =====================================================
+   ALERTAS
+===================================================== */
+
+.alert {
+
+    padding: 13px;
+
+    border-radius: 7px;
+
+    font-size: 13px;
+
+    margin-bottom: 20px;
+
+    line-height: 1.5;
+
+}
+
+.alert-warning {
+
+    background: #fff8e6;
+
+    border: 1px solid #f2c76e;
+
+    color: #9a5600;
+
+}
+
+
+/* =====================================================
+   CARDS DE OPÇÕES
+===================================================== */
+
 .option-card {
 
-    border: 1px solid #dbe3ef;
+    border: 1px solid #dbe2eb;
 
     border-radius: 12px;
 
-    padding: 18px;
+    padding: 16px;
 
     margin-bottom: 18px;
 
@@ -237,143 +316,231 @@ button:disabled {
 
 .option-card h3 {
 
-    margin-top: 0;
+    color: #1769e0;
+
+    font-size: 16px;
+
+    margin: 0 0 15px 0;
 
 }
 
-.confirmation {
 
-    background: #f8fafc;
+/* =====================================================
+   INFORMAÇÕES DE DATAS
+===================================================== */
 
-    border: 1px solid #cbd5e1;
+.date-info {
+
+    margin-top: 10px;
+
+    background: #f1f6fb;
+
+    border-left: 4px solid #1769e0;
+
+    padding: 10px;
+
+    font-size: 12px;
+
+    color: #444;
+
+    display: none;
+
+}
+
+
+/* =====================================================
+   MENSAGENS
+===================================================== */
+
+.message {
+
+    text-align: center;
+
+    font-size: 13px;
+
+    margin-top: 12px;
+
+    min-height: 18px;
+
+}
+
+.error {
+
+    color: #d93025;
+
+}
+
+.success {
+
+    color: #188038;
+
+}
+
+
+/* =====================================================
+   MODAL DE CONFIRMAÇÃO
+===================================================== */
+
+.modal {
+
+    display: none;
+
+    position: fixed;
+
+    z-index: 999;
+
+    left: 0;
+
+    top: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background: rgba(0,0,0,0.55);
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 15px;
+
+}
+
+.modal-content {
+
+    background: white;
+
+    width: 100%;
+
+    max-width: 500px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    border-radius: 14px;
+
+    padding: 25px;
+
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+
+}
+
+.modal-content h2 {
+
+    margin-top: 0;
+
+    color: #1769e0;
+
+    font-size: 20px;
+
+}
+
+.confirmation-item {
+
+    background: #f7f9fc;
+
+    border: 1px solid #e0e5ec;
+
+    border-radius: 8px;
+
+    padding: 12px;
+
+    margin-bottom: 12px;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+}
+
+.confirmation-item strong {
+
+    color: #1769e0;
+
+}
+
+
+/* =====================================================
+   RESUMO FINAL
+===================================================== */
+
+#resultSection {
+
+    display: none;
+
+}
+
+.result-box {
+
+    background: #f0fff4;
+
+    border: 1px solid #b7e4c7;
 
     border-radius: 10px;
 
-    padding: 18px;
+    padding: 20px;
 
-    margin-bottom: 20px;
-
-}
-
-.confirmation h3 {
-
-    margin-top: 0;
-
-}
-
-.summary-item {
-
-    padding: 10px 0;
-
-    border-bottom: 1px solid #e5e7eb;
+    line-height: 1.7;
 
     font-size: 14px;
 
 }
 
-.summary-item:last-child {
+.result-box h3 {
 
-    border-bottom: none;
+    color: #188038;
 
-}
-
-.summary-item strong {
-
-    display: block;
-
-    color: #475569;
-
-    font-size: 12px;
-
-    margin-bottom: 4px;
+    margin-top: 0;
 
 }
 
-.footer {
+
+/* =====================================================
+   RODAPÉ
+===================================================== */
+
+footer {
 
     text-align: center;
 
     margin-top: 25px;
 
-    padding-top: 12px;
+    padding-top: 15px;
 
-    border-top: 1px solid #e5e7eb;
-
-    color: #94a3b8;
+    border-top: 1px solid #eeeeee;
 
     font-size: 11px;
 
-}
-
-.btn-secondary {
-
-    background: #64748b;
-
-    margin-top: 10px;
+    color: #9aa3ad;
 
 }
 
-.btn-secondary:hover {
 
-    background: #475569;
+/* =====================================================
+   RESPONSIVIDADE
+===================================================== */
 
-}
-
-.btn-success {
-
-    background: #16a34a;
-
-}
-
-.btn-success:hover {
-
-    background: #15803d;
-
-}
-
-.user-info {
-
-    background: #eff6ff;
-
-    border-radius: 8px;
-
-    padding: 10px;
-
-    margin-bottom: 20px;
-
-    font-size: 13px;
-
-    color: #1e40af;
-
-}
-
-@media (max-width: 650px) {
+@media (max-width: 480px) {
 
     body {
 
-        background: #f1f3f6;
+        padding: 15px 8px;
 
     }
 
     .container {
 
-        margin: 10px;
-
         padding: 20px;
 
-        border-radius: 14px;
+        border-radius: 12px;
 
     }
 
-    .header h1 {
+    header h1 {
 
         font-size: 24px;
-
-    }
-
-    h2 {
-
-        font-size: 17px;
 
     }
 
@@ -383,364 +550,286 @@ button:disabled {
 
 </head>
 
+
 <body>
 
 
 <div class="container">
 
-    <!-- =========================================
-         CABEÇALHO
-    ========================================== -->
 
-    <div class="header">
+<!-- =====================================================
+     CABEÇALHO
+===================================================== -->
 
-        <h1>Férias 2027</h1>
+<header>
 
-        <p>Formulário de Escolha de Período da 1ª Cia/PM do 43ºBPM/I</p>
+    <h1>Férias 2027</h1>
 
-    </div>
+    <p>Formulário de Escolha de Período da 1ª Cia/PM do 43º BPM/I</p>
+
+</header>
 
 
-    <!-- =========================================
-         TELA DE LOGIN
-    ========================================== -->
+<!-- =====================================================
+     LOGIN
+===================================================== -->
 
-    <div id="telaLogin">
+<div id="loginSection">
 
-        <h2>Autenticação</h2>
+    <div class="section-title">
 
-        <form id="formLogin">
-
-            <label for="cpf">CPF</label>
-
-            <input
-                type="text"
-                id="cpf"
-                placeholder="Digite seu CPF"
-                maxlength="14"
-                required
-            >
-
-            <label for="re">RE (Senha)</label>
-
-            <input
-                type="password"
-                id="re"
-                placeholder="Digite seu RE"
-                required
-            >
-
-            <button type="submit" id="btnLogin">
-                Entrar
-            </button>
-
-        </form>
-
-        <div id="mensagemErro" class="error"></div>
+        Autenticação
 
     </div>
 
 
-    <!-- =========================================
-         TELA PRINCIPAL
-    ========================================== -->
+    <label for="cpf">CPF</label>
 
-    <div id="telaFormulario" class="hidden">
+    <input
+        type="text"
+        id="cpf"
+        maxlength="14"
+        placeholder="000.000.000-00"
+        autocomplete="off"
+    >
 
-        <div class="user-info">
 
-            Usuário autenticado: <strong id="nomeUsuario"></strong>
+    <label for="re">RE (Senha)</label>
 
-        </div>
+    <input
+        type="password"
+        id="re"
+        placeholder="Digite seu RE"
+    >
 
 
-        <h2>Suas Opções de Interesse</h2>
+    <button onclick="fazerLogin()">
 
+        Entrar
 
-        <div class="warning">
+    </button>
 
-            <strong>Atenção:</strong><br>
 
-            Você deverá preencher obrigatoriamente as 3 opções.
+    <div id="loginMessage" class="message"></div>
 
-            As opções não podem ser iguais.
+</div>
 
-            Para períodos de 15 + 15 dias, os dois meses deverão ser diferentes.
 
-        </div>
+<!-- =====================================================
+     FORMULÁRIO PRINCIPAL
+===================================================== -->
 
+<div id="formSection">
 
-        <!-- =====================================
-             OPÇÃO 1
-        ====================================== -->
 
-        <div class="option-card">
+    <div class="user-box">
 
-            <h3>1ª Opção (Preferencial)</h3>
-
-            <label for="tipo1">Tipo de Período</label>
-
-            <select id="tipo1" onchange="atualizarFormulario(1)">
-
-                <option value="30">30 dias diretos</option>
-
-                <option value="15+15">15 + 15 dias</option>
-
-            </select>
-
-
-            <div id="mes1Container">
-
-                <label for="mes1">Mês de Interesse</label>
-
-                <select id="mes1" onchange="atualizarDataPorMes(1)"></select>
-
-            </div>
-
-
-            <div id="mes1Periodo2Container" class="hidden">
-
-                <label for="mes1b">Mês do 2º Período</label>
-
-                <select id="mes1b" onchange="atualizarDataPorMes(1, true)"></select>
-
-            </div>
-
-
-            <label for="data1">Data pretendida para início</label>
-
-            <input type="date" id="data1" onchange="atualizarResumoAutomatico(1)">
-
-
-            <div id="data1bContainer" class="hidden">
-
-                <label for="data1b">Segunda data pretendida para início</label>
-
-                <input type="date" id="data1b" onchange="atualizarResumoAutomatico(1, true)">
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================
-             OPÇÃO 2
-        ====================================== -->
-
-        <div class="option-card">
-
-            <h3>2ª Opção (Alternativa)</h3>
-
-            <label for="tipo2">Tipo de Período</label>
-
-            <select id="tipo2" onchange="atualizarFormulario(2)">
-
-                <option value="30">30 dias diretos</option>
-
-                <option value="15+15">15 + 15 dias</option>
-
-            </select>
-
-
-            <div>
-
-                <label for="mes2">Mês de Interesse</label>
-
-                <select id="mes2" onchange="atualizarDataPorMes(2)"></select>
-
-            </div>
-
-
-            <div id="mes2Periodo2Container" class="hidden">
-
-                <label for="mes2b">Mês do 2º Período</label>
-
-                <select id="mes2b" onchange="atualizarDataPorMes(2, true)"></select>
-
-            </div>
-
-
-            <label for="data2">Data pretendida para início</label>
-
-            <input type="date" id="data2" onchange="atualizarResumoAutomatico(2)">
-
-
-            <div id="data2bContainer" class="hidden">
-
-                <label for="data2b">Segunda data pretendida para início</label>
-
-                <input type="date" id="data2b" onchange="atualizarResumoAutomatico(2, true)">
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================
-             OPÇÃO 3
-        ====================================== -->
-
-        <div class="option-card">
-
-            <h3>3ª Opção (Alternativa)</h3>
-
-            <label for="tipo3">Tipo de Período</label>
-
-            <select id="tipo3" onchange="atualizarFormulario(3)">
-
-                <option value="30">30 dias diretos</option>
-
-                <option value="15+15">15 + 15 dias</option>
-
-            </select>
-
-
-            <div>
-
-                <label for="mes3">Mês de Interesse</label>
-
-                <select id="mes3" onchange="atualizarDataPorMes(3)"></select>
-
-            </div>
-
-
-            <div id="mes3Periodo2Container" class="hidden">
-
-                <label for="mes3b">Mês do 2º Período</label>
-
-                <select id="mes3b" onchange="atualizarDataPorMes(3, true)"></select>
-
-            </div>
-
-
-            <label for="data3">Data pretendida para início</label>
-
-            <input type="date" id="data3" onchange="atualizarResumoAutomatico(3)">
-
-
-            <div id="data3bContainer" class="hidden">
-
-                <label for="data3b">Segunda data pretendida para início</label>
-
-                <input type="date" id="data3b" onchange="atualizarResumoAutomatico(3, true)">
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================
-             BOTÕES
-        ====================================== -->
-
-        <button type="button" onclick="abrirConfirmacao()">
-
-            Revisar Escolhas
-
-        </button>
-
-
-        <button
-            type="button"
-            class="btn-secondary"
-            onclick="sairSistema()"
-        >
-
-            Sair
-
-        </button>
+        Usuário autenticado:
+        <strong id="nomeUsuario"></strong>
 
     </div>
 
 
-    <!-- =========================================
-         TELA DE CONFIRMAÇÃO
-    ========================================== -->
+    <div class="section-title">
 
-    <div id="telaConfirmacao" class="hidden">
+        Suas Opções de Interesse
+
+    </div>
+
+
+    <div class="alert alert-warning">
+
+        <strong>Atenção:</strong><br>
+
+        Você deverá preencher obrigatoriamente as 3 opções.
+
+        As opções não podem ser iguais.
+
+        Para períodos de 15 + 15 dias, os dois meses deverão ser diferentes.
+
+    </div>
+
+
+    <!-- =================================================
+         OPÇÃO 1
+    ================================================== -->
+
+    <div class="option-card">
+
+        <h3>1ª Opção (Preferencial)</h3>
+
+
+        <label for="tipo1">Tipo de Período</label>
+
+        <select id="tipo1" onchange="atualizarFormulario()">
+
+            <option value="30">30 dias diretos</option>
+
+            <option value="15+15">15 + 15 dias</option>
+
+        </select>
+
+
+        <div id="periodo1"></div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         OPÇÃO 2
+    ================================================== -->
+
+    <div class="option-card">
+
+        <h3>2ª Opção (Alternativa)</h3>
+
+
+        <label for="tipo2">Tipo de Período</label>
+
+        <select id="tipo2" onchange="atualizarFormulario()">
+
+            <option value="30">30 dias diretos</option>
+
+            <option value="15+15">15 + 15 dias</option>
+
+        </select>
+
+
+        <div id="periodo2"></div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         OPÇÃO 3
+    ================================================== -->
+
+    <div class="option-card">
+
+        <h3>3ª Opção (Alternativa)</h3>
+
+
+        <label for="tipo3">Tipo de Período</label>
+
+        <select id="tipo3" onchange="atualizarFormulario()">
+
+            <option value="30">30 dias diretos</option>
+
+            <option value="15+15">15 + 15 dias</option>
+
+        </select>
+
+
+        <div id="periodo3"></div>
+
+
+    </div>
+
+
+    <button id="btnEnviar" onclick="abrirConfirmacao()">
+
+        Conferir Escolhas
+
+    </button>
+
+
+    <div id="formMessage" class="message"></div>
+
+
+</div>
+
+
+<!-- =====================================================
+     RESULTADO FINAL
+===================================================== -->
+
+<div id="resultSection">
+
+    <div class="section-title">
+
+        Registro Concluído
+
+    </div>
+
+
+    <div class="result-box">
+
+        <h3>Sucesso!</h3>
+
+        <p>
+
+            Suas escolhas de férias foram registradas corretamente.
+
+        </p>
+
+
+        <div id="resultadoDetalhes"></div>
+
+    </div>
+
+
+    <button class="btn-secondary" onclick="location.reload()">
+
+        Encerrar
+
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     RODAPÉ
+===================================================== -->
+
+<footer>
+
+    Elaborado por: Cb PM Ciquiroli
+
+</footer>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     MODAL DE CONFIRMAÇÃO
+===================================================== -->
+
+<div id="confirmModal" class="modal">
+
+
+    <div class="modal-content">
+
 
         <h2>Confirmação das Escolhas</h2>
 
 
-        <div class="warning">
+        <p style="font-size:13px;color:#666;">
 
-            Confira cuidadosamente suas opções antes de confirmar o envio.
+            Confira atentamente as informações abaixo antes de enviar.
 
-        </div>
-
-
-        <div id="resumoConfirmacao" class="confirmation"></div>
+        </p>
 
 
-        <button
-            type="button"
-            class="btn-success"
-            onclick="confirmarEnvio()"
-        >
+        <div id="confirmationContent"></div>
 
-            Confirmar e Enviar Escolhas
+
+        <button onclick="confirmarEnvio()">
+
+            Confirmar e Enviar
 
         </button>
 
 
-        <button
-            type="button"
-            class="btn-secondary"
-            onclick="voltarFormulario()"
-        >
+        <button class="btn-secondary" onclick="fecharConfirmacao()">
 
             Voltar e Corrigir
 
         </button>
 
-    </div>
-
-
-    <!-- =========================================
-         TELA DE SUCESSO
-    ========================================== -->
-
-    <div id="telaSucesso" class="hidden">
-
-        <h2>Registro Concluído</h2>
-
-
-        <div class="confirmation">
-
-            <h3 style="color:#15803d;">Suas escolhas foram registradas!</h3>
-
-            <p>
-
-                O sistema recebeu suas opções de férias para o ano de 2027.
-
-            </p>
-
-        </div>
-
-
-        <div id="resumoFinal" class="confirmation"></div>
-
-
-        <button
-            type="button"
-            class="btn-secondary"
-            onclick="window.location.reload()"
-        >
-
-            Encerrar
-
-        </button>
-
-    </div>
-
-
-    <!-- =========================================
-         RODAPÉ
-    ========================================== -->
-
-    <div class="footer">
-
-        Elaborado por: Cb PM Ciquiroli
 
     </div>
 
@@ -750,221 +839,691 @@ button:disabled {
 
 <script>
 
+/* =====================================================
+   CONFIGURAÇÃO DO GOOGLE APPS SCRIPT
+===================================================== */
 
-// =====================================================
-// CONFIGURAÇÃO GOOGLE APPS SCRIPT
-// =====================================================
-
-const URL_APPS_SCRIPT =
+const API_URL =
 "https://script.google.com/macros/s/AKfycbzRmSXwxT0i7ttudFZ3S_AI0YFGogVeNu63WKhqBQcEInO33s6T7Ximzrt1OeLunweFZw/exec";
 
 
-// =====================================================
-// CONFIGURAÇÕES DOS MESES
-// =====================================================
+/* =====================================================
+   VARIÁVEIS GLOBAIS
+===================================================== */
+
+let usuarioAtual = {
+
+    cpf: "",
+
+    nome: ""
+
+};
+
+
+/* =====================================================
+   MESES
+===================================================== */
 
 const meses = [
 
-    { numero: "01", nome: "Janeiro" },
+    "Janeiro",
 
-    { numero: "02", nome: "Fevereiro" },
+    "Fevereiro",
 
-    { numero: "03", nome: "Março" },
+    "Março",
 
-    { numero: "04", nome: "Abril" },
+    "Abril",
 
-    { numero: "05", nome: "Maio" },
+    "Maio",
 
-    { numero: "06", nome: "Junho" },
+    "Junho",
 
-    { numero: "07", nome: "Julho" },
+    "Julho",
 
-    { numero: "08", nome: "Agosto" },
+    "Agosto",
 
-    { numero: "09", nome: "Setembro" },
+    "Setembro",
 
-    { numero: "10", nome: "Outubro" },
+    "Outubro",
 
-    { numero: "11", nome: "Novembro" },
+    "Novembro",
 
-    { numero: "12", nome: "Dezembro" }
+    "Dezembro"
 
 ];
 
 
-// =====================================================
-// INICIALIZAÇÃO
-// =====================================================
+/* =====================================================
+   MÁSCARA CPF
+===================================================== */
 
-document.addEventListener("DOMContentLoaded", function() {
+document.getElementById("cpf").addEventListener("input", function(e) {
 
+    let valor = e.target.value.replace(/\D/g, "");
 
-    carregarMeses();
+    valor = valor.substring(0, 11);
 
+    valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
 
-    const formLogin = document.getElementById("formLogin");
+    valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
 
+    valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 
-    if (formLogin) {
-
-        formLogin.addEventListener("submit", fazerLogin);
-
-    }
-
-
-    aplicarMascaraCPF();
-
+    e.target.value = valor;
 
 });
 
 
-// =====================================================
-// CARREGAR MESES NOS SELECTS
-// =====================================================
+/* =====================================================
+   LIMPAR CPF
+===================================================== */
 
-function carregarMeses() {
+function limparCPF(cpf) {
 
+    return String(cpf || "").replace(/\D/g, "");
 
-    for (let i = 1; i <= 3; i++) {
-
-
-        const selectPrincipal = document.getElementById("mes" + i);
-
-        const selectSegundo = document.getElementById("mes" + i + "b");
+}
 
 
-        meses.forEach(function(mes) {
+/* =====================================================
+   FORMATAR DATA
+===================================================== */
+
+function formatarData(data) {
+
+    if (!data) return "";
+
+    const partes = data.split("-");
+
+    return partes[2] + "/" + partes[1] + "/" + partes[0];
+
+}
 
 
-            const option = document.createElement("option");
+/* =====================================================
+   CALCULAR DATA FINAL
+===================================================== */
 
-            option.value = mes.numero;
+function calcularDataFinal(dataInicio, dias) {
 
-            option.textContent = mes.nome;
+    if (!dataInicio) return "";
+
+    const data = new Date(dataInicio + "T00:00:00");
+
+    data.setDate(data.getDate() + dias - 1);
+
+    const ano = data.getFullYear();
+
+    const mes = String(data.getMonth() + 1).padStart(2, "0");
+
+    const dia = String(data.getDate()).padStart(2, "0");
+
+    return `${ano}-${mes}-${dia}`;
+
+}
 
 
-            selectPrincipal.appendChild(option);
+/* =====================================================
+   GERAR OPÇÕES DE MESES
+===================================================== */
+
+function gerarMeses(selectId, ignorarMeses = []) {
+
+    const select = document.getElementById(selectId);
+
+    if (!select) return;
+
+    const valorAtual = select.value;
+
+    select.innerHTML = "";
+
+    meses.forEach((mes, index) => {
+
+        const option = document.createElement("option");
+
+        const numeroMes = index + 1;
+
+        option.value = numeroMes;
+
+        option.textContent = mes;
+
+        if (!ignorarMeses.includes(numeroMes)) {
+
+            select.appendChild(option);
+
+        }
+
+    });
+
+    if (valorAtual && !ignorarMeses.includes(parseInt(valorAtual))) {
+
+        select.value = valorAtual;
+
+    }
+
+}
 
 
-            const option2 = document.createElement("option");
+/* =====================================================
+   GERAR CAMPOS DE UMA OPÇÃO
+===================================================== */
 
-            option2.value = mes.numero;
+function gerarCamposOpcao(numero, mesesBloqueados = []) {
 
-            option2.textContent = mes.nome;
+    const tipo = document.getElementById("tipo" + numero).value;
+
+    const container = document.getElementById("periodo" + numero);
+
+    let html = "";
 
 
-            selectSegundo.appendChild(option2);
+    /* =================================================
+       30 DIAS
+    ================================================== */
 
-        });
+    if (tipo === "30") {
+
+        html += `
+
+            <label for="mes${numero}">Mês de Interesse</label>
+
+            <select id="mes${numero}"
+                    onchange="atualizarCalendarios()">
+
+            </select>
 
 
-        // Seleciona automaticamente Janeiro
+            <label for="data${numero}">Data pretendida para início</label>
 
-        selectPrincipal.value = "01";
+            <input type="date"
+                   id="data${numero}"
+                   onchange="mostrarDataFinal(${numero})">
 
-        selectSegundo.value = "02";
 
+            <div id="info${numero}" class="date-info"></div>
+
+        `;
 
     }
 
 
-    atualizarTodosBloqueios();
+    /* =================================================
+       15 + 15 DIAS
+    ================================================== */
+
+    if (tipo === "15+15") {
+
+        html += `
+
+            <label for="mes${numero}a">Mês do 1º Período</label>
+
+            <select id="mes${numero}a"
+                    onchange="atualizarCalendarios()">
+
+            </select>
+
+
+            <label for="data${numero}a">Data pretendida para início do 1º período</label>
+
+            <input type="date"
+                   id="data${numero}a"
+                   onchange="mostrarDataFinal(${numero})">
+
+
+            <div id="info${numero}a" class="date-info"></div>
+
+
+            <label for="mes${numero}b">Mês do 2º Período</label>
+
+            <select id="mes${numero}b"
+                    onchange="atualizarCalendarios()">
+
+            </select>
+
+
+            <label for="data${numero}b">Data pretendida para início do 2º período</label>
+
+            <input type="date"
+                   id="data${numero}b"
+                   onchange="mostrarDataFinal(${numero})">
+
+
+            <div id="info${numero}b" class="date-info"></div>
+
+        `;
+
+    }
+
+
+    container.innerHTML = html;
+
+    atualizarCalendarios();
 
 }
 
 
-// =====================================================
-// MÁSCARA CPF
-// =====================================================
+/* =====================================================
+   ATUALIZAR FORMULÁRIO COMPLETO
+===================================================== */
 
-function aplicarMascaraCPF() {
+function atualizarFormulario() {
+
+    gerarCamposOpcao(1);
+
+    gerarCamposOpcao(2);
+
+    gerarCamposOpcao(3);
+
+    atualizarCalendarios();
+
+}
 
 
-    const campo = document.getElementById("cpf");
+/* =====================================================
+   BLOQUEIO DE MESES REPETIDOS
+===================================================== */
+
+function atualizarCalendarios() {
+
+    const selecoes = [];
 
 
-    campo.addEventListener("input", function() {
+    for (let i = 1; i <= 3; i++) {
+
+        const tipo = document.getElementById("tipo" + i).value;
 
 
-        let valor = campo.value.replace(/\D/g, "");
+        if (tipo === "30") {
 
+            const campo = document.getElementById("mes" + i);
 
-        if (valor.length > 11) {
+            if (campo && campo.value) {
 
-            valor = valor.substring(0, 11);
+                selecoes.push({
+
+                    id: campo.id,
+
+                    mes: parseInt(campo.value),
+
+                    tipo: "30"
+
+                });
+
+            }
 
         }
 
 
-        valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+        if (tipo === "15+15") {
 
-        valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+            const campoA = document.getElementById("mes" + i + "a");
 
-        valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+            const campoB = document.getElementById("mes" + i + "b");
 
 
-        campo.value = valor;
+            if (campoA && campoA.value) {
+
+                selecoes.push({
+
+                    id: campoA.id,
+
+                    mes: parseInt(campoA.value),
+
+                    tipo: "15"
+
+                });
+
+            }
+
+
+            if (campoB && campoB.value) {
+
+                selecoes.push({
+
+                    id: campoB.id,
+
+                    mes: parseInt(campoB.value),
+
+                    tipo: "15"
+
+                });
+
+            }
+
+        }
+
+    }
+
+
+    /* =================================================
+       ATUALIZA CADA SELECT
+    ================================================== */
+
+    for (let i = 1; i <= 3; i++) {
+
+        const tipo = document.getElementById("tipo" + i).value;
+
+
+        if (tipo === "30") {
+
+            const select = document.getElementById("mes" + i);
+
+            if (!select) continue;
+
+            const valorAtual = parseInt(select.value);
+
+            const bloqueados = selecoes
+
+                .filter(s => s.id !== select.id)
+
+                .map(s => s.mes);
+
+
+            preencherSelectMes(select, valorAtual, bloqueados);
+
+        }
+
+
+        if (tipo === "15+15") {
+
+            const selectA = document.getElementById("mes" + i + "a");
+
+            const selectB = document.getElementById("mes" + i + "b");
+
+
+            if (!selectA || !selectB) continue;
+
+
+            const valorA = parseInt(selectA.value);
+
+            const valorB = parseInt(selectB.value);
+
+
+            const bloqueadosA = selecoes
+
+                .filter(s => s.id !== selectA.id)
+
+                .map(s => s.mes);
+
+
+            const bloqueadosB = selecoes
+
+                .filter(s => s.id !== selectB.id)
+
+                .map(s => s.mes);
+
+
+            preencherSelectMes(selectA, valorA, bloqueadosA);
+
+            preencherSelectMes(selectB, valorB, bloqueadosB);
+
+        }
+
+    }
+
+
+    atualizarDatasPermitidas();
+
+}
+
+
+/* =====================================================
+   PREENCHER SELECT DE MÊS
+===================================================== */
+
+function preencherSelectMes(select, valorAtual, bloqueados) {
+
+    const valor = valorAtual;
+
+    select.innerHTML = "";
+
+
+    meses.forEach((mes, index) => {
+
+        const numero = index + 1;
+
+        const option = document.createElement("option");
+
+        option.value = numero;
+
+        option.textContent = mes;
+
+
+        if (!bloqueados.includes(numero) || numero === valor) {
+
+            select.appendChild(option);
+
+        }
 
     });
 
+
+    if (valor && !bloqueados.includes(valor)) {
+
+        select.value = valor;
+
+    }
+
+    else if (select.options.length > 0) {
+
+        select.selectedIndex = 0;
+
+    }
+
 }
 
 
-// =====================================================
-// LIMPAR CPF
-// =====================================================
+/* =====================================================
+   ATUALIZAR LIMITES DO CALENDÁRIO
+===================================================== */
 
-function limparCPF(cpf) {
+function atualizarDatasPermitidas() {
 
-    return String(cpf || "")
-        .replace(/\D/g, "")
-        .trim();
+    const ano = 2027;
+
+
+    for (let i = 1; i <= 3; i++) {
+
+        const tipo = document.getElementById("tipo" + i).value;
+
+
+        if (tipo === "30") {
+
+            const mes = document.getElementById("mes" + i);
+
+            const data = document.getElementById("data" + i);
+
+
+            if (mes && data) {
+
+                aplicarLimiteData(data, parseInt(mes.value), 30);
+
+            }
+
+        }
+
+
+        if (tipo === "15+15") {
+
+            const mesA = document.getElementById("mes" + i + "a");
+
+            const mesB = document.getElementById("mes" + i + "b");
+
+
+            const dataA = document.getElementById("data" + i + "a");
+
+            const dataB = document.getElementById("data" + i + "b");
+
+
+            if (mesA && dataA) {
+
+                aplicarLimiteData(dataA, parseInt(mesA.value), 15);
+
+            }
+
+
+            if (mesB && dataB) {
+
+                aplicarLimiteData(dataB, parseInt(mesB.value), 15);
+
+            }
+
+        }
+
+    }
 
 }
 
 
-// =====================================================
-// LOGIN
-// =====================================================
+/* =====================================================
+   APLICAR LIMITES DE DATA
+===================================================== */
 
-async function fazerLogin(event) {
+function aplicarLimiteData(campo, mes, dias) {
+
+    if (!mes) return;
 
 
-    event.preventDefault();
+    const ano = 2027;
 
 
-    const cpf = document.getElementById("cpf").value.trim();
+    const primeiroDia = `${ano}-${String(mes).padStart(2, "0")}-01`;
+
+    const ultimoDia = new Date(ano, mes, 0).getDate();
+
+    const ultimoDiaMes = `${ano}-${String(mes).padStart(2, "0")}-${String(ultimoDia).padStart(2, "0")}`;
+
+
+    campo.min = primeiroDia;
+
+    campo.max = ultimoDiaMes;
+
+
+    if (campo.value) {
+
+        const data = new Date(campo.value + "T00:00:00");
+
+        const inicio = new Date(primeiroDia + "T00:00:00");
+
+        const fim = new Date(ultimoDiaMes + "T00:00:00");
+
+
+        if (data < inicio || data > fim) {
+
+            campo.value = "";
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   MOSTRAR DATA FINAL
+===================================================== */
+
+function mostrarDataFinal(numero) {
+
+    const tipo = document.getElementById("tipo" + numero).value;
+
+
+    if (tipo === "30") {
+
+        const data = document.getElementById("data" + numero);
+
+        const info = document.getElementById("info" + numero);
+
+
+        if (data && data.value) {
+
+            const final = calcularDataFinal(data.value, 30);
+
+            info.innerHTML = `Período: ${formatarData(data.value)} até ${formatarData(final)}`;
+
+            info.style.display = "block";
+
+        }
+
+        else if (info) {
+
+            info.style.display = "none";
+
+        }
+
+    }
+
+
+    if (tipo === "15+15") {
+
+        const dataA = document.getElementById("data" + numero + "a");
+
+        const dataB = document.getElementById("data" + numero + "b");
+
+
+        const infoA = document.getElementById("info" + numero + "a");
+
+        const infoB = document.getElementById("info" + numero + "b");
+
+
+        if (dataA && dataA.value) {
+
+            const finalA = calcularDataFinal(dataA.value, 15);
+
+            infoA.innerHTML = `1º Período: ${formatarData(dataA.value)} até ${formatarData(finalA)}`;
+
+            infoA.style.display = "block";
+
+        }
+
+
+        if (dataB && dataB.value) {
+
+            const finalB = calcularDataFinal(dataB.value, 15);
+
+            infoB.innerHTML = `2º Período: ${formatarData(dataB.value)} até ${formatarData(finalB)}`;
+
+            infoB.style.display = "block";
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function fazerLogin() {
+
+    const cpf = limparCPF(document.getElementById("cpf").value);
 
     const re = document.getElementById("re").value.trim();
 
-    const mensagemErro = document.getElementById("mensagemErro");
-
-    const botao = document.getElementById("btnLogin");
+    const mensagem = document.getElementById("loginMessage");
 
 
-    mensagemErro.textContent = "";
+    mensagem.className = "message";
 
-    mensagemErro.style.display = "none";
+    mensagem.textContent = "Verificando...";
 
 
     if (!cpf || !re) {
 
-        mostrarErro("Informe o CPF e o RE.");
+        mensagem.className = "message error";
+
+        mensagem.textContent = "Informe CPF e RE.";
 
         return;
 
     }
 
 
-    botao.disabled = true;
-
-    botao.textContent = "Verificando...";
-
-
     try {
 
-
-        const resposta = await fetch(URL_APPS_SCRIPT, {
+        const resposta = await fetch(API_URL, {
 
             method: "POST",
 
@@ -987,276 +1546,129 @@ async function fazerLogin(event) {
         });
 
 
-        if (!resposta.ok) {
-
-            throw new Error("Erro HTTP " + resposta.status);
-
-        }
-
-
         const dados = await resposta.json();
 
 
-        console.log("Resposta do Apps Script:", dados);
+        if (dados.sucesso) {
+
+            usuarioAtual.cpf = cpf;
+
+            usuarioAtual.nome = dados.nome;
 
 
-        if (dados.sucesso === true) {
+            document.getElementById("nomeUsuario").textContent = dados.nome;
 
 
-            sessionStorage.setItem("cpfUsuario", limparCPF(cpf));
+            document.getElementById("loginSection").style.display = "none";
 
-            sessionStorage.setItem("nomeUsuario", dados.nome || "");
-
-
-            document.getElementById("nomeUsuario").textContent = dados.nome || "";
+            document.getElementById("formSection").style.display = "block";
 
 
-            document.getElementById("telaLogin").classList.add("hidden");
-
-            document.getElementById("telaFormulario").classList.remove("hidden");
-
-
-        } else {
-
-
-            mostrarErro(dados.msg || "CPF ou RE incorretos.");
+            atualizarFormulario();
 
         }
 
+        else {
 
-    } catch (erro) {
+            mensagem.className = "message error";
 
+            mensagem.textContent = dados.msg || "CPF ou RE inválidos.";
 
-        console.error("Erro de conexão:", erro);
-
-
-        mostrarErro(
-
-            "Erro ao conectar ao servidor. Verifique sua internet ou tente novamente."
-
-        );
-
+        }
 
     }
 
+    catch (erro) {
 
-    botao.disabled = false;
+        mensagem.className = "message error";
 
-    botao.textContent = "Entrar";
+        mensagem.textContent = "Erro ao conectar ao servidor. Verifique sua internet.";
 
-}
-
-
-// =====================================================
-// EXIBIR ERRO
-// =====================================================
-
-function mostrarErro(mensagem) {
-
-
-    const elemento = document.getElementById("mensagemErro");
-
-
-    elemento.textContent = mensagem;
-
-    elemento.style.display = "block";
-
-}
-
-
-// =====================================================
-// ATUALIZAR FORMULÁRIO CONFORME TIPO DE PERÍODO
-// =====================================================
-
-function atualizarFormulario(numeroOpcao) {
-
-
-    const tipo = document.getElementById("tipo" + numeroOpcao).value;
-
-
-    const mesSegundo = document.getElementById(
-
-        "mes" + numeroOpcao + "Periodo2Container"
-
-    );
-
-
-    const dataSegundo = document.getElementById(
-
-        "data" + numeroOpcao + "bContainer"
-
-    );
-
-
-    if (tipo === "15+15") {
-
-
-        mesSegundo.classList.remove("hidden");
-
-        dataSegundo.classList.remove("hidden");
-
-
-        // Limpa segunda data
-
-        document.getElementById("data" + numeroOpcao + "b").value = "";
-
-
-    } else {
-
-
-        mesSegundo.classList.add("hidden");
-
-        dataSegundo.classList.add("hidden");
-
-        document.getElementById("data" + numeroOpcao + "b").value = "";
-
+        console.error(erro);
 
     }
 
-
-    atualizarTodosBloqueios();
-
 }
 
 
-// =====================================================
-// ATUALIZAR DATA AUTOMATICAMENTE CONFORME MÊS
-// =====================================================
+/* =====================================================
+   COLETAR DADOS DAS OPÇÕES
+===================================================== */
 
-function atualizarDataPorMes(numeroOpcao, segundoPeriodo = false) {
+function coletarOpcoes() {
 
+    const opcoes = [];
 
-    const sufixo = segundoPeriodo ? "b" : "";
-
-
-    const mes = document.getElementById(
-
-        "mes" + numeroOpcao + sufixo
-
-    ).value;
-
-
-    const dataInput = document.getElementById(
-
-        "data" + numeroOpcao + sufixo
-
-    );
-
-
-    if (!mes) return;
-
-
-    const dataPadrao = `2027-${mes}-01`;
-
-
-    dataInput.value = dataPadrao;
-
-
-    atualizarResumoAutomatico(numeroOpcao, segundoPeriodo);
-
-
-    atualizarTodosBloqueios();
-
-}
-
-
-// =====================================================
-// BLOQUEIO DE MESES REPETIDOS
-// =====================================================
-
-function atualizarTodosBloqueios() {
-
-
-    const escolhas = [];
 
     for (let i = 1; i <= 3; i++) {
 
         const tipo = document.getElementById("tipo" + i).value;
 
-        const mes = document.getElementById("mes" + i).value;
 
-        const mes2 = document.getElementById("mes" + i + "b").value;
+        if (tipo === "30") {
 
+            const mes = parseInt(document.getElementById("mes" + i).value);
 
-        escolhas.push({
+            const dataInicio = document.getElementById("data" + i).value;
 
-            tipo: tipo,
-
-            mes: mes,
-
-            mes2: mes2
-
-        });
-
-    }
+            const dataFim = calcularDataFinal(dataInicio, 30);
 
 
-    // Atualiza bloqueios das opções principais
+            opcoes.push({
 
-    for (let i = 1; i <= 3; i++) {
+                numero: i,
 
+                tipo: "30 dias diretos",
 
-        const select = document.getElementById("mes" + i);
+                mes: meses[mes - 1],
 
+                dataInicio: dataInicio,
 
-        const tipoAtual = document.getElementById("tipo" + i).value;
+                dataFim: dataFim,
 
+                texto: `30 dias diretos em ${meses[mes - 1]} (Início: ${dataInicio})`
 
-        const mesesUtilizados = [];
-
-
-        for (let j = 1; j <= 3; j++) {
-
-            if (j !== i) {
-
-                const mesOutro = document.getElementById("mes" + j).value;
-
-                mesesUtilizados.push(mesOutro);
-
-
-                if (document.getElementById("tipo" + j).value === "15+15") {
-
-                    mesesUtilizados.push(
-
-                        document.getElementById("mes" + j + "b").value
-
-                    );
-
-                }
-
-            }
+            });
 
         }
 
 
-        Array.from(select.options).forEach(function(option) {
+        if (tipo === "15+15") {
+
+            const mesA = parseInt(document.getElementById("mes" + i + "a").value);
+
+            const mesB = parseInt(document.getElementById("mes" + i + "b").value);
 
 
-            option.disabled = mesesUtilizados.includes(option.value);
+            const dataA = document.getElementById("data" + i + "a").value;
+
+            const dataB = document.getElementById("data" + i + "b").value;
 
 
-        });
+            const fimA = calcularDataFinal(dataA, 15);
+
+            const fimB = calcularDataFinal(dataB, 15);
 
 
-        // Atualiza segundo mês para períodos 15+15
+            opcoes.push({
 
-        if (tipoAtual === "15+15") {
+                numero: i,
 
+                tipo: "15 + 15 dias",
 
-            const select2 = document.getElementById("mes" + i + "b");
+                mesA: meses[mesA - 1],
 
-            const primeiroMes = document.getElementById("mes" + i).value;
+                mesB: meses[mesB - 1],
 
+                dataInicioA: dataA,
 
-            Array.from(select2.options).forEach(function(option) {
+                dataFimA: fimA,
 
+                dataInicioB: dataB,
 
-                option.disabled =
+                dataFimB: fimB,
 
-                    option.value === primeiroMes ||
-
-                    mesesUtilizados.includes(option.value);
-
+                texto: `15 dias em ${meses[mesA - 1]} (Início: ${dataA}) até ${fimA} + 15 dias em ${meses[mesB - 1]} (Início: ${dataB}) até ${fimB}`
 
             });
 
@@ -1264,371 +1676,192 @@ function atualizarTodosBloqueios() {
 
     }
 
-}
 
-
-// =====================================================
-// FORMATAR DATA PARA EXIBIÇÃO
-// =====================================================
-
-function formatarData(dataString) {
-
-
-    if (!dataString) return "";
-
-
-    const partes = dataString.split("-");
-
-
-    return partes[2] + "/" + partes[1] + "/" + partes[0];
+    return opcoes;
 
 }
 
 
-// =====================================================
-// CALCULAR DATA DE TÉRMINO
-// =====================================================
+/* =====================================================
+   VALIDAR OPÇÕES
+===================================================== */
 
-function calcularTermino(dataInicio, dias) {
-
-
-    if (!dataInicio) return "";
+function validarOpcoes(opcoes) {
 
 
-    const data = new Date(dataInicio + "T00:00:00");
+    if (opcoes.length !== 3) {
 
-
-    data.setDate(data.getDate() + dias - 1);
-
-
-    const ano = data.getFullYear();
-
-    const mes = String(data.getMonth() + 1).padStart(2, "0");
-
-    const dia = String(data.getDate()).padStart(2, "0");
-
-
-    return `${ano}-${mes}-${dia}`;
-
-}
-
-
-// =====================================================
-// DESCRIÇÃO DE UMA OPÇÃO
-// =====================================================
-
-function gerarDescricaoOpcao(numeroOpcao) {
-
-
-    const tipo = document.getElementById("tipo" + numeroOpcao).value;
-
-    const mes = document.getElementById("mes" + numeroOpcao).value;
-
-    const dataInicio = document.getElementById("data" + numeroOpcao).value;
-
-
-    const nomeMes = meses.find(m => m.numero === mes)?.nome || "";
-
-
-    let descricao = "";
-
-
-    if (tipo === "30") {
-
-
-        const termino = calcularTermino(dataInicio, 30);
-
-
-        descricao =
-
-            `30 dias diretos em ${nomeMes} ` +
-
-            `(Início: ${formatarData(dataInicio)} - ` +
-
-            `Término: ${formatarData(termino)})`;
-
-
-    } else {
-
-
-        const mes2 = document.getElementById("mes" + numeroOpcao + "b").value;
-
-        const dataInicio2 = document.getElementById("data" + numeroOpcao + "b").value;
-
-
-        const nomeMes2 = meses.find(m => m.numero === mes2)?.nome || "";
-
-
-        const termino1 = calcularTermino(dataInicio, 15);
-
-        const termino2 = calcularTermino(dataInicio2, 15);
-
-
-        descricao =
-
-            `15 + 15 dias: ` +
-
-            `1º período em ${nomeMes} ` +
-
-            `(${formatarData(dataInicio)} até ${formatarData(termino1)}) ` +
-
-            `e 2º período em ${nomeMes2} ` +
-
-            `(${formatarData(dataInicio2)} até ${formatarData(termino2)})`;
+        return "Preencha as 3 opções.";
 
     }
 
 
-    return descricao;
+    /* Verificar campos vazios */
 
-}
+    for (const opcao of opcoes) {
 
+        if (opcao.tipo === "30" || opcao.tipo === "30 dias diretos") {
 
-// =====================================================
-// ATUALIZAÇÃO DO RESUMO INTERNO
-// =====================================================
+            if (!opcao.dataInicio) {
 
-function atualizarResumoAutomatico(numeroOpcao, segundoPeriodo = false) {
-
-
-    atualizarTodosBloqueios();
-
-}
-
-
-// =====================================================
-// VALIDAR TODAS AS OPÇÕES
-// =====================================================
-
-function validarOpcoes() {
-
-
-    const opcoes = [];
-
-
-    for (let i = 1; i <= 3; i++) {
-
-
-        const tipo = document.getElementById("tipo" + i).value;
-
-        const mes = document.getElementById("mes" + i).value;
-
-        const data = document.getElementById("data" + i).value;
-
-
-        if (!mes || !data) {
-
-            alert(`Preencha corretamente a ${i}ª opção.`);
-
-            return false;
-
-        }
-
-
-        if (tipo === "15+15") {
-
-
-            const mes2 = document.getElementById("mes" + i + "b").value;
-
-            const data2 = document.getElementById("data" + i + "b").value;
-
-
-            if (!mes2 || !data2) {
-
-                alert(`Preencha os dois períodos da ${i}ª opção.`);
-
-                return false;
-
-            }
-
-
-            if (mes === mes2) {
-
-                alert(`Os meses da ${i}ª opção não podem ser iguais.`);
-
-                return false;
+                return `Informe a data de início da ${opcao.numero}ª opção.`;
 
             }
 
         }
 
 
-        opcoes.push({
+        if (opcao.tipo === "15 + 15 dias") {
 
-            tipo: tipo,
+            if (!opcao.dataInicioA || !opcao.dataInicioB) {
 
-            mes: mes,
+                return `Informe as duas datas da ${opcao.numero}ª opção.`;
 
-            data: data
-
-        });
-
-    }
-
-
-    // Verifica meses principais entre opções
-
-    const combinacoes = [];
-
-
-    for (let i = 1; i <= 3; i++) {
-
-
-        const tipo = document.getElementById("tipo" + i).value;
-
-        const mes = document.getElementById("mes" + i).value;
-
-
-        combinacoes.push(mes);
-
-
-        if (tipo === "15+15") {
-
-            combinacoes.push(
-
-                document.getElementById("mes" + i + "b").value
-
-            );
+            }
 
         }
 
     }
 
 
-    const duplicados = combinacoes.filter(
+    /* =================================================
+       VERIFICAR MESES REPETIDOS ENTRE OPÇÕES
+    ================================================== */
 
-        (item, index) => combinacoes.indexOf(item) !== index
-
-    );
-
-
-    if (duplicados.length > 0) {
+    const mesesUsados = [];
 
 
-        alert(
+    for (const opcao of opcoes) {
 
-            "As opções de férias não podem utilizar meses iguais. Verifique suas escolhas."
+        if (opcao.tipo === "30 dias diretos") {
 
-        );
+            mesesUsados.push(opcao.mes);
+
+        }
 
 
-        return false;
+        if (opcao.tipo === "15 + 15 dias") {
+
+            if (opcao.mesA === opcao.mesB) {
+
+                return `Na ${opcao.numero}ª opção, os dois períodos devem possuir meses diferentes.`;
+
+            }
+
+            mesesUsados.push(opcao.mesA);
+
+            mesesUsados.push(opcao.mesB);
+
+        }
 
     }
 
 
-    return true;
+    /* =================================================
+       REGRA: OPÇÕES NÃO PODEM SER IGUAIS
+    ================================================== */
+
+    const combinacoes = opcoes.map(op => op.texto);
+
+    const unicas = new Set(combinacoes);
+
+
+    if (unicas.size !== combinacoes.length) {
+
+        return "As 3 opções devem ser diferentes.";
+
+    }
+
+
+    return "";
 
 }
 
 
-// =====================================================
-// ABRIR CONFIRMAÇÃO
-// =====================================================
+/* =====================================================
+   ABRIR CONFIRMAÇÃO
+===================================================== */
 
 function abrirConfirmacao() {
 
+    const opcoes = coletarOpcoes();
 
-    if (!validarOpcoes()) return;
+    const erro = validarOpcoes(opcoes);
 
-
-    let html = "";
-
-
-    for (let i = 1; i <= 3; i++) {
+    const mensagem = document.getElementById("formMessage");
 
 
-        html += `
-
-            <div class="summary-item">
-
-                <strong>${i}ª Opção</strong>
-
-                ${gerarDescricaoOpcao(i)}
-
-            </div>
-
-        `;
-
-    }
+    mensagem.className = "message";
 
 
-    document.getElementById("resumoConfirmacao").innerHTML = html;
+    if (erro) {
 
+        mensagem.className = "message error";
 
-    document.getElementById("telaFormulario").classList.add("hidden");
-
-    document.getElementById("telaConfirmacao").classList.remove("hidden");
-
-
-    window.scrollTo(0, 0);
-
-}
-
-
-// =====================================================
-// VOLTAR AO FORMULÁRIO
-// =====================================================
-
-function voltarFormulario() {
-
-
-    document.getElementById("telaConfirmacao").classList.add("hidden");
-
-    document.getElementById("telaFormulario").classList.remove("hidden");
-
-
-    window.scrollTo(0, 0);
-
-}
-
-
-// =====================================================
-// CONFIRMAR ENVIO
-// =====================================================
-
-async function confirmarEnvio() {
-
-
-    const cpf = sessionStorage.getItem("cpfUsuario");
-
-    const nome = sessionStorage.getItem("nomeUsuario");
-
-
-    if (!cpf || !nome) {
-
-
-        alert("Sessão expirada. Faça login novamente.");
-
-        window.location.reload();
+        mensagem.textContent = erro;
 
         return;
 
     }
 
 
-    if (!validarOpcoes()) return;
+    let html = "";
 
 
-    const botao = document.querySelector("#telaConfirmacao button.btn-success");
+    opcoes.forEach(opcao => {
 
+        html += `
+
+            <div class="confirmation-item">
+
+                <strong>${opcao.numero}ª Opção</strong><br>
+
+                ${opcao.texto}
+
+            </div>
+
+        `;
+
+    });
+
+
+    document.getElementById("confirmationContent").innerHTML = html;
+
+    document.getElementById("confirmModal").style.display = "flex";
+
+}
+
+
+/* =====================================================
+   FECHAR CONFIRMAÇÃO
+===================================================== */
+
+function fecharConfirmacao() {
+
+    document.getElementById("confirmModal").style.display = "none";
+
+}
+
+
+/* =====================================================
+   CONFIRMAR E ENVIAR
+===================================================== */
+
+async function confirmarEnvio() {
+
+    const opcoes = coletarOpcoes();
+
+
+    const botao = document.querySelector("#confirmModal button");
 
     botao.disabled = true;
 
     botao.textContent = "Enviando...";
 
 
-    const op1 = gerarDescricaoOpcao(1);
-
-    const op2 = gerarDescricaoOpcao(2);
-
-    const op3 = gerarDescricaoOpcao(3);
-
-
     try {
 
-
-        const resposta = await fetch(URL_APPS_SCRIPT, {
+        const resposta = await fetch(API_URL, {
 
             method: "POST",
 
@@ -1642,126 +1875,122 @@ async function confirmarEnvio() {
 
                 acao: "salvar",
 
-                cpf: cpf,
+                cpf: usuarioAtual.cpf,
 
-                nome: nome,
+                nome: usuarioAtual.nome,
 
-                op1: op1,
+                op1: opcoes[0].texto,
 
-                op2: op2,
+                op2: opcoes[1].texto,
 
-                op3: op3
+                op3: opcoes[2].texto
 
             })
 
         });
 
 
-        if (!resposta.ok) {
-
-            throw new Error("Erro HTTP " + resposta.status);
-
-        }
-
-
         const dados = await resposta.json();
 
 
-        console.log("Resposta do servidor:", dados);
+        if (dados.sucesso) {
 
+            fecharConfirmacao();
 
-        if (dados.sucesso === true) {
+            mostrarResultado(opcoes);
 
+        }
 
-            mostrarSucesso();
-
-
-        } else {
-
+        else {
 
             alert(dados.msg || "Não foi possível registrar as escolhas.");
 
         }
 
+    }
 
-    } catch (erro) {
+    catch (erro) {
 
+        alert("Erro ao enviar dados. Verifique sua conexão com a internet.");
 
         console.error(erro);
-
-
-        alert(
-
-            "Erro ao enviar dados. Verifique sua conexão com a internet."
-
-        );
 
     }
 
 
     botao.disabled = false;
 
-    botao.textContent = "Confirmar e Enviar Escolhas";
+    botao.textContent = "Confirmar e Enviar";
 
 }
 
 
-// =====================================================
-// MOSTRAR TELA DE SUCESSO
-// =====================================================
+/* =====================================================
+   MOSTRAR RESULTADO FINAL
+===================================================== */
 
-function mostrarSucesso() {
+function mostrarResultado(opcoes) {
+
+    document.getElementById("formSection").style.display = "none";
+
+    document.getElementById("resultSection").style.display = "block";
 
 
-    let html = "";
+    let html = `
+
+        <p><strong>Nome:</strong> ${usuarioAtual.nome}</p>
+
+        <p><strong>CPF:</strong> ${usuarioAtual.cpf}</p>
+
+        <hr>
+
+    `;
 
 
-    for (let i = 1; i <= 3; i++) {
-
+    opcoes.forEach(opcao => {
 
         html += `
 
-            <div class="summary-item">
+            <div style="margin-bottom:15px;">
 
-                <strong>${i}ª Opção</strong>
+                <strong>${opcao.numero}ª Opção:</strong><br>
 
-                ${gerarDescricaoOpcao(i)}
+                ${opcao.texto}
 
             </div>
 
         `;
 
-    }
+    });
 
 
-    document.getElementById("resumoFinal").innerHTML = html;
+    html += `
+
+        <hr>
+
+        <p style="font-size:12px;color:#777;">
+
+            Data do registro: ${new Date().toLocaleString("pt-BR")}
+
+        </p>
+
+    `;
 
 
-    document.getElementById("telaConfirmacao").classList.add("hidden");
-
-    document.getElementById("telaFormulario").classList.add("hidden");
-
-    document.getElementById("telaSucesso").classList.remove("hidden");
-
-
-    window.scrollTo(0, 0);
-
-}
-
-
-// =====================================================
-// SAIR DO SISTEMA
-// =====================================================
-
-function sairSistema() {
-
-
-    sessionStorage.clear();
-
-    window.location.reload();
+    document.getElementById("resultadoDetalhes").innerHTML = html;
 
 }
 
+
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    document.getElementById("cpf").focus();
+
+});
 
 </script>
 
