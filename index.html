@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Agendamento de Férias 2027</title>
+<link rel="icon" href="data:,">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#f3f4f6;font-family:Arial,sans-serif;color:#243044}.card{background:#fff;border-radius:14px;box-shadow:0 8px 25px #00000012}.btn{border:0;border-radius:9px;padding:13px 16px;font-weight:700;cursor:pointer}.btn:disabled{opacity:.55;cursor:not-allowed}.hidden{display:none!important}.msg{margin-top:10px;padding:10px;border-radius:8px;font-size:14px}.ok{background:#dcfce7;color:#166534}.err{background:#fee2e2;color:#991b1b}.modal-bg{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:16px;z-index:10}.modal{background:#fff;width:min(100%,520px);border-radius:14px;overflow:hidden}.modal-head{background:#24438f;color:white;padding:20px}.modal-body{padding:20px}.field{width:100%;border:1px solid #d1d5db;border-radius:8px;padding:11px;background:#fff}.choice{border:1px solid #e5e7eb;border-radius:12px;padding:16px;margin-top:14px}.label{font-size:13px;font-weight:700;display:block;margin:0 0 6px}.sub{font-size:12px;color:#64748b;margin:4px 0 12px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:420px){.grid2{grid-template-columns:1fr}}
@@ -26,11 +27,34 @@ const URL_APPS_SCRIPT='https://script.google.com/macros/s/AKfycbwMsbZ29gPLFNmZR7
 const MESES=[['01','Janeiro'],['02','Fevereiro'],['03','Março'],['04','Abril'],['05','Maio'],['06','Junho'],['07','Julho'],['08','Agosto'],['09','Setembro'],['10','Outubro'],['11','Novembro'],['12','Dezembro']];
 let cpfUsuario='',nomeUsuario='';
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function optionMes(id){return '<select id="'+id+'" class="field" required><option value="" selected disabled>Selecione o mês</option>'+MESES.map(m=>'<option value="'+m[0]+'">'+m[1]+'</option>').join('')+'</select>'}
+function optionMes(id){return '<select id="'+id+'" class="field"><option value="" selected disabled>Selecione o mês</option>'+MESES.map(m=>'<option value="'+m[0]+'">'+m[1]+'</option>').join('')+'</select>'}
 function criarOpcoes(){let h='';for(let i=1;i<=3;i++)h+=`<div class="choice"><h3 class="font-bold mb-3">${i}ª Opção</h3><label class="label">Tipo de férias</label><select id="tipo${i}" class="field" required onchange="alterarTipo(${i})"><option value="" selected disabled>Selecione o tipo de período</option><option value="30">30 dias diretos</option><option value="15">15 + 15 dias</option></select><div id="bloco30_${i}" class="hidden mt-3"><label class="label">Mês de início</label>${optionMes('mes'+i)}<label class="label mt-3">Data de início</label><input id="data${i}" type="date" class="field" disabled required></div><div id="bloco15_${i}" class="hidden mt-3"><p class="sub">Os dois períodos devem iniciar em meses diferentes.</p><div class="grid2"><div><label class="label">1º mês</label>${optionMes('mes'+i+'a')}<label class="label mt-2">Início</label><input id="data${i}a" type="date" class="field" disabled required></div><div><label class="label">2º mês</label>${optionMes('mes'+i+'b')}<label class="label mt-2">Início</label><input id="data${i}b" type="date" class="field" disabled required></div></div></div></div>`;document.getElementById('opcoes').innerHTML=h}
 function diasMes(m){return new Date(2027,Number(m),0).getDate()}
 function configurarData(el,m){if(!el)return;el.disabled=!m;if(m){el.min=`2027-${m}-01`;el.max=`2027-${m}-${String(diasMes(m)).padStart(2,'0')}`}else{el.value='';el.removeAttribute('min');el.removeAttribute('max')}}
-function alterarTipo(i){let t=document.getElementById('tipo'+i).value;document.getElementById('bloco30_'+i).classList.toggle('hidden',t!=='30');document.getElementById('bloco15_'+i).classList.toggle('hidden',t!=='15');if(t==='30'){configurarData(document.getElementById('data'+i),document.getElementById('mes'+i).value)}else if(t==='15'){configurarData(document.getElementById('data'+i+'a'),document.getElementById('mes'+i+'a').value);configurarData(document.getElementById('data'+i+'b'),document.getElementById('mes'+i+'b').value)}}
+function alterarTipo(i){
+    const t=document.getElementById('tipo'+i).value;
+    const bloco30=document.getElementById('bloco30_'+i);
+    const bloco15=document.getElementById('bloco15_'+i);
+    const mes30=document.getElementById('mes'+i), data30=document.getElementById('data'+i);
+    const mesA=document.getElementById('mes'+i+'a'), dataA=document.getElementById('data'+i+'a');
+    const mesB=document.getElementById('mes'+i+'b'), dataB=document.getElementById('data'+i+'b');
+    bloco30.classList.toggle('hidden',t!=='30');
+    bloco15.classList.toggle('hidden',t!=='15');
+    [mes30,data30,mesA,dataA,mesB,dataB].forEach(el=>{if(el)el.required=false;});
+    if(t==='30'){
+        mes30.required=true; data30.required=true;
+        configurarData(data30,mes30.value);
+        [mesA,dataA,mesB,dataB].forEach(el=>{if(el){el.value='';el.disabled=true;el.removeAttribute('min');el.removeAttribute('max');}});
+    }else if(t==='15'){
+        mesA.required=true; dataA.required=true; mesB.required=true; dataB.required=true;
+        configurarData(dataA,mesA.value); configurarData(dataB,mesB.value);
+        [mes30,data30].forEach(el=>{if(el){el.value='';el.disabled=(el===data30);el.removeAttribute('min');el.removeAttribute('max');}});
+    }else{
+        [data30,dataA,dataB].forEach(el=>{if(el){el.value='';el.disabled=true;el.removeAttribute('min');el.removeAttribute('max');}});
+        [mes30,mesA,mesB].forEach(el=>{if(el)el.value='';});
+    }
+    atualizarBloqueiosMeses();
+}
 function selecionarMes(id,dataId){let m=document.getElementById(id).value;configurarData(document.getElementById(dataId),m);atualizarBloqueiosMeses()}
 function obter(i){let t=document.getElementById('tipo'+i).value;if(t==='30'){let m=document.getElementById('mes'+i).value,d=document.getElementById('data'+i).value;return {tipo:t,meses:[m],inicio:[d]}}let a=document.getElementById('mes'+i+'a').value,b=document.getElementById('mes'+i+'b').value,da=document.getElementById('data'+i+'a').value,db=document.getElementById('data'+i+'b').value;return {tipo:t,meses:[a,b],inicio:[da,db]}}
 function validar(){let arr=[];for(let i=1;i<=3;i++){let x=obter(i);if(!x.tipo||x.meses.some(m=>!m)||x.inicio.some(d=>!d))return 'Preencha completamente as três opções.';if(x.tipo==='15'&&x.meses[0]===x.meses[1])return 'Na opção '+i+', os períodos 15 + 15 devem estar em meses diferentes.';arr.push(x)}for(let i=0;i<3;i++)for(let j=i+1;j<3;j++)if(arr[i].tipo===arr[j].tipo&&arr[i].meses.some(m=>arr[j].meses.includes(m)))return 'As opções '+(i+1)+' e '+(j+1)+' não podem repetir mês quando possuem o mesmo tipo de férias.';return ''}
@@ -41,7 +65,26 @@ async function enviarDados(){let b=document.getElementById('btnConfirmarEnvio');
 function mostrar(id,t,erro){let e=document.getElementById(id);e.textContent=t;e.className='msg '+(erro?'err':'ok')}
 function fecharModal(){document.getElementById('modalConfirmacao').classList.add('hidden')}
 function liberarTodosOsMeses(){document.querySelectorAll('select[id^="mes"]').forEach(s=>[...s.options].forEach(o=>o.disabled=false))}
-function limparEscolhas(){if(!confirm('Deseja realmente limpar todas as escolhas de férias?'))return;document.getElementById('formFerias').reset();for(let i=1;i<=3;i++){document.getElementById('bloco30_'+i).classList.add('hidden');document.getElementById('bloco15_'+i).classList.add('hidden');['data'+i,'data'+i+'a','data'+i+'b'].forEach(id=>configurarData(document.getElementById(id),''))}liberarTodosOsMeses();document.getElementById('mensagemEscolhas').innerHTML='';fecharModal();document.getElementById('tipo1').focus()}
+function limparEscolhas(){
+    if(!confirm('Deseja realmente limpar todas as escolhas de férias?'))return;
+    document.getElementById('formFerias').reset();
+    for(let i=1;i<=3;i++){
+        document.getElementById('bloco30_'+i).classList.add('hidden');
+        document.getElementById('bloco15_'+i).classList.add('hidden');
+        ['mes'+i,'mes'+i+'a','mes'+i+'b','data'+i,'data'+i+'a','data'+i+'b'].forEach(id=>{
+            const el=document.getElementById(id);
+            if(el){
+                el.value=''; el.required=false;
+                if(el.type==='date') configurarData(el,'');
+                else el.disabled=false;
+            }
+        });
+    }
+    liberarTodosOsMeses();
+    document.getElementById('mensagemEscolhas').innerHTML='';
+    fecharModal();
+    document.getElementById('tipo1').focus();
+}
 function limparEscolhasSemConfirmacao(){document.getElementById('formFerias').reset();for(let i=1;i<=3;i++){document.getElementById('bloco30_'+i).classList.add('hidden');document.getElementById('bloco15_'+i).classList.add('hidden')}liberarTodosOsMeses()}
 function voltarLogin(){fecharModal();document.getElementById('modalSucesso').classList.add('hidden');document.getElementById('telaEscolhas').classList.add('hidden');document.getElementById('telaLogin').classList.remove('hidden');document.getElementById('formLogin').reset();document.getElementById('mensagemLogin').innerHTML='';limparEscolhasSemConfirmacao()}
 function mascaraCPF(v){return v.replace(/\D/g,'').slice(0,11).replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2')}
